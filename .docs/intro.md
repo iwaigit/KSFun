@@ -6,6 +6,7 @@ Bienvenido al centro de documentación de **Karla Spice Fun (KSFUN)**. Este dire
 
 *   **[Requerimientos Funcionales](KS.fun.txt):** Desglose detallado de las características principales y la lógica de la aplicación.
 *   **[Especificaciones de Formularios](KS_formulario.txt):** Definiciones para formularios de recolección de datos y reglas de validación.
+*   **[Manual de Galería](manual_galeria.md):** Guía de uso para el panel de administración de la galería.
 *   **[Referencias de Diseño]([EJEMPLOS]%20Paginas%20web%20de%20citas.md):** Inspiración y guías de UI/UX basadas en plataformas similares.
 
 ## Sincronización con GitBook

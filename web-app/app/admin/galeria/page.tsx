@@ -5,7 +5,7 @@ import { useQuery, useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import AdminSidebar from '@/components/AdminSidebar';
 import { Id } from '@/convex/_generated/dataModel';
-import { compressImage } from '@/lib/image';
+import { processImage } from '@/lib/image';
 import { imageSchema } from '@/lib/validators';
 
 export default function GaleriaAdmin() {
@@ -15,6 +15,7 @@ export default function GaleriaAdmin() {
     const deletePhoto = useMutation(api.gallery.deletePhoto);
 
     const [isUploading, setIsUploading] = useState(false);
+    const [selectedImage, setSelectedImage] = useState<any | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleUpload = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +25,7 @@ export default function GaleriaAdmin() {
         // 1. Zod Validation
         const validation = imageSchema.safeParse({ size: file.size, type: file.type });
         if (!validation.success) {
-            alert(validation.error.errors[0].message);
+            alert(validation.error.issues[0]?.message || "Error de validación");
             return;
         }
 
@@ -35,21 +36,25 @@ export default function GaleriaAdmin() {
 
         setIsUploading(true);
         try {
-            // 2. Image Compression
-            const compressedFile = await compressImage(file);
+            // 2. Generar Nombre Secuencial (KSF_01, KSF_02...)
+            const nextOrder = (photos?.length || 0) + 1;
+            const sequentialName = `KSF_${String(nextOrder).padStart(2, '0')}`;
+
+            // 3. Procesar Imagen (Resize + Watermark + Rename + Compress)
+            const processedFile = await processImage(file, sequentialName);
 
             const postUrl = await generateUploadUrl();
             const result = await fetch(postUrl, {
                 method: "POST",
-                headers: { "Content-Type": compressedFile.type },
-                body: compressedFile,
+                headers: { "Content-Type": processedFile.type },
+                body: processedFile,
             });
             const { storageId } = await result.json();
 
             await savePhoto({
                 storageId: storageId as Id<"_storage">,
-                alt: file.name.split('.')[0],
-                order: (photos?.length || 0) + 1,
+                alt: sequentialName, // Usamos el nombre secuencial como Alt
+                order: nextOrder,
             });
 
         } catch (error) {
@@ -97,44 +102,48 @@ export default function GaleriaAdmin() {
                     </div>
                 </header>
 
-                <section className="grid sm:grid-cols-2 xl:grid-cols-3 gap-10">
+                <section className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
                     {photos?.map((img) => (
                         <div key={img._id} className="group relative">
+                            {/* ... (Gradient background remains) ... */}
                             <div className="absolute -inset-1 bg-gradient-to-br from-white/10 to-transparent rounded-2xl blur-sm group-hover:from-[var(--color-neon-cyan)]/20 transition-all duration-500" />
 
-                            <div className="relative glass-card bg-[#1a1a25]/80 border-white/10 overflow-hidden group-hover:border-[var(--color-neon-cyan)]/30 transition-all">
+                            <div
+                                onClick={() => setSelectedImage(img)}
+                                className="relative glass-card bg-[#1a1a25]/80 border-white/10 overflow-hidden group-hover:border-[var(--color-neon-cyan)]/30 transition-all cursor-pointer"
+                            >
                                 <div className="aspect-[3/4] overflow-hidden relative border-b border-white/5">
                                     <img
                                         src={img.url || ''}
                                         alt={img.alt}
                                         className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                                     />
-
+                                    {/* ... (Delete button remains, maybe stopPropagation on it) ... */}
                                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
                                         <button
-                                            onClick={() => handleDelete(img._id)}
+                                            onClick={(e) => { e.stopPropagation(); handleDelete(img._id); }}
                                             className="w-12 h-12 rounded-full bg-black border border-white/20 text-white flex items-center justify-center hover:bg-red-500 hover:border-red-500 transition-all"
                                             title="Eliminar"
                                         >
                                             🗑️
                                         </button>
+                                        <span className="text-[10px] uppercase font-black tracking-widest text-white/50">Ver Grande</span>
                                     </div>
                                 </div>
-
-                                <div className="p-5 flex justify-between items-center bg-black/40">
-                                    <div className="space-y-1">
-                                        <p className="text-[10px] font-black uppercase tracking-widest text-white">{img.alt}</p>
-                                        <p className="text-[8px] text-white/20 uppercase font-bold tracking-tighter">Pos: {img.order} / ID: {img._id.toString().slice(-4)}</p>
+                                {/* ... (Info section remains) ... */}
+                                <div className="p-3 flex justify-between items-center bg-black/40">
+                                    <div className="space-y-0.5">
+                                        <p className="text-[9px] font-black uppercase tracking-widest text-white truncate max-w-[100px]">{img.alt}</p>
+                                        <p className="text-[7px] text-white/20 uppercase font-bold tracking-tighter">#{img.order}</p>
                                     </div>
-                                    <div className="text-[9px] font-black italic text-[var(--color-neon-cyan)]">
-                                        LIVE
-                                    </div>
+                                    <div className="text-[8px] font-black italic text-[var(--color-neon-cyan)]">LIVE</div>
                                 </div>
                             </div>
                         </div>
                     ))}
 
-                    {!photos && [1, 2, 3].map(i => (
+                    {/* ... (Loading skeletons and Upload button logic) ... */}
+                    {!photos && [1, 2, 3, 4, 5, 6].map(i => (
                         <div key={i} className="aspect-[3/4] bg-white/5 animate-pulse rounded-2xl border border-white/10" />
                     ))}
 
@@ -144,10 +153,31 @@ export default function GaleriaAdmin() {
                             className="group relative border-2 border-dashed border-white/5 rounded-2xl aspect-[3/4] flex flex-col items-center justify-center gap-4 hover:border-[var(--color-neon-cyan)]/30 transition-all bg-white/[0.02] hover:bg-white/[0.04]"
                         >
                             <span className="text-4xl text-white/20 group-hover:text-[var(--color-neon-cyan)] transition-colors">+</span>
-                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 group-hover:text-white transition-colors">Añadir a Galería</span>
+                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 group-hover:text-white transition-colors">Añadir</span>
                         </button>
                     )}
                 </section>
+
+                {/* Lightbox Modal */}
+                {selectedImage && (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl animate-in fade-in duration-300" onClick={() => setSelectedImage(null)}>
+                        <div className="relative max-w-4xl w-full h-full max-h-[90vh] flex items-center justify-center p-4" onClick={e => e.stopPropagation()}>
+                            <button onClick={() => setSelectedImage(null)} className="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-black/50 hover:bg-white text-white hover:text-black flex items-center justify-center transition-all">
+                                ✕
+                            </button>
+                            <img
+                                src={selectedImage.url || ''}
+                                alt={selectedImage.alt}
+                                className="max-w-full max-h-full object-contain rounded-lg shadow-2xl border border-white/10"
+                            />
+                            <div className="absolute bottom-8 left-0 right-0 text-center">
+                                <span className="glass-card px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest text-white">
+                                    {selectedImage.alt}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </main>
         </div>
     );

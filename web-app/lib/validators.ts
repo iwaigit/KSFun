@@ -17,6 +17,6 @@ export const orderSchema = z.object({
 
 // Esquema para validación de imágenes
 export const imageSchema = z.object({
-    size: z.number().max(5 * 1024 * 1024, { message: "La imagen no debe superar los 5MB" }), // Validación pre-compresión
+    size: z.number().max(50 * 1024 * 1024, { message: "La imagen es demasiado pesada (máx 50MB antes de comprimir)" }),
     type: z.string().regex(/^image\/(jpeg|png|webp)$/, { message: "Solo se permiten formatos JPG, PNG o WEBP" }),
 });
