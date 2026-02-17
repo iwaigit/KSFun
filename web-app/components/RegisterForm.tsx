@@ -5,6 +5,7 @@ import { useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useAuth } from '@/context/AuthContext';
 import { registrationSchema } from '@/lib/validators';
+import { translateError } from '@/lib/errorMessages';
 
 export type FormMode = 'register' | 'login' | 'forgot';
 
@@ -75,7 +76,9 @@ export default function RegisterForm({ initialMode = 'register', onClose }: Regi
             setStatus('success');
         } catch (err: any) {
             setStatus('error');
-            setErrorMsg(err.message || 'Error en el proceso.');
+            // Translate technical errors to user-friendly messages
+            const userMessage = translateError(err.message || 'Error desconocido');
+            setErrorMsg(userMessage);
         }
     };
 
