@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Contacto</title>
+    <!-- Incluye Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Fuente Inter para una mejor legibilidad */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Color de fondo rosado pastel muy tenue */
+            background-color: #FCE4EC; /* Un tono de rosa pastel */
+        }
+        /* Estilos personalizados para el mensaje de estado */
+        .message-box {
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        .message-box.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .message-box.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6fb;
+        }
+        /* Estilo para el spinner de carga */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #3b82f6;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
+        <!-- Logo en la cabecera y centrado -->
+        <div class="flex justify-center mb-6">
+            <img src="https://i.postimg.cc/QCqqBGn9/KS-Stickers.png" alt="Logo Karla Spice Fun" class="max-w-[150px] h-auto rounded-lg">
+        </div>
+
+        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Quien eres y dime tus deseos...</h2>
+        <form id="contactForm" class="space-y-6">
+            <!-- Campo Nombre -->
+            <div>
+                <label for="nombre" class="block text-xs font-bold text-gray-700 mb-1">Nombre <span class="text-red-500">*</span></label>
+                <input type="text" id="nombre" name="nombre" required maxlength="40"
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm">
+                <p id="nombreCharCount" class="text-xs text-gray-500 mt-1 text-right">0/40 caracteres</p>
+            </div>
+
+            <!-- Campo Prefijo Móvil y Teléfono -->
+            <div>
+                <label for="prefijo" class="block text-xs font-bold text-gray-700 mb-1">Teléfono <span class="text-red-500">*</span></label>
+                <div class="flex mt-1">
+                    <select id="prefijo" name="prefijo" required
+                            class="block px-4 py-2 border border-gray-300 rounded-l-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm">
+                        <option value="" disabled selected>Prefijo</option>
+                        <option value="414">414</option>
+                        <option value="424">424</option>
+                        <option value="412">412</option>
+                        <option value="422">422</option>
+                        <option value="416">416</option>
+                        <option value="426">426</option>
+                    </select>
+                    <input type="text" id="telefono" name="telefono" required maxlength="7"
+                           class="block w-full px-4 py-2 border border-gray-300 rounded-r-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
+                           pattern="[0-9]{7}" title="Por favor, introduce 7 dígitos numéricos.">
+                </div>
+                <p class="text-xs text-gray-500 mt-1 text-right">Máximo 7 dígitos (ej: 1234567).</p>
+            </div>
+
+            <!-- Campo Correo Electrónico -->
+            <div>
+                <label for="email" class="block text-xs font-bold text-gray-700 mb-1">Correo Electrónico <span class="text-red-500">*</span></label>
+                <input type="email" id="email" name="email" required
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm">
+                <p class="text-xs text-gray-500 mt-1">Ejemplo: tu.correo@dominio.com</p>
+                <p id="emailError" class="text-red-600 text-xs mt-1 hidden">Por favor, introduce un correo electrónico válido (ej: tu.correo@dominio.com).</p>
+            </div>
+
+            <!-- Campo Edad (Fecha de Nacimiento) -->
+            <div>
+                <label for="edad" class="block text-xs font-bold text-gray-700 mb-1">Fecha de Nacimiento <span class="text-red-500">*</span></label>
+                <input type="text" id="edad" name="edad" required placeholder="dd/mm/aaaa"
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm">
+                <p class="text-xs text-gray-500 mt-1">Formato: dd/mm/aaaa</p>
+                <p id="edadError" class="text-red-600 text-xs mt-1 hidden">Por favor, introduce una fecha válida en formato dd/mm/aaaa.</p>
+                <p id="edadMinError" class="text-red-600 text-xs mt-1 hidden">Debes tener al menos 21 años para registrarte.</p>
+            </div>
+
+            <!-- Campo oculto para la edad del usuario -->
+            <input type="hidden" id="edad_usuario" name="edad_usuario">
+
+            <!-- Campo Intereses (Radio buttons) -->
+            <div>
+                <label class="block text-xs font-bold text-gray-700 mb-2">Intereses</label>
+                <div class="mt-1 space-y-2">
+                    <div class="flex items-center">
+                        <input id="interes-presencial-hotel" name="intereses" type="radio" value="Presencial Hotel" required
+                               class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded-full">
+                        <label for="interes-presencial-hotel" class="ml-2 block text-sm text-gray-900">Presencial Hotel</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input id="interes-presencial-domicilio" name="intereses" type="radio" value="Presencial Domicilio"
+                               class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded-full">
+                        <label for="interes-presencial-domicilio" class="ml-2 block text-sm text-gray-900">Presencial Domicilio</label>
+                    </div>
+                    <p class="text-xs text-gray-500 ml-6 -mt-1">*(Esta opción posee condiciones especiales)</p>
+                    <div class="flex items-center">
+                        <input id="interes-virtual" name="intereses" type="radio" value="Virtual (Fotos / Videos / SexyChat / a Live)"
+                               class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded-full">
+                        <label for="interes-virtual" class="ml-2 block text-sm text-gray-900">Virtual (Fotos / Videos / SexyChat / a Live)</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nueva sección para la función de Gemini API -->
+            <div class="mt-6 pt-4 border-t border-gray-200">
+                <button type="button" id="generateMessageBtn"
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transition duration-150 ease-in-out">
+                    <span id="generateMessageText">? Comenta o sugiere me!! ?</span>
+                    <span id="generateMessageSpinner" class="spinner hidden"></span>
+                </button>
+                <div id="generatedMessageContainer" class="mt-4 hidden">
+                    <label for="generatedMessage" class="block text-xs font-bold text-gray-700 mb-1">Mensaje Sugerido:</label>
+                    <textarea id="generatedMessage" rows="4" readonly
+                              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50 text-gray-800 text-sm resize-none"></textarea>
+                    <button type="button" id="copyMessageBtn"
+                            class="mt-2 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-150 ease-in-out">
+                        Copiar Mensaje
+                    </button>
+                </div>
+            </div>
+
+            <!-- Campo Comentario Adicional -->
+            <div>
+                <label for="comentarioAdicional" class="block text-xs font-bold text-gray-700 mb-1">Comentario Adicional</label>
+                <textarea id="comentarioAdicional" name="comentarioAdicional" maxlength="600" rows="4"
+                          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm resize-none"></textarea>
+                <p id="comentarioCharCount" class="text-xs text-gray-500 mt-1 text-right">0/600 caracteres</p>
+            </div>
+
+            <!-- Botón de Envío -->
+            <div>
+                <button type="submit"
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
+                    Enviar
+                </button>
+            </div>
+        </form>
+
+        <!-- Contenedor para mensajes de estado -->
+        <div id="messageContainer" class="message-box hidden"></div>
+
+        <!-- Pie de página con logo y eslogan -->
+        <div class="mt-8 pt-4 border-t border-gray-200 flex items-center justify-center space-x-2">
+            <img src="https://i.postimg.cc/RZMnCpt8/MINI-IWAI-LOGO.png" alt="Logo IWAI" class="max-w-[40px] h-auto">
+            <p class="text-xs text-gray-500 italic">"Inteligencia que automatiza, innovación que transforma."</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('contactForm');
+            const emailInput = document.getElementById('email');
+            const emailError = document.getElementById('emailError');
+            const messageContainer = document.getElementById('messageContainer');
+
+            // Referencias para el campo Nombre y su contador
+            const nombreInput = document.getElementById('nombre');
+            const nombreCharCount = document.getElementById('nombreCharCount');
+            const maxNombreLength = 40;
+
+            // Referencias para el campo Teléfono y Prefijo
+            const prefijoInput = document.getElementById('prefijo');
+            const telefonoInput = document.getElementById('telefono');
+
+            // Referencias para el campo Edad (Fecha de Nacimiento) y el nuevo campo oculto
+            const edadInput = document.getElementById('edad');
+            const edadError = document.getElementById('edadError');
+            const edadMinError = document.getElementById('edadMinError'); // Nuevo: mensaje de error para edad mínima
+            const edadUsuarioHiddenInput = document.getElementById('edad_usuario');
+
+            // Referencias para la nueva función de Gemini API
+            const generateMessageBtn = document.getElementById('generateMessageBtn');
+            const generateMessageText = document.getElementById('generateMessageText');
+            const generateMessageSpinner = document.getElementById('generateMessageSpinner');
+            const generatedMessageContainer = document.getElementById('generatedMessageContainer');
+            const generatedMessage = document.getElementById('generatedMessage');
+            const copyMessageBtn = document.getElementById('copyMessageBtn');
+
+            // Nuevas referencias para el campo Comentario Adicional y su contador
+            const comentarioAdicionalInput = document.getElementById('comentarioAdicional');
+            const comentarioCharCount = document.getElementById('comentarioCharCount');
+            const maxComentarioLength = 600;
+
+            // Función para actualizar el contador de caracteres del nombre
+            function updateNombreCharCount() {
+                const currentLength = nombreInput.value.length;
+                nombreCharCount.textContent = `${currentLength}/${maxNombreLength} caracteres`;
+            }
+
+            // Función para actualizar el contador de caracteres del comentario adicional
+            function updateComentarioCharCount() {
+                const currentLength = comentarioAdicionalInput.value.length;
+                comentarioCharCount.textContent = `${currentLength}/${maxComentarioLength} caracteres`;
+            }
+
+            // Función para calcular la edad
+            function calculateAge(dobString) {
+                const parts = dobString.split('/');
+                if (parts.length !== 3) return null; // Formato incorrecto
+
+                const day = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10) - 1; // Meses son 0-indexados en JS
+                const year = parseInt(parts[2], 10);
+
+                const birthDate = new Date(year, month, day);
+                const today = new Date();
+
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const m = today.getMonth() - birthDate.getMonth();
+
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                return age;
+            }
+
+            // Inicializar contadores al cargar la página
+            updateNombreCharCount();
+            updateComentarioCharCount();
+
+            // Escuchar el evento 'input' para actualizar el contador del nombre en tiempo real
+            nombreInput.addEventListener('input', updateNombreCharCount);
+
+            // Escuchar el evento 'input' para actualizar el contador del comentario adicional en tiempo real
+            comentarioAdicionalInput.addEventListener('input', updateComentarioCharCount);
+
+            // Función para mostrar mensajes al usuario
+            function showMessage(message, type) {
+                messageContainer.textContent = message;
+                messageContainer.className = `message-box ${type}`;
+                messageContainer.classList.remove('hidden');
+                setTimeout(() => {
+                    messageContainer.classList.add('hidden');
+                }, 5000);
+            }
+
+            // Validación de correo electrónico en tiempo real
+            emailInput.addEventListener('input', () => {
+                if (emailInput.validity.valid) {
+                    emailError.classList.add('hidden');
+                } else {
+                    emailError.classList.remove('hidden');
+                }
+            });
+
+            // Validación de formato de fecha dd/mm/aaaa y edad mínima para el campo Edad
+            edadInput.addEventListener('input', () => {
+                const datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
+                edadError.classList.add('hidden'); // Ocultar errores previos
+                edadMinError.classList.add('hidden');
+
+                if (datePattern.test(edadInput.value)) {
+                    const age = calculateAge(edadInput.value);
+                    if (age !== null && age >= 21) {
+                        edadError.classList.add('hidden');
+                        edadMinError.classList.add('hidden');
+                    } else if (age !== null && age < 21) {
+                        edadMinError.classList.remove('hidden');
+                    } else {
+                        edadError.classList.remove('hidden');
+                    }
+                } else {
+                    edadError.classList.remove('hidden');
+                }
+            });
+
+            // Función para copiar el mensaje generado al portapapeles
+            copyMessageBtn.addEventListener('click', () => {
+                generatedMessage.select();
+                document.execCommand('copy');
+                showMessage('¡Mensaje copiado al portapapeles!', 'success');
+            });
+
+            // Lógica para la generación de mensajes con Gemini API
+            generateMessageBtn.addEventListener('click', async () => {
+                const selectedInterest = document.querySelector('input[name="intereses"]:checked');
+
+                if (!selectedInterest) {
+                    showMessage('Por favor, selecciona un interés primero.', 'error');
+                    return;
+                }
+
+                const interestValue = selectedInterest.value;
+                let prompt = '';
+
+                // Definir el prompt basado en el interés seleccionado
+                switch (interestValue) {
+                    case 'Presencial Hotel':
+                        prompt = 'Genera un mensaje corto, seductor y discreto para una invitación a un encuentro presencial en un hotel, enfocado en el placer y la intimidad. No uses lenguaje explícito.';
+                        break;
+                    case 'Presencial Domicilio':
+                        prompt = 'Crea un mensaje breve y atractivo para una invitación a un encuentro presencial a domicilio, mencionando sutilmente que hay "condiciones especiales" y que se discutirán en privado. No uses lenguaje explícito.';
+                        break;
+                    case 'Virtual (Fotos / Videos / SexyChat / a Live)':
+                        prompt = 'Redacta un mensaje conciso y excitante para una invitación a una interacción virtual (fotos, videos, sexychat, live), destacando la diversión, la conexión online y la fantasía. No uses lenguaje explícito.';
+                        break;
+                    default:
+                        prompt = 'Genera un mensaje corto y atractivo para una invitación general, destacando la emoción y la conexión.';
+                }
+
+                // Mostrar spinner y deshabilitar botón
+                generateMessageText.classList.add('hidden');
+                generateMessageSpinner.classList.remove('hidden');
+                generateMessageBtn.disabled = true;
+                generatedMessage.value = ''; // Limpiar mensaje anterior
+                generatedMessageContainer.classList.add('hidden'); // Ocultar el contenedor del mensaje
+
+                try {
+                    let chatHistory = [];
+                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                    const payload = { contents: chatHistory };
+                    const apiKey = ""; // La clave API será proporcionada por el entorno Canvas
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        generatedMessage.value = text;
+                        generatedMessageContainer.classList.remove('hidden'); // Mostrar el contenedor del mensaje
+                    } else {
+                        showMessage('No se pudo generar el mensaje. Inténtalo de nuevo.', 'error');
+                        console.error('Respuesta inesperada de la API de Gemini:', result);
+                    }
+                } catch (error) {
+                    console.error('Error al llamar a la API de Gemini:', error);
+                    showMessage(`Error al generar mensaje: ${error.message}`, 'error');
+                } finally {
+                    // Ocultar spinner y habilitar botón
+                    generateMessageText.classList.remove('hidden');
+                    generateMessageSpinner.classList.add('hidden');
+                    generateMessageBtn.disabled = false;
+                }
+            });
+
+
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                // Validar correo electrónico
+                if (!emailInput.validity.valid) {
+                    emailError.classList.remove('hidden');
+                    showMessage('Por favor, corrige los errores en el formulario.', 'error');
+                    return;
+                }
+
+                // Validar formato de fecha y edad mínima
+                const datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
+                if (!datePattern.test(edadInput.value)) {
+                    edadError.classList.remove('hidden');
+                    showMessage('Por favor, introduce una fecha válida en formato dd/mm/aaaa.', 'error');
+                    return;
+                }
+
+                const age = calculateAge(edadInput.value);
+                if (age === null || age < 21) {
+                    edadMinError.classList.remove('hidden');
+                    showMessage('Debes tener al menos 21 años para registrarte.', 'error');
+                    return;
+                }
+
+                // Asignar el valor de la edad calculada al campo oculto
+                edadUsuarioHiddenInput.value = age.toString(); // Convertir la edad a string
+
+                // Recopilar los datos del formulario
+                const formData = new FormData(form);
+                const data = {};
+                for (let [key, value] of formData.entries()) {
+                    data[key] = value;
+                }
+
+                // Concatenar prefijo y teléfono para el envío
+                data.telefonoCompleto = `${prefijoInput.value}${telefonoInput.value}`;
+                // Puedes decidir si quieres eliminar data.prefijo o mantenerlo si el webhook lo necesita.
+                // delete data.prefijo;
+
+                // URL del webhook
+                const webhookUrl = 'https://iwai-n8n-n8n.wuw7hm.easypanel.host/webhook-test/formulario';
+
+                try {
+                    const response = await fetch(webhookUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    if (response.ok) {
+                        showMessage('¡Formulario enviado con éxito!', 'success');
+                        form.reset();
+                        emailError.classList.add('hidden');
+                        edadError.classList.add('hidden'); // Ocultar error de edad al resetear
+                        edadMinError.classList.add('hidden'); // Ocultar error de edad mínima
+                        updateNombreCharCount(); // Reinicia el contador de caracteres del nombre
+                        updateComentarioCharCount(); // Reinicia el contador de caracteres del comentario
+                        generatedMessageContainer.classList.add('hidden'); // Ocultar el mensaje generado
+                        generatedMessage.value = ''; // Limpiar el textarea del mensaje generado
+                    } else {
+                        const errorText = await response.text();
+                        console.error('Error al enviar el formulario:', response.status, errorText);
+                        showMessage(`Error al enviar el formulario: ${response.status} - ${errorText || 'Respuesta inesperada'}`, 'error');
+                    }
+                } catch (error) {
+                    console.error('Error en la solicitud fetch:', error);
+                    showMessage(`Error de conexión: ${error.message}`, 'error');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

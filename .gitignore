@@ -1,0 +1,24 @@
+# Large files
+*.psd
+*.zip
+*.tar.gz
+
+# Node
+node_modules/
+.npm
+npm-debug.log
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Environment variables
+.env
+.env.local

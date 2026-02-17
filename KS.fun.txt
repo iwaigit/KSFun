@@ -1,0 +1,632 @@
+
+
+PROMPT
+-------------------------------------------------------------------
+Prompt Profesional: Desarrollo de Plataforma Web/Móvil de Contenido y E-commerce para Adultos - "KarlaSpice.fun"
+Objetivo General:
+Se requiere la conceptualización y especificación detallada para el desarrollo de una plataforma digital integral, diseñada para la venta de contenido fotográfico y de video, así como productos de e-commerce (lencería femenina y juguetes eróticos), bajo la marca "Karla Spice". La plataforma debe ser altamente atractiva para un público adulto y facilitar el contacto directo con Karla Spice.
+
+Público Objetivo:
+Adultos mayores de 21 años interesados en contenido exclusivo y productos relacionados con la lencería y juguetes eróticos.
+
+Identidad de la Marca y Contacto:
+
+Dominio Principal: karlaspice.fun
+
+Correo Electrónico de Contacto: karlaspicefun@gmail.com
+
+Número de Teléfono de Contacto: +5804129392991
+
+Redes Sociales:
+
+Telegram: @karlaspice
+
+WhatsApp: wa.me/+584129392091
+
+Instagram: @karlaspice
+
+Estética y Diseño (UX/UI):
+La interfaz de usuario (UI) debe ser visualmente impactante y adherirse a una estética vibrante y moderna.
+
+Paleta de Colores: Tonos pastel dominantes, incluyendo amarillo tenue, azul celeste, verde agua, fucsia y una variedad de colores suaves.
+
+Estilo Visual: Inspiración clara en el arte Pop Art, con elementos gráficos que transmitan energía, diversión y un toque sofisticado.
+
+Experiencia de Usuario (UX): La navegación debe ser intuitiva, fluida y altamente atractiva, garantizando una experiencia inmersiva y placentera para el usuario adulto.
+
+Estructura y Funcionalidad Clave:
+
+Regulación de Entrada (Verificación de Edad - Mayores de 21 Años):
+
+Mecanismo: Al acceder al dominio, el usuario será redirigido a una página de verificación de edad obligatoria.
+
+Input Requerido: Solicitud de la fecha de nacimiento del usuario en formato dd/mm/aa.
+
+Lógica de Verificación: El sistema debe calcular la edad del usuario basándose en la fecha actual y la fecha de nacimiento proporcionada.
+
+Condición de Acceso: Solo los usuarios que demuestren ser mayores de 21 años podrán proceder al Home de la página. En caso contrario, se mostrará un mensaje de restricción claro y conciso.
+
+Página Principal (Home):
+
+Diseño Visual: Una fotografía de alta calidad de Karla Spice debe servir como fondo principal, estableciendo el tono y la personalidad de la marca.
+
+Elementos Funcionales:
+
+Opción de Login: Un enlace o botón destacado para el inicio de sesión de usuarios registrados.
+
+Menú de Navegación Principal: Acceso claro a las subpáginas principales de la plataforma.
+
+Subpáginas Detalladas:
+
+a. Galería Fotográfica de Karla Spice:
+
+Contenido: Mínimo de 12 fotografías de Karla Spice.
+
+Presentación Inicial: Las imágenes se mostrarán como miniaturas (thumbnails) en un diseño de cuadrícula atractivo.
+
+Interacción: Al hacer clic en cualquier miniatura, la imagen correspondiente debe expandirse a su tamaño completo en una vista de lightbox o modal, permitiendo una experiencia de visualización inmersiva.
+
+b. E-commerce: "Ks Shop for you" (Lencería Femenina):
+
+Tipo: Plataforma de comercio electrónico completa, dedicada a la venta de lencería femenina.
+
+Detalle de Productos: Cada producto debe incluir:
+
+Múltiples fotografías de alta resolución desde diferentes ángulos.
+
+Precio claramente visible.
+
+Opciones de tallas disponibles.
+
+Descripción detallada del modelo y materiales.
+
+Funcionalidades de E-commerce:
+
+Carrito de Compras: Funcionalidad completa para añadir, eliminar y ajustar cantidades de productos.
+
+Proceso de Checkout: Un flujo de pago simplificado y seguro (la implementación de pasarelas de pago reales no es parte de este prompt inicial, pero el flujo debe estar diseñado).
+
+Gestión de Productos: (Implícito) Capacidad para listar y gestionar productos.
+
+c. E-commerce: "KsToys for You" (Juguetes Eróticos):
+
+Tipo: Plataforma de comercio electrónico similar a "Ks Shop for you", enfocada en juguetes eróticos.
+
+Detalle de Productos: Similar a la sección de lencería, incluyendo fotografías, precios y descripciones.
+
+Funcionalidades de E-commerce: Carrito de compras y proceso de checkout idénticos a la sección de lencería.
+
+d. Formas de Contacto:
+
+Información Esencial: Mostrar claramente el correo electrónico (karlaspicefun@gmail.com) y el número de teléfono (+5804129392991).
+
+Enlaces Directos a Redes Sociales: Botones o iconos que enlacen directamente a Telegram (@karlaspice), WhatsApp (wa.me/+584129392091) e Instagram (@karlaspice).
+
+Formulario de Contacto (Opcional pero Recomendado): Un formulario sencillo para que los usuarios puedan enviar mensajes directamente desde la página.
+
+Consideraciones Técnicas y de Rendimiento:
+
+Diseño Responsive: La plataforma debe ser completamente responsive, garantizando una experiencia de usuario óptima y consistente en todos los dispositivos (escritorio, tabletas y teléfonos móviles), adaptándose fluidamente a diferentes tamaños de pantalla y orientaciones.
+
+Optimización: Priorizar la optimización de la carga de la página y el rendimiento general para asegurar una experiencia rápida y sin interrupciones.
+
+Accesibilidad: Considerar principios básicos de accesibilidad web para garantizar que la plataforma sea usable por la mayor cantidad de usuarios posible.
+
+
+
+PAGINA WEB
+-------------------------------------------------------------------
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karla Spice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Pop Art Pastels -->
+    <!-- Application Structure Plan: Se ha diseñado una Single-Page Application (SPA) para una experiencia de usuario fluida y sin recargas. La estructura se basa en secciones que se muestran u ocultan con JavaScript. El flujo comienza con una barrera de edad obligatoria. Una vez superada, el usuario accede al 'Home' y puede navegar a través de un encabezado fijo a las diferentes secciones: Galería, dos tiendas de E-commerce y Contacto. Se utilizan modales para ampliar imágenes, ver detalles de productos y gestionar el carrito de compras, manteniendo al usuario en un entorno cohesivo. Esta arquitectura fue elegida por su modernidad y eficiencia, ideal para una marca personal que busca retener la atención del usuario. -->
+    <!-- Visualization & Content Choices: Report Info -> Verificación de edad. Goal -> Restringir acceso. Viz/Method -> Modal a pantalla completa con inputs de fecha. Interaction -> El usuario introduce su fecha de nacimiento, JS valida si es >21 años. Justification -> Cumple el requisito legal de forma directa. Library/Method -> Vanilla JS. | Report Info -> Galería de fotos. Goal -> Exhibir contenido visual. Viz/Method -> Cuadrícula de miniaturas. Interaction -> Click en miniatura abre un modal 'lightbox' con la imagen ampliada. Justification -> Patrón de UX estándar y efectivo para galerías. Library/Method -> HTML/CSS/JS. | Report Info -> Tiendas E-commerce. Goal -> Vender productos. Viz/Method -> Cuadrícula de tarjetas de producto. Interaction -> Click en producto abre modal con detalles y botón 'Añadir al Carrito'. El estado del carrito se gestiona con JS y se visualiza en un modal propio. Justification -> Flujo de compra intuitivo y separado que no interrumpe la navegación. Library/Method -> Vanilla JS para la lógica del carrito. | Report Info -> Contacto. Goal -> Facilitar la comunicación. Viz/Method -> Sección de texto con enlaces directos. Interaction -> Enlaces 'mailto:', 'tel:' y a redes sociales. Justification -> Proporciona acceso directo y rápido a los canales de contacto. Library/Method -> HTML. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        :root {
+            --bg-main: #FFF8E1; /* Amarillo Pastel */
+            --primary: #FF80AB; /* Fucsia Pastel */
+            --secondary: #A2D2FF; /* Azul Celeste Pastel */
+            --accent: #BDE0FE; /* Verde Agua/Azul claro Pastel */
+            --text-dark: #333333;
+            --text-light: #FFFFFF;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+        }
+        .bg-primary { background-color: var(--primary); }
+        .text-primary { color: var(--primary); }
+        .border-primary { border-color: var(--primary); }
+        .bg-secondary { background-color: var(--secondary); }
+        .bg-accent { background-color: var(--accent); }
+        .btn {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        .card-zoom {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-zoom:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+        section {
+            display: none;
+        }
+        section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Age Verification Modal -->
+    <div id="age-gate" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-10 text-center max-w-md w-full">
+            <h2 class="text-2xl md:text-3xl font-bold text-primary mb-2">Acceso Restringido</h2>
+            <p class="text-gray-600 mb-6">Debes tener al menos 21 años para entrar. Por favor, introduce tu fecha de nacimiento.</p>
+            <div class="flex justify-center space-x-2 mb-4">
+                <input type="number" id="dob-day" placeholder="DD" class="w-16 p-2 text-center border-2 border-gray-300 rounded-md focus:border-primary focus:ring-primary">
+                <input type="number" id="dob-month" placeholder="MM" class="w-16 p-2 text-center border-2 border-gray-300 rounded-md focus:border-primary focus:ring-primary">
+                <input type="number" id="dob-year" placeholder="AAAA" class="w-24 p-2 text-center border-2 border-gray-300 rounded-md focus:border-primary focus:ring-primary">
+            </div>
+            <p id="age-error" class="text-red-500 text-sm mb-4 h-5"></p>
+            <button id="verify-age-btn" class="w-full bg-primary text-white font-bold py-3 px-6 rounded-lg btn">Verificar Edad</button>
+            <p class="text-xs text-gray-400 mt-6">Al entrar, confirmas que tienes la edad legal para ver contenido para adultos en tu región y aceptas nuestros Términos y Condiciones.</p>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden initially) -->
+    <div id="main-content" class="hidden">
+        <!-- Header -->
+        <header class="bg-white/80 backdrop-blur-sm sticky top-0 z-40 shadow-md">
+            <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
+                <a href="#" class="h-10 flex items-center" onclick="showPage('home')">
+                    <img src="http://googleusercontent.com/file_content/2" alt="Karla Spice Logo" class="h-full w-auto">
+                </a>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#" class="nav-link" data-page="home" onclick="showPage('home')">Inicio</a>
+                    <a href="#" class="nav-link" data-page="gallery" onclick="showPage('gallery')">Galería</a>
+                    <a href="#" class="nav-link" data-page="shop-lingerie" onclick="showPage('shop-lingerie')">Ks Shop</a>
+                    <a href="#" class="nav-link" data-page="shop-toys" onclick="showPage('shop-toys')">KsToys</a>
+                    <a href="#" class="nav-link" data-page="contact" onclick="showPage('contact')">Contacto</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="hidden md:block bg-secondary text-white px-4 py-2 rounded-lg btn text-sm">Login</button>
+                    <button id="cart-btn" class="relative" onclick="showCartModal()">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                    <button id="mobile-menu-btn" class="md:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                    </button>
+                </div>
+            </nav>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white py-4">
+                <a href="#" class="block text-center py-2 text-gray-700 hover:bg-gray-100" onclick="showPage('home')">Inicio</a>
+                <a href="#" class="block text-center py-2 text-gray-700 hover:bg-gray-100" onclick="showPage('gallery')">Galería</a>
+                <a href="#" class="block text-center py-2 text-gray-700 hover:bg-gray-100" onclick="showPage('shop-lingerie')">Ks Shop</a>
+                <a href="#" class="block text-center py-2 text-gray-700 hover:bg-gray-100" onclick="showPage('shop-toys')">KsToys</a>
+                <a href="#" class="block text-center py-2 text-gray-700 hover:bg-gray-100" onclick="showPage('contact')">Contacto</a>
+                <div class="mt-4 flex justify-center">
+                    <button class="bg-secondary text-white px-6 py-2 rounded-lg btn">Login</button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Home Section -->
+            <section id="home" class="active">
+                <div class="h-[80vh] bg-cover bg-center bg-no-repeat flex items-center justify-center text-white" style="background-image: url('https://placehold.co/1920x1080/FF80AB/FFFFFF?text=Karla+Spice');">
+                    <div class="bg-black bg-opacity-50 p-10 rounded-xl text-center">
+                        <h1 class="text-5xl md:text-7xl font-bold mb-4">Bienvenido al mundo de Karla Spice</h1>
+                        <p class="text-xl md:text-2xl">Descubre un universo de sensualidad y diversión.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gallery Section -->
+            <section id="gallery" class="py-12 md:py-20">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-4xl font-bold text-center mb-10 text-primary">Galería Exclusiva</h2>
+                    <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Shop Lingerie Section -->
+            <section id="shop-lingerie" class="py-12 md:py-20 bg-accent/30">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-4xl font-bold text-center mb-2 text-primary">Ks Shop for you</h2>
+                    <p class="text-center text-gray-600 mb-10">Lencería que despierta tus sentidos.</p>
+                    <div id="lingerie-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Shop Toys Section -->
+            <section id="shop-toys" class="py-12 md:py-20">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-4xl font-bold text-center mb-2 text-primary">KsToys for You</h2>
+                    <p class="text-center text-gray-600 mb-10">Juguetes para explorar nuevas fronteras.</p>
+                    <div id="toys-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="py-12 md:py-20 bg-secondary/20">
+                <div class="container mx-auto px-4 text-center">
+                    <h2 class="text-4xl font-bold mb-8 text-primary">Contacta Conmigo</h2>
+                    <div class="max-w-3xl mx-auto grid md:grid-cols-2 gap-8">
+                        <div class="bg-white p-8 rounded-xl shadow-lg">
+                            <h3 class="text-2xl font-semibold mb-4">Información Directa</h3>
+                            <p class="mb-2"><strong>Email:</strong> <a href="mailto:karlaspicefun@gmail.com" class="text-primary hover:underline">karlaspicefun@gmail.com</a></p>
+                            <p><strong>Teléfono:</strong> <a href="tel:+5804129392991" class="text-primary hover:underline">+58 0412-9392991</a></p>
+                        </div>
+                        <div class="bg-white p-8 rounded-xl shadow-lg">
+                            <h3 class="text-2xl font-semibold mb-4">Redes Sociales</h3>
+                            <div class="flex justify-center space-x-6">
+                                <a href="https://t.me/karlaspice" target="_blank" class="text-primary hover:opacity-75 transition-opacity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.84c-.18.18-.22.39-.22.58v.02c0 .22.04.42.12.6l-2.38 2.38c-.22-.08-.44-.12-.68-.12-.9 0-1.64.74-1.64 1.64s.74 1.64 1.64 1.64c.9 0 1.64-.74 1.64-1.64 0-.24-.04-.46-.12-.68l2.38-2.38c.18.08.38.12.58.12.9 0 1.64-.74 1.64-1.64s-.74-1.64-1.64-1.64zm-7.28 0c-.9 0-1.64.74-1.64 1.64s.74 1.64 1.64 1.64c.9 0 1.64-.74 1.64-1.64s-.74-1.64-1.64-1.64z"/></svg>
+                                    <span class="sr-only">Telegram</span>
+                                </a>
+                                <a href="https://wa.me/584129392091" target="_blank" class="text-primary hover:opacity-75 transition-opacity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.79.46 3.48 1.34 4.95L2.05 22l5.25-1.42c1.41.81 3.02 1.24 4.74 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zM12.04 20.15c-1.55 0-3.04-.42-4.32-1.18l-.31-.18-3.22.87.89-3.14-.2-.33c-.85-1.38-1.29-2.98-1.29-4.68 0-4.54 3.7-8.24 8.24-8.24 4.54 0 8.24 3.7 8.24 8.24s-3.7 8.24-8.24 8.24zm4.52-6.13c-.24-.12-1.44-.71-1.66-.79-.22-.08-.38-.12-.54.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2s-1.4-1.38-1.56-1.62c-.16-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42s-.54-1.29-.74-1.77c-.2-.48-.4-.41-.54-.41h-.47c-.16 0-.42.06-.63.3s-.85.83-1.04 2.02c-.18 1.19.87 2.34 1 2.5.12.16 1.75 2.67 4.24 3.75 2.49 1.08 2.49.72 2.94.69.45-.03 1.44-.59 1.64-.15.2.44.2 1.29.12 1.41-.08.12-.3.18-.54.06z"/></svg>
+                                    <span class="sr-only">WhatsApp</span>
+                                </a>
+                                <a href="https://instagram.com/karlaspice" target="_blank" class="text-primary hover:opacity-75 transition-opacity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.74 2 8.33 2.02 7.25 2.07c-1.09.05-1.84.23-2.49.47-.65.25-1.23.58-1.77 1.14-.54.55-.89 1.12-1.13 1.77-.24.65-.42 1.4-.47 2.49C2.02 8.33 2 8.74 2 12s.02 3.67.07 4.75c.05 1.09.23 1.84.47 2.49.25.65.58 1.23 1.14 1.77.55.54 1.12.89 1.77 1.13.65.24 1.4.42 2.49.47 1.08.05 1.49.07 4.75.07s3.67-.02 4.75-.07c1.09-.05 1.84-.23 2.49-.47.65-.25 1.23-.58 1.77-1.13.54-.55.89-1.12 1.13-1.77.24-.65.42-1.4.47-2.49.05-1.08.07-1.49.07-4.75s-.02-3.67-.07-4.75c-.05-1.09-.23-1.84-.47-2.49-.25-.65-.58-1.23-1.13-1.77-.55-.54-1.12-.89-1.77-1.14-.65-.24-1.4-.42-2.49-.47C15.67 2.02 15.26 2 12 2zm0 1.8c3.2 0 3.58.01 4.84.07.97.04 1.5.2 1.87.33.46.17.78.39 1.15.75.36.37.58.69.75 1.15.13.37.29.9.33 1.87.06 1.26.07 1.64.07 4.84s-.01 3.58-.07 4.84c-.04.97-.2 1.5-.33 1.87-.17.46-.39.78-.75 1.15-.37.36-.69.58-1.15.75-.37.13-.9.29-1.87.33-1.26.06-1.64.07-4.84.07s-3.58-.01-4.84-.07c-.97-.04-1.5-.2-1.87-.33-.46-.17-.78-.39-1.15-.75-.36-.37-.58-.69-.75-1.15-.13-.37-.29-.9-.33-1.87-.06-1.26-.07-1.64-.07-4.84s.01-3.58.07-4.84c.04-.97.2-1.5.33-1.87.17-.46.39-.78.75-1.15.37-.36.69-.58 1.15-.75.37-.13.9-.29 1.87-.33C8.42 3.81 8.8 3.8 12 3.8zm0 3.35c-2.42 0-4.38 1.96-4.38 4.38s1.96 4.38 4.38 4.38 4.38-1.96 4.38-4.38-1.96-4.38-4.38-4.38zm0 7.16c-1.54 0-2.78-1.24-2.78-2.78s1.24-2.78 2.78-2.78 2.78 1.24 2.78 2.78-1.24 2.78-2.78 2.78zm4.97-7.26c-.78 0-1.41.63-1.41 1.41s.63 1.41 1.41 1.41 1.41-.63 1.41-1.41-.63-1.41-1.41-1.41z"/></svg>
+                                    <span class="sr-only">Instagram</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Image Lightbox Modal -->
+    <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden items-center justify-center p-4">
+        <img id="modal-img" src="" class="max-w-full max-h-full object-contain rounded-lg">
+        <button onclick="closeModal('image-modal')" class="absolute top-4 right-4 text-white text-4xl">&times;</button>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col md:flex-row">
+            <div class="md:w-1/2 p-4">
+                <img id="product-modal-img" src="" class="w-full h-full object-cover rounded-lg">
+            </div>
+            <div class="md:w-1/2 p-6 flex flex-col">
+                <div class="flex-grow overflow-y-auto">
+                    <h3 id="product-modal-name" class="text-3xl font-bold text-primary mb-2"></h3>
+                    <p id="product-modal-price" class="text-2xl text-gray-800 mb-4"></p>
+                    <p id="product-modal-desc" class="text-gray-600 mb-4"></p>
+                    <div id="product-modal-sizes" class="mb-4">
+                        <label class="font-semibold text-gray-700">Talla:</label>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <!-- Size buttons will be injected here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-auto pt-4">
+                    <button id="add-to-cart-btn" class="w-full bg-primary text-white font-bold py-3 rounded-lg btn">Añadir al Carrito</button>
+                    <button onclick="closeModal('product-modal')" class="w-full mt-2 text-gray-500 py-2">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shopping Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col">
+            <div class="p-6 border-b">
+                <h3 class="text-2xl font-bold text-primary">Tu Carrito de Compras</h3>
+            </div>
+            <div id="cart-items" class="p-6 flex-grow overflow-y-auto">
+                <!-- Cart items will be injected here -->
+            </div>
+            <div class="p-6 border-t bg-gray-50 rounded-b-2xl">
+                <div class="flex justify-between items-center text-xl font-bold mb-4">
+                    <span>Total:</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button class="w-full bg-primary text-white font-bold py-3 rounded-lg btn">Proceder al Pago</button>
+                <button onclick="closeModal('cart-modal')" class="w-full mt-2 text-gray-500 py-2">Seguir Comprando</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const mainContent = document.getElementById('main-content');
+            const ageGate = document.getElementById('age-gate');
+            const verifyAgeBtn = document.getElementById('verify-age-btn');
+            const ageError = document.getElementById('age-error');
+
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            let cart = [];
+            let products = [];
+
+            function init() {
+                checkSessionAgeVerification();
+                setupEventListeners();
+                loadData();
+                updateNavLinks('home');
+            }
+
+            function checkSessionAgeVerification() {
+                if (sessionStorage.getItem('isAgeVerified') === 'true') {
+                    ageGate.classList.add('hidden');
+                    mainContent.classList.remove('hidden');
+                }
+            }
+
+            function setupEventListeners() {
+                verifyAgeBtn.addEventListener('click', handleAgeVerification);
+                mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showPage(link.dataset.page);
+                    });
+                });
+            }
+
+            function handleAgeVerification() {
+                const day = parseInt(document.getElementById('dob-day').value);
+                const month = parseInt(document.getElementById('dob-month').value);
+                const year = parseInt(document.getElementById('dob-year').value);
+                ageError.textContent = '';
+
+                if (isNaN(day) || isNaN(month) || isNaN(year) || day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > new Date().getFullYear()) {
+                    ageError.textContent = 'Por favor, introduce una fecha válida.';
+                    return;
+                }
+
+                const birthDate = new Date(year, month - 1, day);
+                const today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const m = today.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+
+                if (age >= 21) {
+                    sessionStorage.setItem('isAgeVerified', 'true');
+                    ageGate.style.opacity = 0;
+                    ageGate.style.visibility = 'hidden';
+                    setTimeout(() => {
+                        ageGate.classList.add('hidden');
+                        mainContent.classList.remove('hidden');
+                    }, 300);
+                } else {
+                    ageError.textContent = 'Debes ser mayor de 21 años para acceder.';
+                }
+            }
+            
+            function loadData() {
+                const galleryGrid = document.getElementById('gallery-grid');
+                for (let i = 1; i <= 12; i++) {
+                    const imgUrl = `https://placehold.co/400x400/A2D2FF/FFFFFF?text=Foto+${i}`;
+                    const div = document.createElement('div');
+                    div.className = 'aspect-square bg-gray-200 rounded-lg overflow-hidden cursor-pointer card-zoom';
+                    div.innerHTML = `<img src="${imgUrl}" alt="Foto de galería ${i}" class="w-full h-full object-cover" onclick="openImageModal('${imgUrl}')">`;
+                    galleryGrid.appendChild(div);
+                }
+
+                const lingerieData = [
+                    { id: 1, name: 'Conjunto Pasión', price: 49.99, sizes: ['S', 'M', 'L'], img: 'https://placehold.co/600x600/FF80AB/FFFFFF?text=Lenceria+1' },
+                    { id: 2, name: 'Body Encaje', price: 59.99, sizes: ['S', 'M', 'L', 'XL'], img: 'https://placehold.co/600x600/FF80AB/FFFFFF?text=Lenceria+2' },
+                    { id: 3, name: 'Bralette Seducción', price: 35.50, sizes: ['S', 'M'], img: 'https://placehold.co/600x600/FF80AB/FFFFFF?text=Lenceria+3' },
+                    { id: 4, name: 'Kimono de Seda', price: 75.00, sizes: ['Unitalla'], img: 'https://placehold.co/600x600/FF80AB/FFFFFF?text=Lenceria+4' },
+                ];
+
+                const toysData = [
+                    { id: 5, name: 'Vibrador Clásico', price: 69.99, sizes: [], img: 'https://placehold.co/600x600/BDE0FE/333333?text=Juguete+1' },
+                    { id: 6, name: 'Anillo Vibrador', price: 29.99, sizes: [], img: 'https://placehold.co/600x600/BDE0FE/333333?text=Juguete+2' },
+                    { id: 7, name: 'Bolas Chinas', price: 45.00, sizes: [], img: 'https://placehold.co/600x600/BDE0FE/333333?text=Juguete+3' },
+                    { id: 8, name: 'Succionador de Clítoris', price: 89.90, sizes: [], img: 'https://placehold.co/600x600/BDE0FE/333333?text=Juguete+4' },
+                ];
+                
+                products = [...lingerieData, ...toysData];
+                
+                populateShop('lingerie-grid', lingerieData);
+                populateShop('toys-grid', toysData);
+            }
+
+            function populateShop(gridId, data) {
+                const grid = document.getElementById(gridId);
+                data.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-xl shadow-lg overflow-hidden card-zoom cursor-pointer';
+                    card.innerHTML = `
+                        <div class="aspect-w-1 aspect-h-1">
+                            <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-4 text-center">
+                            <h3 class="font-semibold text-lg">${item.name}</h3>
+                            <p class="text-primary font-bold text-xl mt-1">$${item.price.toFixed(2)}</p>
+                        </div>
+                    `;
+                    card.addEventListener('click', () => openProductModal(item.id));
+                    grid.appendChild(card);
+                });
+            }
+
+            window.showPage = (pageId) => {
+                document.querySelectorAll('main section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(pageId).classList.add('active');
+                updateNavLinks(pageId);
+                window.scrollTo(0, 0);
+                if(mobileMenu.classList.contains('hidden') === false) {
+                    mobileMenu.classList.add('hidden');
+                }
+            }
+
+            function updateNavLinks(activePage) {
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    if (link.dataset.page === activePage) {
+                        link.classList.add('active', 'text-primary');
+                    } else {
+                        link.classList.remove('active', 'text-primary');
+                    }
+                });
+            }
+
+            window.openImageModal = (src) => {
+                document.getElementById('modal-img').src = src;
+                const modal = document.getElementById('image-modal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+
+            window.openProductModal = (productId) => {
+                const product = products.find(p => p.id === productId);
+                if (!product) return;
+
+                document.getElementById('product-modal-img').src = product.img;
+                document.getElementById('product-modal-name').textContent = product.name;
+                document.getElementById('product-modal-price').textContent = `$${product.price.toFixed(2)}`;
+                document.getElementById('product-modal-desc').textContent = `Descubre el placer con ${product.name}. Un diseño único para momentos inolvidables. Fabricado con materiales de alta calidad, seguros para el cuerpo.`;
+                
+                const sizesContainer = document.getElementById('product-modal-sizes');
+                if (product.sizes.length > 0) {
+                    sizesContainer.classList.remove('hidden');
+                    const sizeButtons = sizesContainer.querySelector('div');
+                    sizeButtons.innerHTML = '';
+                    product.sizes.forEach(size => {
+                        const button = document.createElement('button');
+                        button.className = 'border-2 border-gray-300 rounded px-3 py-1 hover:border-primary focus:border-primary focus:bg-primary/20';
+                        button.textContent = size;
+                        sizeButtons.appendChild(button);
+                    });
+                } else {
+                    sizesContainer.classList.add('hidden');
+                }
+
+                document.getElementById('add-to-cart-btn').onclick = () => {
+                    addToCart(productId);
+                    closeModal('product-modal');
+                };
+
+                const modal = document.getElementById('product-modal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+
+            window.closeModal = (modalId) => {
+                document.getElementById(modalId).classList.add('hidden');
+                document.getElementById(modalId).classList.remove('flex');
+            }
+            
+            function addToCart(productId) {
+                const existingItem = cart.find(item => item.id === productId);
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    const product = products.find(p => p.id === productId);
+                    cart.push({ ...product, quantity: 1 });
+                }
+                updateCartUI();
+            }
+
+            function updateCartUI() {
+                const cartCount = document.getElementById('cart-count');
+                const cartItemsContainer = document.getElementById('cart-items');
+                const cartTotalEl = document.getElementById('cart-total');
+
+                let totalItems = 0;
+                let totalPrice = 0;
+                
+                cartItemsContainer.innerHTML = '';
+
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = '<p class="text-gray-500 text-center">Tu carrito está vacío.</p>';
+                } else {
+                    cart.forEach(item => {
+                        totalItems += item.quantity;
+                        totalPrice += item.price * item.quantity;
+                        const itemEl = document.createElement('div');
+                        itemEl.className = 'flex items-center justify-between py-3';
+                        itemEl.innerHTML = `
+                            <div class="flex items-center">
+                                <img src="${item.img}" class="w-16 h-16 object-cover rounded-md mr-4">
+                                <div>
+                                    <p class="font-semibold">${item.name}</p>
+                                    <p class="text-sm text-gray-500">$${item.price.toFixed(2)}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="mx-4">x ${item.quantity}</span>
+                            </div>
+                        `;
+                        cartItemsContainer.appendChild(itemEl);
+                    });
+                }
+
+                cartCount.textContent = totalItems;
+                cartTotalEl.textContent = `$${totalPrice.toFixed(2)}`;
+            }
+
+            window.showCartModal = () => {
+                const modal = document.getElementById('cart-modal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+
+            init();
+        });
+    </script>
+
+</body>
+</html>
