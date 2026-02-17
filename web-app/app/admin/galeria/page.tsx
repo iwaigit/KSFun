@@ -5,6 +5,8 @@ import { useQuery, useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import AdminSidebar from '@/components/AdminSidebar';
 import { Id } from '@/convex/_generated/dataModel';
+import { compressImage } from '@/lib/image';
+import { imageSchema } from '@/lib/validators';
 
 export default function GaleriaAdmin() {
     const photos = useQuery(api.gallery.listPhotos);
@@ -19,6 +21,13 @@ export default function GaleriaAdmin() {
         const file = e.target.files?.[0];
         if (!file) return;
 
+        // 1. Zod Validation
+        const validation = imageSchema.safeParse({ size: file.size, type: file.type });
+        if (!validation.success) {
+            alert(validation.error.errors[0].message);
+            return;
+        }
+
         if ((photos?.length || 0) >= 24) {
             alert("Has alcanzado el límite de 2 docenas (24 fotos) en la galería.");
             return;
@@ -26,11 +35,14 @@ export default function GaleriaAdmin() {
 
         setIsUploading(true);
         try {
+            // 2. Image Compression
+            const compressedFile = await compressImage(file);
+
             const postUrl = await generateUploadUrl();
             const result = await fetch(postUrl, {
                 method: "POST",
-                headers: { "Content-Type": file.type },
-                body: file,
+                headers: { "Content-Type": compressedFile.type },
+                body: compressedFile,
             });
             const { storageId } = await result.json();
 
