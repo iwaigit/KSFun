@@ -70,8 +70,8 @@ export const register = mutation({
     },
 });
 
-// Login de usuario
-export const login = query({
+// Login de usuario (changed to mutation to prevent auto-execution)
+export const login = mutation({
     args: {
         email: v.string(),
         password: v.string(),
@@ -79,14 +79,21 @@ export const login = query({
     handler: async (ctx, args) => {
         const user = await ctx.db
             .query("users")
-            .withIndex("by_email", (q) => q.eq("email", args.email))
+            .withIndex("by_email", (q) => q.eq("email", args.email.toLowerCase()))
             .unique();
 
-        if (!user || user.password !== args.password) {
+        if (!user || user.password !== args.password.toUpperCase()) {
             throw new Error("Credenciales inválidas.");
         }
 
-        // Note: Activity logging moved to a separate mutation since queries can't mutate
+        // Log activity
+        await ctx.db.insert("activityLogs", {
+            userId: user._id,
+            action: "user_login",
+            details: `Usuario ${user.email} inició sesión`,
+            timestamp: Date.now(),
+        });
+
         return { id: user._id, email: user.email, role: user.role, permissions: user.permissions };
     },
 });

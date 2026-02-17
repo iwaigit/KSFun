@@ -16,6 +16,7 @@ interface RegisterFormProps {
 export default function RegisterForm({ initialMode = 'register', onClose }: RegisterFormProps) {
     const { login: authLogin } = useAuth();
     const registerMutation = useMutation(api.users.register);
+    const loginMutation = useMutation(api.users.login);
     const [mode, setMode] = useState<FormMode>(initialMode);
     const [formData, setFormData] = useState({
         email: '',
@@ -25,10 +26,7 @@ export default function RegisterForm({ initialMode = 'register', onClose }: Regi
     });
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     const [errorMsg, setErrorMsg] = useState('');
-
-    // Preparamos la query de login pero solo la usaremos manualmente (en un handler real sería una mutación o algo similar, pero Convex login suele ser query/mutation balanceado)
-    // Para simplificar, usaremos el getUser por email y compararemos (en prod esto sería una action segura)
-    const userQuery = useQuery(api.users.login, mode === 'login' ? { email: formData.email, password: formData.password } : "skip" as any);
+    const [loginData, setLoginData] = useState<any>(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -64,8 +62,13 @@ export default function RegisterForm({ initialMode = 'register', onClose }: Regi
                 authLogin({ id: userId, email: validatedData.email, role: 'client' });
             } else {
                 // Login
-                if (!userQuery) throw new Error("Credenciales inválidas o servidor no responde.");
-                authLogin(userQuery);
+                const userData = await loginMutation({
+                    email: formData.email,
+                    password: formData.password
+                });
+
+                setLoginData(userData);
+                authLogin(userData);
             }
 
             localStorage.setItem('ks-age-verified', 'true');
@@ -94,9 +97,10 @@ export default function RegisterForm({ initialMode = 'register', onClose }: Regi
                             setMode('login');
                         } else {
                             // Redirect based on role
-                            if (userQuery?.role === 'admin') {
+                            const userRole = loginData?.role || 'client';
+                            if (userRole === 'admin') {
                                 window.location.href = '/admin';
-                            } else if (userQuery?.role === 'promoter') {
+                            } else if (userRole === 'promoter') {
                                 window.location.href = '/promoter';
                             } else {
                                 window.location.href = '/perfil';
