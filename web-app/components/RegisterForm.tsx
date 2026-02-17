@@ -79,6 +79,32 @@ export default function RegisterForm({ initialMode = 'register', onClose }: Regi
         }
     };
 
+    // Error state display
+    if (status === 'error') {
+        return (
+            <div className="glass-card p-10 text-center space-y-6 animate-in zoom-in duration-500">
+                <div className="text-6xl">⚠️</div>
+                <h2 className="text-3xl font-black uppercase italic text-red-400">
+                    Error en el Sistema
+                </h2>
+                <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+                    <p className="text-white/90 font-bold text-sm">
+                        {errorMsg}
+                    </p>
+                </div>
+                <button
+                    onClick={() => {
+                        setStatus('idle');
+                        setErrorMsg('');
+                    }}
+                    className="cyber-button w-full neon-border-cyan"
+                >
+                    ← Volver a Intentar
+                </button>
+            </div>
+        );
+    }
+
     if (status === 'success') {
         return (
             <div className="glass-card p-10 text-center space-y-6 animate-in zoom-in duration-500">
@@ -198,10 +224,6 @@ export default function RegisterForm({ initialMode = 'register', onClose }: Regi
                                 onChange={(e) => setFormData({ ...formData, password: e.target.value.toUpperCase() })}
                             />
                         </div>
-                    )}
-
-                    {status === 'error' && (
-                        <p className="text-xs font-bold text-red-400 uppercase tracking-tighter animate-pulse">{errorMsg}</p>
                     )}
 
                     <button
