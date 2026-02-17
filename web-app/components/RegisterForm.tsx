@@ -69,8 +69,6 @@ export default function RegisterForm({ initialMode = 'register', onClose }: Regi
     };
 
     if (status === 'success') {
-        const isStaff = userQuery?.role === 'admin' || userQuery?.role === 'promoter'; // Check query result or local state if context not ready
-
         return (
             <div className="glass-card p-10 text-center space-y-6 animate-in zoom-in duration-500">
                 <div className="text-6xl">{mode === 'forgot' ? '📧' : '✨'}</div>
@@ -88,16 +86,21 @@ export default function RegisterForm({ initialMode = 'register', onClose }: Regi
                             setMode('login');
                         } else {
                             // Redirect based on role
-                            if (isStaff) {
+                            if (userQuery?.role === 'admin') {
                                 window.location.href = '/admin';
+                            } else if (userQuery?.role === 'promoter') {
+                                window.location.href = '/promoter';
                             } else {
-                                window.location.href = '/perfil'; // Or reload for client state
+                                window.location.href = '/perfil';
                             }
                         }
                     }}
                     className="cyber-button w-full neon-border-pink"
                 >
-                    {mode === 'forgot' ? 'Volver al Login' : isStaff ? 'Ir al Dashboard' : 'Ir a Mi Perfil'}
+                    {mode === 'forgot' ? 'Volver al Login' :
+                        userQuery?.role === 'admin' ? 'Ir al Dashboard Admin' :
+                            userQuery?.role === 'promoter' ? 'Ir al Dashboard Promotor' :
+                                'Ir a Mi Perfil'}
                 </button>
             </div>
         );

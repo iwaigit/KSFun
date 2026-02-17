@@ -35,7 +35,7 @@ export const register = mutation({
             birthdate: args.birthdate,
             phone: args.phone,
             isVerified: false,
-            role: "user",
+            role: "client",
             createdAt: Date.now(),
         });
 
@@ -67,15 +67,63 @@ export const login = query({
             throw new Error("Credenciales inválidas.");
         }
 
-        // Log de Actividad: Login
+        // Note: Activity logging moved to a separate mutation since queries can't mutate
+        return { id: user._id, email: user.email, role: user.role, permissions: user.permissions };
+    },
+});
+
+// Log user login (called after successful login)
+export const logLogin = mutation({
+    args: { userId: v.id("users") },
+    handler: async (ctx, args) => {
+        const user = await ctx.db.get(args.userId);
+        if (!user) return;
+
         await ctx.db.insert("activityLogs", {
-            userId: user._id,
+            userId: args.userId,
             action: "user_login",
             details: `Usuario ${user.email} inició sesión`,
             timestamp: Date.now(),
         });
+    },
+});
 
-        return { id: user._id, email: user.email, role: user.role };
+// Grant role to user (Admin only)
+export const grantRole = mutation({
+    args: {
+        adminId: v.id("users"),
+        targetUserId: v.id("users"),
+        newRole: v.string(),
+        permissions: v.optional(v.array(v.string())),
+    },
+    handler: async (ctx, args) => {
+        // Verify admin permissions
+        const admin = await ctx.db.get(args.adminId);
+        if (!admin || admin.role !== "admin") {
+            throw new Error("Solo los administradores pueden otorgar roles.");
+        }
+
+        // Validate role
+        const validRoles = ["admin", "promoter", "vip", "client"];
+        if (!validRoles.includes(args.newRole)) {
+            throw new Error("Rol inválido.");
+        }
+
+        // Update user role
+        await ctx.db.patch(args.targetUserId, {
+            role: args.newRole,
+            permissions: args.permissions,
+        });
+
+        // Log activity
+        await ctx.db.insert("activityLogs", {
+            userId: args.targetUserId,
+            action: "role_granted",
+            details: `Admin ${admin.email} otorgó el rol '${args.newRole}' al usuario`,
+            timestamp: Date.now(),
+        });
+
+        return true;
     },
 });
 
