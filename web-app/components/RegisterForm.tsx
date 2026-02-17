@@ -61,6 +61,11 @@ export default function RegisterForm({ initialMode = 'register', onClose }: Regi
                 });
 
                 authLogin({ id: userId, email: validatedData.email, role: 'client' });
+
+                // Auto-redirect for new registrations
+                setTimeout(() => {
+                    window.location.href = '/perfil';
+                }, 1500);
             } else {
                 // Login
                 const userData = await loginMutation({
@@ -70,6 +75,17 @@ export default function RegisterForm({ initialMode = 'register', onClose }: Regi
 
                 setLoginData(userData);
                 authLogin(userData);
+
+                // Auto-redirect based on role
+                setTimeout(() => {
+                    if (userData.role === 'admin') {
+                        window.location.href = '/admin';
+                    } else if (userData.role === 'promoter') {
+                        window.location.href = '/promoter';
+                    } else {
+                        window.location.href = '/perfil';
+                    }
+                }, 1500);
             }
 
             localStorage.setItem('ks-age-verified', 'true');
