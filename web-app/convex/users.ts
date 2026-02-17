@@ -10,7 +10,17 @@ export const register = mutation({
         phone: v.string(),
     },
     handler: async (ctx, args) => {
-        // Validar edad mínima (18+)
+        // Check if email already exists
+        const existingUser = await ctx.db
+            .query("users")
+            .withIndex("by_email", (q) => q.eq("email", args.email.toLowerCase()))
+            .unique();
+
+        if (existingUser) {
+            throw new Error("Este correo electrónico ya está registrado. Por favor inicia sesión o usa otro correo.");
+        }
+
+        // Validate age (18+)
         const birthDate = new Date(args.birthdate);
         const today = new Date();
         let age = today.getFullYear() - birthDate.getFullYear();
@@ -20,17 +30,26 @@ export const register = mutation({
         }
 
         if (age < 18) {
-            throw new Error("Debes tener al menos 18 años.");
+            throw new Error("Debes tener al menos 18 años para registrarte.");
         }
 
-        // Validar formato de contraseña KSXXXXX
+        if (age > 120) {
+            throw new Error("Por favor verifica tu fecha de nacimiento.");
+        }
+
+        // Validate password format KSXXXXX
         if (!/^KS\d{5}$/.test(args.password)) {
-            throw new Error("La contraseña debe empezar por 'KS' seguido de 5 números.");
+            throw new Error("La contraseña debe ser KS seguido de 5 dígitos (ej: KS12345).");
         }
 
-        // Insertar usuario
+        // Validate phone format (international)
+        if (!/^\+\d{10,15}$/.test(args.phone)) {
+            throw new Error("El teléfono debe estar en formato internacional: +código_país + número (ej: +584121234567)");
+        }
+
+        // Insert user
         const userId = await ctx.db.insert("users", {
-            email: args.email,
+            email: args.email.toLowerCase(),
             password: args.password,
             birthdate: args.birthdate,
             phone: args.phone,
@@ -156,3 +175,52 @@ export const getUserByEmail = query({
             .unique();
     },
 });
+
+// TEMPORARY: Create initial admin user (delete after use)
+export const createAdminUser = mutation({
+    args: {
+        email: v.string(),
+        password: v.string(), // Format: KSXXXXX
+        birthdate: v.string(),
+        phone: v.string(),
+    },
+    handler: async (ctx, args) => {
+        // Check if admin already exists
+        const existingAdmin = await ctx.db
+            .query("users")
+            .filter((q) => q.eq(q.field("role"), "admin"))
+            .first();
+
+        if (existingAdmin) {
+            throw new Error("Ya existe un usuario admin. Elimina esta mutación después de crear el admin inicial.");
+        }
+
+        // Validate password format
+        if (!/^KS\d{5}$/.test(args.password)) {
+            throw new Error("La contraseña debe empezar por 'KS' seguido de 5 números.");
+        }
+
+        // Insert admin user
+        const adminId = await ctx.db.insert("users", {
+            email: args.email,
+            password: args.password,
+            birthdate: args.birthdate,
+            phone: args.phone,
+            isVerified: true,
+            role: "admin",
+            permissions: ["grant_roles", "view_logs", "manage_calendar", "full_access"],
+            createdAt: Date.now(),
+        });
+
+        // Log activity
+        await ctx.db.insert("activityLogs", {
+            userId: adminId,
+            action: "admin_created",
+            details: `Usuario admin creado: ${args.email}`,
+            timestamp: Date.now(),
+        });
+
+        return adminId;
+    },
+});
+

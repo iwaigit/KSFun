@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useAuth } from '@/context/AuthContext';
+import { registrationSchema } from '@/lib/validators';
 
 export type FormMode = 'register' | 'login' | 'forgot';
 
@@ -42,18 +43,25 @@ export default function RegisterForm({ initialMode = 'register', onClose }: Regi
             }
 
             if (mode === 'register') {
-                if (!formData.phone || formData.phone.length < 10) {
-                    throw new Error("Por favor ingresa un teléfono válido para WhatsApp.");
+                // Validate with Zod
+                const validation = registrationSchema.safeParse(formData);
+
+                if (!validation.success) {
+                    const firstError = validation.error.issues[0];
+                    throw new Error(firstError.message);
                 }
 
+                // Use validated and transformed data
+                const validatedData = validation.data;
+
                 const userId = await registerMutation({
-                    email: formData.email,
-                    password: formData.password,
-                    birthdate: formData.birthdate,
-                    phone: formData.phone
+                    email: validatedData.email,
+                    password: validatedData.password,
+                    birthdate: validatedData.birthdate,
+                    phone: validatedData.phone
                 });
 
-                authLogin({ id: userId, email: formData.email, role: 'client' });
+                authLogin({ id: userId, email: validatedData.email, role: 'client' });
             } else {
                 // Login
                 if (!userQuery) throw new Error("Credenciales inválidas o servidor no responde.");
