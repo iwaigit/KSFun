@@ -110,8 +110,8 @@ export default function RegisterForm({ initialMode = 'register', onClose }: Regi
                     className="cyber-button w-full neon-border-pink"
                 >
                     {mode === 'forgot' ? 'Volver al Login' :
-                        userQuery?.role === 'admin' ? 'Ir al Dashboard Admin' :
-                            userQuery?.role === 'promoter' ? 'Ir al Dashboard Promotor' :
+                        loginData?.role === 'admin' ? 'Ir al Dashboard Admin' :
+                            loginData?.role === 'promoter' ? 'Ir al Dashboard Promotor' :
                                 'Ir a Mi Perfil'}
                 </button>
             </div>
