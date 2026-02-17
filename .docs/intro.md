@@ -1,20 +1,20 @@
-# Documentation Index
+# Índice de Documentación
 
-Welcome to the **Karla Spice Fun (KSFUN)** documentation hub. This directory contains all the technical and functional specifications for the project.
+Bienvenido al centro de documentación de **Karla Spice Fun (KSFUN)**. Este directorio contiene todas las especificaciones técnicas y funcionales del proyecto.
 
-## Directory Structure
+## Estructura del Directorio
 
-*   **[Functional Requirements](KS.fun.txt):** Detailed breakdown of the application's core features and logic.
-*   **[Form Specifications](KS_formulario.txt):** definitions for data collection forms and validation rules.
-*   **[Design References]([EJEMPLOS]%20Paginas%20web%20de%20citas.md):** Inspiration and UI/UX guidelines based on similar platforms.
+*   **[Requerimientos Funcionales](KS.fun.txt):** Desglose detallado de las características principales y la lógica de la aplicación.
+*   **[Especificaciones de Formularios](KS_formulario.txt):** Definiciones para formularios de recolección de datos y reglas de validación.
+*   **[Referencias de Diseño]([EJEMPLOS]%20Paginas%20web%20de%20citas.md):** Inspiración y guías de UI/UX basadas en plataformas similares.
 
-## GitBook Synchronization
+## Sincronización con GitBook
 
-This folder is configured to sync with GitBook. Any markdown (`.md`) or text (`.txt`) files added here will be automatically available in our hosted documentation.
+Esta carpeta está configurada para sincronizarse con GitBook. Cualquier archivo markdown (`.md`) o de texto (`.txt`) añadido aquí estará automáticamente disponible en nuestra documentación alojada.
 
-### How to Add Documentation
+### Cómo agregar documentación
 
-1.  Create a new file in this `.docs` directory.
-2.  Use standard Markdown formatting.
-3.  Link it here in `intro.md` if it's a top-level document.
-4.  Commit and push changes to GitHub.
+1.  Crea un nuevo archivo en este directorio `.docs`.
+2.  Usa formato Markdown estándar.
+3.  Enlázalo aquí en `intro.md` si es un documento de nivel superior.
+4.   confirma (commit) y envía (push) los cambios a GitHub.
