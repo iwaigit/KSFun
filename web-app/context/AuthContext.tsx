@@ -13,12 +13,14 @@ interface AuthContextType {
     login: (user: User) => void;
     logout: () => void;
     isAuthenticated: boolean;
+    loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const savedUser = localStorage.getItem('ks-auth');
@@ -29,6 +31,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 console.error('Error loading auth', e);
             }
         }
+        setLoading(false);
     }, []);
 
     const login = (newUser: User) => {
@@ -46,7 +49,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             user,
             login,
             logout,
-            isAuthenticated: !!user
+            isAuthenticated: !!user,
+            loading
         }}>
             {children}
         </AuthContext.Provider>

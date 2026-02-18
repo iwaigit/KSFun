@@ -2,20 +2,15 @@
 
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import AdminSidebar from '@/components/AdminSidebar';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-    const { user, isAuthenticated } = useAuth();
+    const { user, isAuthenticated, loading } = useAuth();
     const router = useRouter();
-    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    useEffect(() => {
-        if (!mounted) return;
+        if (loading) return;
 
         if (!isAuthenticated) {
             router.push('/verificar-edad');
@@ -25,9 +20,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         if (user?.role !== 'admin') {
             router.push('/');
         }
-    }, [isAuthenticated, user, router, mounted]);
+    }, [isAuthenticated, user, router, loading]);
 
-    if (!mounted || !isAuthenticated || user?.role !== 'admin') {
+    if (loading || !isAuthenticated || user?.role !== 'admin') {
         return null;
     }
 
