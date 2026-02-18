@@ -28,14 +28,18 @@ export default defineSchema({
       .index("by_user", ["userId"]),
 
     // Tienda y Pedidos
-    products: defineTable({
-        name: v.string(),
-        description: v.string(),
-        priceUsd: v.number(),
-        stock: v.number(),
-        category: v.string(),
-        imageUrl: v.optional(v.string()),
-    }),
+  products: defineTable({
+    name: v.string(),
+    description: v.string(),
+    priceUsd: v.number(),
+    priceUSD: v.optional(v.number()),
+    stock: v.optional(v.number()),
+    category: v.string(),
+    imageUrl: v.optional(v.string()),
+    image: v.optional(v.string()),
+    active: v.optional(v.boolean()),
+    createdAt: v.optional(v.number()),
+}),
 
     orders: defineTable({
         userId: v.id("users"),
