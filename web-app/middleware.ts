@@ -5,9 +5,9 @@ export function middleware(request: NextRequest) {
     const auth = request.cookies.get('ks-auth');
     const isAdminRoute = request.nextUrl.pathname.startsWith('/admin');
 
-    if (isAdminRoute && !auth) {
-        return NextResponse.redirect(new URL('/verificar-edad', request.url));
-    }
+   if (isAdminRoute && !auth) {
+    return NextResponse.redirect(new URL('/', request.url));
+}
 
     return NextResponse.next();
 }

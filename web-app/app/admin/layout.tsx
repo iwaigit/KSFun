@@ -17,8 +17,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         if (loading) return;
 
         if (!isAuthenticated) {
-            router.push('/verificar-edad');
-            return;
+        router.push('/');
+        return;
         }
 
         if (user?.role !== 'admin') {
