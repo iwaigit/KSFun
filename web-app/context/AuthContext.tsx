@@ -1,6 +1,9 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useQuery } from 'convex/react';
+import { api } from '@/convex/_generated/api';
+import { Id } from '@/convex/_generated/dataModel';
 
 interface User {
     id: string;
@@ -13,6 +16,7 @@ interface AuthContextType {
     login: (user: User) => void;
     logout: () => void;
     isAuthenticated: boolean;
+    isVerified: boolean;
     loading: boolean;
 }
 
@@ -21,6 +25,12 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
+
+    // Query to check if user is verified in Convex
+    const isVerifiedQuery = useQuery(
+        api.users.isUserVerified,
+        user?.id ? { userId: user.id as Id<"users"> } : "skip"
+    );
 
     useEffect(() => {
         const savedUser = localStorage.getItem('ks-auth');
@@ -52,7 +62,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             login,
             logout,
             isAuthenticated: !!user,
-            loading
+            isVerified: isVerifiedQuery ?? false,
+            loading: loading || isVerifiedQuery === undefined
         }}>
             {children}
         </AuthContext.Provider>
