@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google"; // Usando Outfit para un toque más Pop/Moderno
+import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -15,6 +15,7 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "Karla Spice Fun | Official Site",
   description: "Explora la galería exclusiva de Karla Spice, su tienda de lencería y mucho más.",
+  robots: "noindex, nofollow",
 };
 
 import { LanguageProvider } from "@/context/LanguageContext";
@@ -37,6 +38,18 @@ export default function RootLayout({
               <CartProvider>
                 {children}
                 <UniversalCart />
+                <footer style={{
+                  textAlign: 'center',
+                  padding: '12px',
+                  fontSize: '11px',
+                  color: '#666',
+                  borderTop: '1px solid #1a1a1a',
+                }}>
+                  © 2026 IWAI — Automatización Inteligente |{' '}
+                  <a href="https://www.iwai.work" target="_blank" rel="noopener noreferrer" style={{ color: '#666', textDecoration: 'none' }}>
+                    www.iwai.work
+                  </a>
+                </footer>
               </CartProvider>
             </AuthProvider>
           </LanguageProvider>
