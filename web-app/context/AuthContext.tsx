@@ -37,11 +37,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const login = (newUser: User) => {
         setUser(newUser);
         localStorage.setItem('ks-auth', JSON.stringify(newUser));
+        document.cookie = `ks-auth=${encodeURIComponent(JSON.stringify(newUser))}; path=/; max-age=86400`;
     };
 
     const logout = () => {
         setUser(null);
         localStorage.removeItem('ks-auth');
+        document.cookie = 'ks-auth=; path=/; max-age=0';
     };
 
     return (
