@@ -2,27 +2,32 @@
 
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import AdminSidebar from '@/components/AdminSidebar';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const { user, isAuthenticated } = useAuth();
     const router = useRouter();
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    useEffect(() => {
+        if (!mounted) return;
+
         if (!isAuthenticated) {
             router.push('/verificar-edad');
             return;
         }
 
-        // Only allow admin role
         if (user?.role !== 'admin') {
-            router.push('/'); // Redirect non-admins to home
+            router.push('/');
         }
-    }, [isAuthenticated, user, router]);
+    }, [isAuthenticated, user, router, mounted]);
 
-    // Don't render anything until auth is verified
-    if (!isAuthenticated || user?.role !== 'admin') {
+    if (!mounted || !isAuthenticated || user?.role !== 'admin') {
         return null;
     }
 
