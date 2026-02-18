@@ -10,6 +10,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const router = useRouter();
 
     useEffect(() => {
+        console.log('loading:', loading);
+        console.log('isAuthenticated:', isAuthenticated);
+        console.log('user:', user);
+
         if (loading) return;
 
         if (!isAuthenticated) {
