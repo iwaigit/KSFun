@@ -31,8 +31,7 @@ export default defineSchema({
   products: defineTable({
     name: v.string(),
     description: v.string(),
-    priceUsd: v.number(),
-    priceUSD: v.optional(v.number()),
+    priceUSD: v.number(),
     stock: v.optional(v.number()),
     category: v.string(),
     imageUrl: v.optional(v.string()),
