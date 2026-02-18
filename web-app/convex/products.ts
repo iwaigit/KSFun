@@ -28,21 +28,3 @@ export const create = mutation({
         });
     },
 });
-
-// Registrar un pedido (Checkout)
-export const createOrder = mutation({
-    args: {
-        userId: v.id("users"),
-        productId: v.id("products"),
-        paymentMethod: v.string(), // 'paypal', 'cash', 'ves'
-        total: v.number(),
-        currency: v.string(), // 'USD', 'VES'
-    },
-    handler: async (ctx, args) => {
-        return await ctx.db.insert("orders", {
-            ...args,
-            status: "pending",
-            createdAt: Date.now(),
-        });
-    },
-});
