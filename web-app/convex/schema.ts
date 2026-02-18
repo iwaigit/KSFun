@@ -24,7 +24,8 @@ export default defineSchema({
         status: v.string(), // 'pending', 'confirmed', 'rejected'
         notes: v.optional(v.string()),
         createdAt: v.number(),
-    }).index("by_date", ["date"]),
+    }).index("by_date", ["date"])
+      .index("by_user", ["userId"]),
 
     // Tienda y Pedidos
     products: defineTable({
