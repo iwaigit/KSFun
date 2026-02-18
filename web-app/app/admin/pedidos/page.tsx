@@ -5,7 +5,7 @@ import { api } from "@/convex/_generated/api";
 import AdminSidebar from "@/components/AdminSidebar";
 
 export default function PedidosAdmin() {
-    const orders = useQuery(api.orders.listAllOrders);
+    const orders = useQuery(api.orders.listAll);
 
     return (
         <div className="min-h-screen bg-[#0d0d12] text-white flex">
