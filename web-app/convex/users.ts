@@ -231,3 +231,49 @@ export const createAdminUser = mutation({
     },
 });
 
+// Obtener usuario por ID
+export const getUserById = query({
+    args: { userId: v.id("users") },
+    handler: async (ctx, args) => {
+        return await ctx.db.get(args.userId);
+    },
+});
+
+// Verificar si un usuario está verificado
+export const isUserVerified = query({
+    args: { userId: v.id("users") },
+    handler: async (ctx, args) => {
+        const user = await ctx.db.get(args.userId);
+        if (!user) return false;
+        return user.isVerified === true;
+    },
+});
+
+// Actualizar estado de verificación
+export const markUserAsVerified = mutation({
+    args: { 
+        userId: v.id("users"),
+        birthdate: v.string() 
+    },
+    handler: async (ctx, args) => {
+        const birthDate = new Date(args.birthdate);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        if (age < 18) {
+            throw new Error("Debes tener al menos 18 años.");
+        }
+
+        await ctx.db.patch(args.userId, {
+            isVerified: true,
+            birthdate: args.birthdate
+        });
+
+        return true;
+    },
+});
+
