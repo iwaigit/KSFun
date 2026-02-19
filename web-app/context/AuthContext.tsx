@@ -76,4 +76,4 @@ export function useAuth() {
         throw new Error('useAuth must be used within an AuthProvider');
     }
     return context;
-}
+}// Force redeploy mi., 18 de feb. de 2026 23:33:42
