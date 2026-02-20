@@ -52,7 +52,7 @@ export default function GaleriaAdmin() {
 
             await savePhoto({
                 storageId: storageId as Id<"_storage">,
-                alt: sequentialName, // Usamos el nombre secuencial como Alt
+                alt: sequentialName,
                 order: nextOrder,
             });
 
@@ -73,7 +73,6 @@ export default function GaleriaAdmin() {
 
     return (
         <div className="min-h-screen bg-[#0d0d12] text-white flex">
-
             <main className="flex-1 p-8 md:p-12 space-y-12 overflow-y-auto h-screen">
                 <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-white/5 pb-8">
                     <div className="space-y-1">
@@ -92,18 +91,33 @@ export default function GaleriaAdmin() {
                         <button
                             onClick={() => fileInputRef.current?.click()}
                             disabled={isUploading || (photos?.length || 0) >= 24}
-                            className={`px-8 py-4 font-black uppercase text-xs tracking-widest transition-all shadow-pop ${isUploading ? 'bg-gray-600 cursor-not-allowed' : 'bg-white text-black hover:bg-[var(--color-neon-cyan)]'
-                                }`}
+                            className={`px-8 py-4 font-black uppercase text-xs tracking-widest transition-all shadow-pop ${
+                                isUploading ? 'bg-gray-600 cursor-not-allowed' : 'bg-white text-black hover:bg-[var(--color-neon-cyan)]'
+                            }`}
                         >
                             {isUploading ? 'Subiendo...' : '+ Subir Nueva Foto'}
                         </button>
                     </div>
                 </header>
 
+                {/* Advertencia de Contenido Explícito */}
+                <div className="glass-card bg-red-500/5 border border-red-500/20 p-6 rounded-xl">
+                    <div className="flex items-start gap-4">
+                        <span className="text-2xl">⚠️</span>
+                        <div className="space-y-2">
+                            <h3 className="text-sm font-black uppercase tracking-widest text-red-400">Advertencia de Contenido</h3>
+                            <p className="text-xs text-white/70 leading-relaxed">
+                                Esta galería contiene material de carácter explícito sexual destinado exclusivamente para mayores de 18 años. 
+                                Al gestionar y publicar este contenido, usted confirma su responsabilidad legal y acepta que todo el material cumple 
+                                con las regulaciones aplicables. La distribución no autorizada está estrictamente prohibida.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
                 <section className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
                     {photos?.map((img) => (
                         <div key={img._id} className="group relative">
-                            {/* ... (Gradient background remains) ... */}
                             <div className="absolute -inset-1 bg-gradient-to-br from-white/10 to-transparent rounded-2xl blur-sm group-hover:from-[var(--color-neon-cyan)]/20 transition-all duration-500" />
 
                             <div
@@ -116,7 +130,6 @@ export default function GaleriaAdmin() {
                                         alt={img.alt}
                                         className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                                     />
-                                    {/* ... (Delete button remains, maybe stopPropagation on it) ... */}
                                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
                                         <button
                                             onClick={(e) => { e.stopPropagation(); handleDelete(img._id); }}
@@ -128,7 +141,6 @@ export default function GaleriaAdmin() {
                                         <span className="text-[10px] uppercase font-black tracking-widest text-white/50">Ver Grande</span>
                                     </div>
                                 </div>
-                                {/* ... (Info section remains) ... */}
                                 <div className="p-3 flex justify-between items-center bg-black/40">
                                     <div className="space-y-0.5">
                                         <p className="text-[9px] font-black uppercase tracking-widest text-white truncate max-w-[100px]">{img.alt}</p>
@@ -140,7 +152,6 @@ export default function GaleriaAdmin() {
                         </div>
                     ))}
 
-                    {/* ... (Loading skeletons and Upload button logic) ... */}
                     {!photos && [1, 2, 3, 4, 5, 6].map(i => (
                         <div key={i} className="aspect-[3/4] bg-white/5 animate-pulse rounded-2xl border border-white/10" />
                     ))}
