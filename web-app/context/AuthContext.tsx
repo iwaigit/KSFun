@@ -32,6 +32,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         user?.id ? { userId: user.id as Id<"users"> } : "skip"
     );
 
+    // Debug log for production
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            console.log('[AuthContext] isVerifiedQuery:', isVerifiedQuery, 'user:', user?.email);
+        }
+    }, [isVerifiedQuery, user]);
+
     useEffect(() => {
         const savedUser = localStorage.getItem('ks-auth');
         if (savedUser) {
@@ -76,5 +83,4 @@ export function useAuth() {
         throw new Error('useAuth must be used within an AuthProvider');
     }
     return context;
-}// Force redeploy mi., 18 de feb. de 2026 23:33:42
-
+}
