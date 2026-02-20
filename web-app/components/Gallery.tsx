@@ -46,11 +46,9 @@ export default function Gallery() {
     const { t, language } = useLanguage();
     const { addToCart, cart } = useCart();
 
-    // Carga de fotos real desde Convex
     const photos = useQuery(api.gallery.listPhotos);
     const [selectedImage, setSelectedImage] = useState<any | null>(null);
 
-    // Protección Anti-Click Derecho
     const handleContextMenu = (e: React.MouseEvent) => {
         e.preventDefault();
     };
@@ -100,7 +98,20 @@ export default function Gallery() {
                 ))}
             </section>
 
-            {/* Thumbnails Grid (Vista Previa Protegida) */}
+            {/* Advertencia de Contenido */}
+            <div className="glass-card bg-yellow-500/5 border border-yellow-500/30 p-4 rounded-lg">
+                <div className="flex items-center gap-3 justify-center text-center">
+                    <span className="text-xl text-yellow-500 font-black">!</span>
+                    <p className="text-[10px] md:text-xs text-white/70 font-bold">
+                        {language === 'es' 
+                            ? 'Contenido explícito para mayores de 18 años. Distribución no autorizada prohibida. © karlaspice.fun'
+                            : 'Explicit content for ages 18+. Unauthorized distribution prohibited. © karlaspice.fun'
+                        }
+                    </p>
+                </div>
+            </div>
+
+            {/* Thumbnails Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
                 {photos?.map((img, idx) => (
                     <div
@@ -108,7 +119,6 @@ export default function Gallery() {
                         onClick={() => setSelectedImage(img)}
                         className="group relative glass-card p-1 border-white/5 hover:border-[var(--color-neon-pink)] transition-all cursor-pointer overflow-hidden aspect-[3/4]"
                     >
-                        {/* Transparent Overlay to prevent drag */}
                         <div className="absolute inset-0 z-10 bg-transparent" />
 
                         <img
@@ -124,7 +134,6 @@ export default function Gallery() {
                     </div>
                 ))}
 
-                {/* Empty state while loading or if no photos */}
                 {!photos && [1, 2, 3, 4, 5, 6].map(i => (
                     <div key={i} className="aspect-[3/4] bg-white/5 animate-pulse rounded-lg border border-white/10" />
                 ))}
@@ -136,7 +145,7 @@ export default function Gallery() {
                 )}
             </div>
 
-            {/* Lightbox / Modal Protegido */}
+            {/* Lightbox Modal */}
             {selectedImage && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl animate-in fade-in duration-300" onClick={() => setSelectedImage(null)}>
                     <div className="relative max-w-2xl w-full glass-card p-1 border-[var(--color-neon-pink)]/30 group" onClick={e => e.stopPropagation()}>
@@ -145,7 +154,6 @@ export default function Gallery() {
                         </button>
 
                         <div className="relative aspect-video md:aspect-[4/5] overflow-hidden rounded-lg border border-white/10">
-                            {/* Transparent Overlay */}
                             <div className="absolute inset-0 z-30" />
 
                             <img
