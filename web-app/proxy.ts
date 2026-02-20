@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function GET(request: NextRequest) {
+export default function proxy(request: NextRequest) {
     const auth = request.cookies.get('ks-auth');
     const isAdminRoute = request.nextUrl.pathname.startsWith('/admin');
     
