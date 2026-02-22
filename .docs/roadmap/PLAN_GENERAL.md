@@ -17,6 +17,18 @@ Transformar KSFun de una aplicación personalizada para Karla Spice a una **plat
 
 ---
 
+## 📁 Documentación del Proyecto
+
+| Documento | Descripción | Enlace |
+|-----------|-------------|--------|
+| **CHANGELOG** | Registro de todos los cambios | [Ver](./CHANGELOG.md) |
+| **FASE 1** | Sistema de Configuración Global | [Ver](./FASE_1.md) |
+| **FASE 2** | Expansión del Perfil (próximamente) | - |
+| **FASE 3** | Sistema Multi-Performer (futuro) | - |
+| **FASE 4** | Templates Intercambiables (próximamente) | - |
+
+---
+
 ## 🏗️ FASES DEL PROYECTO
 
 ### **FASE 1: Sistema de Configuración Global** 
@@ -29,6 +41,7 @@ Transformar KSFun de una aplicación personalizada para Karla Spice a una **plat
 | 1.3 | Reemplazar textos "hardcodeados" de Karla por variables dinámicas | ⏳ Pendiente | - |
 | 1.4 | Crear sistema de temas/colores personalizables | ⏳ Pendiente | - |
 
+**📖 Detalles:** [FASE_1.md](./FASE_1.md)  
 **Objetivo:** Cualquier cambio de branding (nombre, colores, logo) se hace desde UN solo lugar.
 
 ---
@@ -84,6 +97,8 @@ KSFun/
 │       ├── PLAN_GENERAL.md
 │       ├── FASE_1.md
 │       ├── FASE_2.md
+│       ├── FASE_3.md
+│       ├── FASE_4.md
 │       └── CHANGELOG.md
 ├── web-app/
 │   ├── config/
