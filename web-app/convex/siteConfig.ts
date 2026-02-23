@@ -1,9 +1,21 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
+const statSchema = v.object({
+    label: v.string(),
+    value: v.number(),
+    color: v.string(),
+});
+
+const DEFAULT_STATS = [
+    { label: "Encanto", value: 95, color: "#ff2d75" },
+    { label: "Estilo", value: 98, color: "#00f3ff" },
+    { label: "Energía", value: 92, color: "#fff300" },
+    { label: "Misterio", value: 88, color: "#bd00ff" },
+];
+
 /**
  * Obtiene la configuración actual del sitio.
- * Retorna null si no hay ninguna configuración creada.
  */
 export const get = query({
     args: {},
@@ -15,7 +27,6 @@ export const get = query({
 
 /**
  * Actualiza la configuración del sitio o la crea si no existe.
- * Solo puede ser ejecutada por un admin (pendiente integración con roles).
  */
 export const update = mutation({
     args: {
@@ -24,6 +35,7 @@ export const update = mutation({
         profileImages: v.array(v.string()),
         primaryColor: v.string(),
         secondaryColor: v.string(),
+        backgroundColor: v.optional(v.string()),
         socialLinks: v.object({
             instagram: v.optional(v.string()),
             twitter: v.optional(v.string()),
@@ -34,9 +46,16 @@ export const update = mutation({
         bio: v.string(),
         metaDescription: v.string(),
 
-        // Nuevos campos
+        // Físico
+        height: v.optional(v.string()),
+        eyeColor: v.optional(v.string()),
         locations: v.optional(v.array(v.string())),
         weight: v.optional(v.string()),
+
+        // Stats dinámicas
+        stats: v.optional(v.array(statSchema)),
+
+        // Servicio
         schedule: v.optional(v.object({
             is24h: v.boolean(),
             from: v.optional(v.string()),
@@ -64,123 +83,36 @@ export const update = mutation({
     },
     handler: async (ctx, args) => {
         const existing = await ctx.db.query("siteConfig").first();
-
         if (existing) {
-            await ctx.db.patch(existing._id, {
-                ...args,
-                updatedAt: Date.now(),
-            });
+            await ctx.db.patch(existing._id, { ...args, updatedAt: Date.now() });
             return existing._id;
         } else {
-            return await ctx.db.insert("siteConfig", {
-                ...args,
-                updatedAt: Date.now(),
-            });
+            return await ctx.db.insert("siteConfig", { ...args, updatedAt: Date.now() });
         }
     },
 });
 
 /**
- * Inicializa la configuración con los datos de Karla Spice (Seed).
+ * Inicializa la configuración con datos por defecto (Seed).
+ * Solo crea si no existe.
  */
 export const initialize = mutation({
     args: {},
     handler: async (ctx) => {
         const existing = await ctx.db.query("siteConfig").first();
         if (existing) return existing._id;
-
-        return await ctx.db.insert("siteConfig", {
-            performerName: "Performer Name",
-            tagline: "Official Site",
-            profileImages: [
-                "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1000&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1503104834685-7205e8607eb9?q=80&w=1000&auto=format&fit=crop"
-            ],
-            primaryColor: "#ff2d75", // Neon Pink
-            secondaryColor: "#00f3ff", // Neon Cyan
-            socialLinks: {
-                instagram: "",
-                twitter: "",
-                onlyfans: "",
-            },
-            contactEmail: "contact@domain.fun",
-            bio: "Official digital platform. Exclusive content, personalized experiences, and direct connection.",
-            metaDescription: "Official Site - Exclusive Gallery, Content Packs and more.",
-            locations: ["Caracas"],
-            weight: "55kg",
-            schedule: {
-                is24h: true,
-                workingDays: ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"]
-            },
-            pricing: {
-                h1: 100,
-                h2: 180,
-                night: 500
-            },
-            vesRate: 40, // Tasa de ejemplo
-            taxiIncluded: false,
-            paymentMethods: ["Ca$h", "Pago móvil", "Zelle"],
-            services: ["Trato de Novia", "Cita Social"],
-            targetAudience: ["Hombres"],
-            activePromo: {
-                label: "Promo Apertura",
-                description: "1 Hora c/taxi incluido en zona céntrica",
-                isActive: false
-            },
-            personalMessage: "¡Contáctame para una experiencia inolvidable!",
-            updatedAt: Date.now(),
-        });
+        return await ctx.db.insert("siteConfig", getDefaults());
     },
 });
+
 /**
- * Fuerza el reset de la configuración a los valores de marca blanca por defecto.
+ * Fuerza el reset al estado por defecto (marca blanca).
  */
 export const resetToDefaults = mutation({
     args: {},
     handler: async (ctx) => {
         const existing = await ctx.db.query("siteConfig").first();
-        const defaults = {
-            performerName: "Performer Name",
-            tagline: "Official Site",
-            profileImages: [
-                "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1000&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1503104834685-7205e8607eb9?q=80&w=1000&auto=format&fit=crop"
-            ],
-            primaryColor: "#ff2d75",
-            secondaryColor: "#00f3ff",
-            socialLinks: {
-                instagram: "",
-                twitter: "",
-                onlyfans: "",
-            },
-            contactEmail: "contact@domain.fun",
-            bio: "Official digital platform. Exclusive content, personalized experiences, and direct connection.",
-            metaDescription: "Official Site - Exclusive Gallery, Content Packs and more.",
-            locations: ["Caracas"],
-            weight: "55kg",
-            schedule: {
-                is24h: true,
-                workingDays: ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"]
-            },
-            pricing: {
-                h1: 100,
-                h2: 180,
-                night: 500
-            },
-            vesRate: 40,
-            taxiIncluded: false,
-            paymentMethods: ["Ca$h", "Pago móvil", "Zelle"],
-            services: ["Trato de Novia", "Cita Social"],
-            targetAudience: ["Hombres"],
-            activePromo: {
-                label: "Promo Apertura",
-                description: "1 Hora c/taxi incluido en zona céntrica",
-                isActive: false
-            },
-            personalMessage: "¡Contáctame para una experiencia inolvidable!",
-            updatedAt: Date.now(),
-        };
-
+        const defaults = getDefaults();
         if (existing) {
             await ctx.db.patch(existing._id, defaults);
             return existing._id;
@@ -189,3 +121,48 @@ export const resetToDefaults = mutation({
         }
     },
 });
+
+function getDefaults() {
+    return {
+        performerName: "Performer Name",
+        tagline: "Official Site",
+        profileImages: [
+            "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1000&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=1000&auto=format&fit=crop"
+        ],
+        primaryColor: "#ff2d75",
+        secondaryColor: "#00f3ff",
+        backgroundColor: "#0d0d12",
+        socialLinks: {
+            instagram: "",
+            twitter: "",
+            onlyfans: "",
+            tiktok: "",
+        },
+        contactEmail: "contact@domain.fun",
+        bio: "Official digital platform. Exclusive content, personalized experiences, and direct connection.",
+        metaDescription: "Official Site - Exclusive Gallery, Content Packs and more.",
+        height: "1.68m",
+        eyeColor: "Café",
+        locations: ["Caracas"],
+        weight: "55kg",
+        stats: DEFAULT_STATS,
+        schedule: {
+            is24h: true,
+            workingDays: ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"],
+        },
+        pricing: { h1: 100, h2: 180, night: 500 },
+        vesRate: 40,
+        taxiIncluded: false,
+        paymentMethods: ["Ca$h", "Pago móvil", "Zelle"],
+        services: ["Trato de Novia", "Cita Social", "Masajes Relajantes"],
+        targetAudience: ["Hombres"],
+        activePromo: {
+            label: "Promo Apertura",
+            description: "1 Hora c/taxi incluido en zona céntrica",
+            isActive: false,
+        },
+        personalMessage: "¡Contáctame para una experiencia inolvidable!",
+        updatedAt: Date.now(),
+    };
+}

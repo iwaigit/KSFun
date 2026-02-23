@@ -2,9 +2,16 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { siteConfig as staticConfig } from "@/config/site";
 
+const DEFAULT_STATS = [
+    { label: "Encanto", value: 95, color: "#ff2d75" },
+    { label: "Estilo", value: 98, color: "#00f3ff" },
+    { label: "Energía", value: 92, color: "#fff300" },
+    { label: "Misterio", value: 88, color: "#bd00ff" },
+];
+
 /**
  * Hook para obtener la configuración del sitio desde Convex.
- * Si los datos aún no cargan o hay un error, retorna los valores por defecto.
+ * Si los datos aún no cargan, retorna los valores por defecto.
  */
 export function useSiteConfig() {
     const dynamicConfig = useQuery(api.siteConfig.get);
@@ -20,6 +27,22 @@ export function useSiteConfig() {
         return {
             ...staticConfig,
             initials,
+            profileImages: [],
+            height: "1.68m",
+            eyeColor: "Café",
+            locations: ["Caracas"],
+            weight: "N/A",
+            stats: DEFAULT_STATS,
+            schedule: { is24h: true, workingDays: [] },
+            pricing: { h1: 0 },
+            vesRate: 0,
+            taxiIncluded: false,
+            paymentMethods: [] as string[],
+            services: [] as string[],
+            targetAudience: ["Hombres"],
+            activePromo: { label: "", description: "", isActive: false },
+            personalMessage: "",
+            backgroundColor: "#0d0d12",
             isLoading: dynamicConfig === undefined,
         };
     }
@@ -41,10 +64,17 @@ export function useSiteConfig() {
         colors: {
             primary: dynamicConfig.primaryColor,
             secondary: dynamicConfig.secondaryColor,
+            background: dynamicConfig.backgroundColor || "#0d0d12",
         },
-        // Nuevos campos dinámicos
+        backgroundColor: dynamicConfig.backgroundColor || "#0d0d12",
+        // Físico
+        height: dynamicConfig.height || "N/A",
+        eyeColor: dynamicConfig.eyeColor || "N/A",
         locations: dynamicConfig.locations || ["Caracas"],
-        weight: dynamicConfig.weight || "",
+        weight: dynamicConfig.weight || "N/A",
+        // Stats
+        stats: dynamicConfig.stats || DEFAULT_STATS,
+        // Servicio
         schedule: dynamicConfig.schedule || { is24h: true, workingDays: [] },
         pricing: dynamicConfig.pricing || { h1: 0 },
         vesRate: dynamicConfig.vesRate || 0,

@@ -7,8 +7,8 @@ import { useSiteConfig } from '@/hooks/useSiteConfig';
 export default function AboutPerformer() {
     const config = useSiteConfig();
     const {
-        name, bio, locations, weight, schedule, pricing,
-        vesRate, taxiIncluded, paymentMethods, services,
+        name, bio, locations, height, eyeColor, weight, schedule, pricing,
+        vesRate, taxiIncluded, paymentMethods, services, stats,
         personalMessage, targetAudience, activePromo, profileImages
     } = config;
     const { t } = useLanguage();
@@ -24,16 +24,17 @@ export default function AboutPerformer() {
         }
     }, [profileImages]);
 
-    const stats = [
-        { label: t('profile.charm'), value: 95, color: 'bg-[#ff2d75]' },
-        { label: t('profile.style'), value: 98, color: 'bg-[#00f3ff]' },
-        { label: t('profile.energy'), value: 92, color: 'bg-[#fff300]' },
-        { label: t('profile.mystery'), value: 88, color: 'bg-[#bd00ff]' },
+    // Stats desde Convex (dinámicas)
+    const statBars = stats && stats.length > 0 ? stats : [
+        { label: 'Encanto', value: 95, color: '#ff2d75' },
+        { label: 'Estilo', value: 98, color: '#00f3ff' },
+        { label: 'Energía', value: 92, color: '#fff300' },
+        { label: 'Misterio', value: 88, color: '#bd00ff' },
     ];
 
     const traits = [
-        { label: t('profile.height'), value: '1.68m' },
-        { label: t('profile.eyes'), value: t('profile.eyes_val') },
+        { label: 'Estatura', value: height || 'N/A' },
+        { label: 'Ojos', value: eyeColor || 'N/A' },
         { label: 'Peso', value: weight || 'N/A' },
         { label: 'Ubicación', value: locations?.[0] || 'Caracas' },
         { label: 'Atiendo a', value: targetAudience?.join(', ') || 'Hombres' },
@@ -154,7 +155,7 @@ export default function AboutPerformer() {
 
                     {/* Stats Bars */}
                     <div className="space-y-4">
-                        {stats.map(stat => (
+                        {statBars.map(stat => (
                             <div key={stat.label} className="space-y-1.5">
                                 <div className="flex justify-between text-[8px] font-black uppercase tracking-widest">
                                     <span className="text-white/70">{stat.label}</span>
@@ -162,8 +163,8 @@ export default function AboutPerformer() {
                                 </div>
                                 <div className="h-1 bg-white/5 rounded-full overflow-hidden">
                                     <div
-                                        className={`h-full ${stat.color} shadow-[0_0_10px_rgba(255,255,255,0.1)]`}
-                                        style={{ width: `${stat.value}%` }}
+                                        className="h-full rounded-full shadow-[0_0_10px_rgba(255,255,255,0.1)]"
+                                        style={{ width: `${stat.value}%`, backgroundColor: stat.color }}
                                     />
                                 </div>
                             </div>

@@ -88,6 +88,7 @@ export default defineSchema({
         profileImages: v.array(v.string()), // Fotos de perfil (Carrusel)
         primaryColor: v.string(),
         secondaryColor: v.string(),
+        backgroundColor: v.optional(v.string()), // Color de fondo del sitio
         socialLinks: v.object({
             instagram: v.optional(v.string()),
             twitter: v.optional(v.string()),
@@ -98,9 +99,20 @@ export default defineSchema({
         bio: v.string(),
         metaDescription: v.string(),
 
-        // --- Nuevos campos de Perfil y Servicio ---
-        locations: v.optional(v.array(v.string())), // Ciudades de servicio
-        weight: v.optional(v.string()), // Peso aprox
+        // --- Físico del Perfil ---
+        height: v.optional(v.string()),       // Estatura ej: "1.68m"
+        eyeColor: v.optional(v.string()),     // Color de ojos ej: "Café"
+        locations: v.optional(v.array(v.string())),
+        weight: v.optional(v.string()),
+
+        // --- Stats Dinámicas (Barras de Rendimiento) ---
+        stats: v.optional(v.array(v.object({
+            label: v.string(),   // Encanto, Estilo, etc.
+            value: v.number(),   // 0-100
+            color: v.string(),   // Color hex ej: "#ff2d75"
+        }))),
+
+        // --- Horario & Servicio ---
         schedule: v.optional(v.object({
             is24h: v.boolean(),
             from: v.optional(v.string()),
@@ -114,11 +126,11 @@ export default defineSchema({
             customLabel: v.optional(v.string()),
             customPrice: v.optional(v.number()),
         })),
-        vesRate: v.optional(v.number()), // Tasa de cambio a Bolívares
+        vesRate: v.optional(v.number()),
         taxiIncluded: v.optional(v.boolean()),
         paymentMethods: v.optional(v.array(v.string())),
-        services: v.optional(v.array(v.string())), // Estilos/Servicios ofrecidos
-        targetAudience: v.optional(v.array(v.string())), // Hombres, Mujeres, Parejas
+        services: v.optional(v.array(v.string())),
+        targetAudience: v.optional(v.array(v.string())),
         activePromo: v.optional(v.object({
             label: v.string(),
             description: v.string(),
