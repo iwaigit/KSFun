@@ -3,10 +3,12 @@
 import { useEffect, useState } from 'react';
 import AboutKarla from '@/components/AboutKarla';
 import Link from 'next/link';
+import { useSiteConfig } from '@/hooks/useSiteConfig';
 
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function Perfil() {
+    const { name } = useSiteConfig();
     const { t } = useLanguage();
     const [mounted, setMounted] = useState(false);
 
@@ -24,7 +26,7 @@ export default function Perfil() {
                     {t('nav.back')}
                 </Link>
                 <div className="text-[9px] font-bold uppercase tracking-[0.5em] text-white/20">
-                    KARLA_SPICE_BIO_CORE_V2
+                    {name.replace(' ', '_').toUpperCase()}_BIO_CORE_V2
                 </div>
             </nav>
 

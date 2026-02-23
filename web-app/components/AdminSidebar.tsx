@@ -2,8 +2,11 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useSiteConfig } from '@/hooks/useSiteConfig';
 
 export default function AdminSidebar() {
+    const { name } = useSiteConfig();
+    const initials = name.split(' ').map(n => n[0]).join('');
     const pathname = usePathname();
 
     const menuItems = [
@@ -18,7 +21,7 @@ export default function AdminSidebar() {
     return (
         <aside className="w-64 bg-[#1a1a25] border-r border-white/5 p-6 flex flex-col gap-8 text-white h-screen sticky top-0 shrink-0">
             <h1 className="text-2xl font-black uppercase italic tracking-tighter neon-text-cyan">
-                KS <span className="text-white">ADMIN</span>
+                {initials} <span className="text-white">ADMIN</span>
             </h1>
             <nav className="flex flex-col gap-1 font-black uppercase text-[10px] tracking-widest text-white/40">
                 {menuItems.map((item) => {
@@ -28,8 +31,8 @@ export default function AdminSidebar() {
                             key={item.href}
                             href={item.href}
                             className={`p-4 transition-all ${isActive
-                                    ? 'bg-white/5 text-white border-l-2 border-[var(--color-neon-cyan)]'
-                                    : `hover:bg-white/5 ${item.color}`
+                                ? 'bg-white/5 text-white border-l-2 border-[var(--color-neon-cyan)]'
+                                : `hover:bg-white/5 ${item.color}`
                                 }`}
                         >
                             {item.name}
