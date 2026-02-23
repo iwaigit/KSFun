@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { useCart } from '@/context/CartContext';
+import { useSiteConfig } from '@/hooks/useSiteConfig';
 
 const PRODUCTS = [
     { id: '1', name: 'Conjunto Sakura Neon', priceUSD: 45, category: 'Lencería', image: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?q=80&w=400&auto=format&fit=crop', desc: 'Seda premium con detalles fluorescentes.' },
@@ -12,6 +13,7 @@ const PRODUCTS = [
 ];
 
 export default function Shop() {
+    const { name } = useSiteConfig();
     const { t, language } = useLanguage();
     const { addToCart, cart } = useCart();
     const [currency, setCurrency] = useState<'USD' | 'VES'>('USD');
@@ -28,7 +30,7 @@ export default function Shop() {
             <header className="flex flex-col md:flex-row justify-between items-center gap-6">
                 <div className="space-y-1">
                     <h2 className="text-4xl md:text-5xl font-black uppercase italic tracking-tighter neon-text-cyan leading-none text-center md:text-left">
-                        KS <span className="text-white opacity-20">/</span> SHOP
+                        {name.split(' ').map(n => n[0]).join('')} <span className="text-white opacity-20">/</span> SHOP
                     </h2>
                     <div className="h-0.5 w-16 bg-[var(--color-neon-cyan)] shadow-[0_0_10px_var(--color-neon-cyan)] mx-auto md:mx-0" />
                 </div>

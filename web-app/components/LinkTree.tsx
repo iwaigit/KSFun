@@ -15,7 +15,7 @@ export default function LinkTree() {
     const [authMode, setAuthMode] = useState<FormMode>('login');
 
     const LINKS = [
-        { label: t('nav.profile'), href: '/perfil', color: 'border-[#f472b6]', glow: 'hover:shadow-[0_0_15px_rgba(244,114,182,0.4)]', icon: '✨' },
+        { label: t('nav.profile', { name }), href: '/perfil', color: 'border-[#f472b6]', glow: 'hover:shadow-[0_0_15px_rgba(244,114,182,0.4)]', icon: '✨' },
         { label: t('nav.dates'), href: '/agendar', color: 'border-[#00f3ff]', glow: 'hover:shadow-[0_0_15px_rgba(0,243,255,0.4)]', icon: '📅' },
         { label: t('nav.shop'), href: '#tienda', color: 'border-[#fff300]', glow: 'hover:shadow-[0_0_15px_rgba(255,243,0,0.4)]', icon: '🛍️' },
         { label: t('nav.toys'), href: '#tienda', color: 'border-[#00f3ff]', glow: 'hover:shadow-[0_0_15px_rgba(0,243,255,0.4)]', icon: '🔥' },
@@ -48,13 +48,22 @@ export default function LinkTree() {
                     onClick={() => setShowMenu(!showMenu)}
                     className="relative block glass-card p-4 rotate-[-1deg] group-hover:rotate-0 transition-transform duration-500 cursor-pointer"
                 >
-                    <Image
-                        src={logo || "/logo.png"}
-                        alt={`${name} Logo`}
-                        width={120}
-                        height={120}
-                        className="object-contain brightness-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]"
-                    />
+                    {logo ? (
+                        <Image
+                            src={logo}
+                            alt={`${name} Logo`}
+                            width={120}
+                            height={120}
+                            className="object-contain brightness-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]"
+                        />
+                    ) : (
+                        <div className="w-[120px] h-[120px] rounded-full bg-white/5 border border-white/10 flex items-center justify-center relative overflow-hidden group">
+                            <div className="absolute inset-0 bg-gradient-to-br from-[#ff2d75]/20 to-[#00f3ff]/20 opacity-50" />
+                            <span className="text-5xl font-black uppercase italic tracking-tighter text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] z-10">
+                                {name.charAt(0)}
+                            </span>
+                        </div>
+                    )}
                 </div>
 
                 {/* Context Menu */}

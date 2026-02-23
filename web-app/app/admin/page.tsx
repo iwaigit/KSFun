@@ -1,14 +1,16 @@
 'use client';
 
 import Link from 'next/link';
+import { useSiteConfig } from '@/hooks/useSiteConfig';
 
 export default function AdminDashboard() {
+    const { name } = useSiteConfig();
     return (
         <main className="flex-1 p-8 md:p-12 space-y-12">
             <header className="flex justify-between items-end">
                 <div className="space-y-1">
                     <h2 className="text-6xl font-black uppercase italic tracking-tight">Main <span className="neon-text-cyan">Control</span></h2>
-                    <p className="text-[10px] font-bold text-white/30 uppercase tracking-[0.5em]">Karla Spice Global Management System</p>
+                    <p className="text-[9px] font-bold text-white/30 uppercase tracking-[0.3em] font-mono tracking-widest">{name} Enterprise Global Gateway</p>
                 </div>
                 <div className="glass-card bg-white/5 py-2 px-6 flex items-center gap-3 border-white/10">
                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]" />
@@ -18,6 +20,7 @@ export default function AdminDashboard() {
 
             {/* Stats Grid */}
             <div className="grid md:grid-cols-4 gap-6">
+                <h3 className="col-span-full text-xl font-black uppercase italic tracking-tighter border-b border-white/5 pb-4">Panel de Control de {name}</h3>
                 {[
                     { label: 'Visitas Hoy', value: '2,840', color: 'text-white' },
                     { label: 'Pedidos Nuevos', value: '12', color: 'neon-text-cyan' },
@@ -25,7 +28,7 @@ export default function AdminDashboard() {
                     { label: 'Conversión', value: '4.2%', color: 'neon-text-pink' },
                 ].map((stat) => (
                     <div key={stat.label} className="glass-card p-6 border-white/5 space-y-2 group hover:border-white/20 transition-all">
-                        <p className="text-[9px] font-black uppercase tracking-widest text-white/30">{stat.label}</p>
+                        <p className="text-[10px] font-black uppercase tracking-[0.5em] text-[var(--color-neon-cyan)]">{name} Platform v1.0</p>
                         <p className={`text-4xl font-black italic tracking-tighter ${stat.color}`}>{stat.value}</p>
                     </div>
                 ))}

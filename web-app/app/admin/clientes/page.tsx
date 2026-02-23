@@ -3,8 +3,11 @@
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from 'next/link';
+import { useSiteConfig } from "@/hooks/useSiteConfig";
 
 export default function ClientesAdmin() {
+    const { name } = useSiteConfig();
+    const initials = name.split(' ').map(n => n[0]).join('');
     const clients = useQuery(api.crm.listClients);
 
     return (
@@ -34,7 +37,7 @@ export default function ClientesAdmin() {
                             {clients?.map((client) => (
                                 <tr key={client._id} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors group">
                                     <td className="p-4">
-                                        <div className="text-xs font-black text-white uppercase italic">KS-{client._id.toString().slice(-4)}</div>
+                                        <div className="text-xs font-black text-white uppercase italic">{initials}-{client._id.toString().slice(-4)}</div>
                                     </td>
                                     <td className="p-4 text-xs text-white/60">{client.email}</td>
                                     <td className="p-4 text-xs font-mono text-white/40">{client.phone || 'N/A'}</td>

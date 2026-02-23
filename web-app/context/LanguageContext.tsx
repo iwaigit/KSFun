@@ -7,21 +7,21 @@ type Language = 'es' | 'en';
 interface LanguageContextType {
     language: Language;
     setLanguage: (lang: Language) => void;
-    t: (key: string) => string;
+    t: (key: string, variables?: Record<string, string>) => string;
 }
 
 const translations = {
     es: {
-        'nav.profile': 'Profile Karla Spice',
+        'nav.profile': 'Perfil de {name}',
         'nav.back': '← Volver al Sistema',
         'nav.back_profile': '← Volver al Perfil',
-        'nav.dates': 'KS Citas/Dates',
-        'nav.shop': 'KS Shop',
-        'nav.toys': 'KS Toys',
+        'nav.dates': 'Citas/Dates',
+        'nav.shop': 'Shop',
+        'nav.toys': 'Toys',
         'nav.vip': 'VIP Club',
         'profile.title': 'DATOS',
         'profile.subtitle': 'PERSONALES',
-        'profile.bio': 'Explora las características únicas que definen el ecosistema de Karla Spice. Un equilibrio entre moda, tecnología y arte.',
+        'profile.bio': 'Explora las características únicas que definen el ecosistema de {name}. Un equilibrio entre moda, tecnología y arte.',
         'profile.gallery_btn': '📸 VER GALERÍA EXCLUSIVA',
         'profile.level_access': 'Acceso de Nivel 2',
         'profile.filtered_content': 'Contenido Filtrado',
@@ -37,11 +37,11 @@ const translations = {
         'profile.mystery': 'Misterio',
         'legal.title': 'RESTRICCIÓN DE EDAD Y CONSENTIMIENTO',
         'legal.p1': 'Restricción de Edad y Consentimiento: Al acceder, el usuario declara bajo juramento ser mayor de 18 años (o la mayoría de edad legal en su país) y acepta voluntariamente visualizar contenido sensual de naturaleza adulta.',
-        'legal.p2': 'Propiedad Intelectual y Copyright: Todo el material (fotos, videos y textos) es propiedad exclusiva de Karla Spice Fun; queda estrictamente prohibida su reproducción, descarga, captura de pantalla o distribución total o parcial.',
+        'legal.p2': 'Propiedad Intelectual y Copyright: Todo el material (fotos, videos y textos) es propiedad exclusiva de {name} Fun; queda estrictamente prohibida su reproducción, descarga, captura de pantalla o distribución total o parcial.',
         'legal.p3': 'Prohibición de Redistribución y Sanciones: El uso de este contenido fuera de la plataforma constituye una violación federal de derechos de autor, facultando a la administración para ejercer acciones legales civiles y penales contra el infractor.',
         'legal.checkbox': 'Declaro bajo juramento ser mayor de 18 años y acepto los términos.',
         'legal.btn': 'VER GALERÍA ⚡',
-        'shop.title': 'KS / SHOP',
+        'shop.title': 'SHOP',
         'shop.cart_btn': 'Añadir al Carrito',
         'shop.checkout': 'PROCESAR PAGO',
         'shop.cancel': 'Cancelar',
@@ -71,21 +71,21 @@ const translations = {
         'dates.duration.12h': 'Cita de 12 Horas',
         'dates.duration.weekend': 'Fin de Semana Completo',
         'dates.btn': 'SOLICITAR CITA ⚡',
-        'dates.status': 'Sujeto a aprobación por Karla Spice',
+        'dates.status': 'Sujeto a aprobación por {name}',
         'dates.success': '¡Solicitud Enviada!',
-        'dates.success_desc': 'Karla ha recibido tu petición para el día {date} a las {time}.',
+        'dates.success_desc': '{name} ha recibido tu petición para el día {date} a las {time}.',
     },
     en: {
-        'nav.profile': 'Karla Spice Profile',
+        'nav.profile': '{name} Profile',
         'nav.back': '← Back to System',
         'nav.back_profile': '← Back to Profile',
-        'nav.dates': 'KS Citas/Dates',
-        'nav.shop': 'KS Shop',
-        'nav.toys': 'KS Toys',
+        'nav.dates': 'Dates',
+        'nav.shop': 'Shop',
+        'nav.toys': 'Toys',
         'nav.vip': 'VIP Club',
         'profile.title': 'PERSONAL',
         'profile.subtitle': 'DATA',
-        'profile.bio': 'Explore the unique characteristics that define the Karla Spice ecosystem. A balance between fashion, technology, and art.',
+        'profile.bio': 'Explore the unique characteristics that define the {name} ecosystem. A balance between fashion, technology, and art.',
         'profile.gallery_btn': '📸 VIEW EXCLUSIVE GALLERY',
         'profile.level_access': 'Level 2 Access',
         'profile.filtered_content': 'Filtered Content',
@@ -101,11 +101,11 @@ const translations = {
         'profile.mystery': 'Mystery',
         'legal.title': 'AGE RESTRICTION AND CONSENT',
         'legal.p1': 'Age Restriction and Consent: By accessing, the user declares under oath to be over 18 years old (or the legal age of majority in their country) and voluntarily accepts to view sensual adult content.',
-        'legal.p2': 'Intellectual Property and Copyright: All material (photos, videos, and texts) is the exclusive property of Karla Spice Fun; its reproduction, download, screenshot, or total or partial distribution is strictly prohibited.',
+        'legal.p2': 'Intellectual Property and Copyright: All material (photos, videos, and texts) is the exclusive property of {name} Fun; its reproduction, download, screenshot, or total or partial distribution is strictly prohibited.',
         'legal.p3': 'Prohibición de Redistribución y Sanciones: El use of this content outside the platform constitutes a federal copyright violation, empowering the administration to take civil and criminal legal action against the offender.',
         'legal.checkbox': 'I declare under oath that I am over 18 years old and I accept the terms.',
         'legal.btn': 'VIEW GALLERY ⚡',
-        'shop.title': 'KS / SHOP',
+        'shop.title': 'SHOP',
         'shop.cart_btn': 'Add to Cart',
         'shop.checkout': 'PROCESS PAYMENT',
         'shop.cancel': 'Cancel',
@@ -135,9 +135,9 @@ const translations = {
         'dates.duration.12h': '12-Hour Appointment',
         'dates.duration.weekend': 'Full Weekend Accompaniment',
         'dates.btn': 'REQUEST APPOINTMENT ⚡',
-        'dates.status': 'Subject to Karla Spice approval',
+        'dates.status': 'Subject to {name} approval',
         'dates.success': 'Request Sent!',
-        'dates.success_desc': 'Karla has received your request for {date} at {time}.',
+        'dates.success_desc': '{name} has received your request for {date} at {time}.',
     }
 };
 
@@ -158,8 +158,14 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('ks-language', lang);
     };
 
-    const t = (key: string) => {
-        return translations[language][key as keyof typeof translations['es']] || key;
+    const t = (key: string, variables?: Record<string, string>) => {
+        let text = translations[language][key as keyof typeof translations['es']] || key;
+        if (variables) {
+            Object.keys(variables).forEach(v => {
+                text = text.replace(`{${v}}`, variables[v]);
+            });
+        }
+        return text;
     };
 
     return (

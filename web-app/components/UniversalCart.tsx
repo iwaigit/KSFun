@@ -6,8 +6,10 @@ import { api } from '@/convex/_generated/api';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
+import { useSiteConfig } from '@/hooks/useSiteConfig';
 
 export default function UniversalCart() {
+    const { name } = useSiteConfig();
     const { cart, removeFromCart, updateQuantity, totalUSD, itemCount, clearCart } = useCart();
     const { t, language } = useLanguage();
     const { user, isAuthenticated } = useAuth();
@@ -75,7 +77,7 @@ export default function UniversalCart() {
                     <div className="relative max-w-xl w-full glass-card p-8 md:p-10 space-y-8 border-[var(--color-neon-cyan)]/30" onClick={e => e.stopPropagation()}>
                         <header className="text-center space-y-1 border-b border-white/10 pb-6 relative">
                             <h2 className="text-3xl font-black uppercase italic tracking-tighter neon-text-cyan">{t('cart.title')}</h2>
-                            <p className="text-[9px] font-bold text-white/30 uppercase tracking-[0.3em]">Karla Spice Global Gateway</p>
+                            <p className="text-[9px] font-bold text-white/30 uppercase tracking-[0.3em] font-mono tracking-widest">{name} Enterprise Global Gateway</p>
                             <button
                                 onClick={() => setIsOpen(false)}
                                 className="absolute top-0 right-0 text-white/20 hover:text-white transition-colors text-xl font-black"
@@ -117,7 +119,7 @@ export default function UniversalCart() {
 
                         <div className="space-y-6 pt-6 border-t border-white/10">
                             <div className="flex justify-between items-end">
-                                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40">{t('cart.total')}</span>
+                                <p className="text-[10px] font-black uppercase tracking-[0.5em] text-[var(--color-neon-cyan)]">{name} Platform v1.0</p>
                                 <div className="text-right">
                                     <p className="text-3xl font-black italic neon-text-cyan leading-none">{formatPrice(totalUSD)}</p>
                                     {language === 'es' && (

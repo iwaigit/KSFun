@@ -2,8 +2,11 @@
 
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { useSiteConfig } from "@/hooks/useSiteConfig";
 
 export default function PedidosAdmin() {
+    const { name } = useSiteConfig();
+    const initials = name.split(' ').map(n => n[0]).join('');
     const orders = useQuery(api.orders.listAll);
 
     return (
@@ -36,7 +39,7 @@ export default function PedidosAdmin() {
                                         {new Date(order.createdAt).toLocaleDateString()}
                                     </td>
                                     <td className="p-4">
-                                        <div className="text-xs font-black text-white uppercase italic">KS-{order._id.toString().slice(-4)}</div>
+                                        <div className="text-xs font-black text-white uppercase italic">{initials}-{order._id.toString().slice(-4)}</div>
                                     </td>
                                     <td className="p-4">
                                         <div className="flex flex-col gap-1">
@@ -52,7 +55,7 @@ export default function PedidosAdmin() {
                                     </td>
                                     <td className="p-4">
                                         <span className={`px-2 py-1 text-[8px] font-black uppercase tracking-widest rounded ${order.status === 'completed' ? 'bg-green-500/20 text-green-400' :
-                                                order.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' : 'bg-white/10 text-white/40'
+                                            order.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' : 'bg-white/10 text-white/40'
                                             }`}>
                                             {order.status}
                                         </span>
