@@ -26,7 +26,7 @@ export default function GaleriaPage() {
         <main className="min-h-screen bg-[#0d0d12] text-white p-6 md:p-12 selection:bg-[#ff2d75]">
             {/* Header / Nav */}
             <nav className="max-w-6xl mx-auto mb-16 flex justify-between items-center">
-                <Link href="/perfil" className="font-black uppercase tracking-widest text-[var(--color-neon-pink)] hover:neon-text-pink transition-all text-sm">
+                <Link href="/perfil" className="font-black uppercase tracking-widest text-[var(--color-neon-pink)] hover:neon-text-pink transition-all text-[10px] md:text-sm">
                     {t('nav.back_profile')}
                 </Link>
                 <div className="text-[10px] font-bold uppercase tracking-[0.4em] text-white/20">

@@ -126,7 +126,7 @@ export default function Gallery() {
                         <img
                             src={img.url || ''}
                             alt={img.alt}
-                            className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-500 blur-[1px] group-hover:blur-0"
+                            className="w-full h-full object-contain grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-500 blur-[1px] group-hover:blur-0"
                             draggable={false}
                         />
 
@@ -161,7 +161,7 @@ export default function Gallery() {
                             <img
                                 src={selectedImage.url || ''}
                                 alt={selectedImage.alt}
-                                className="w-full h-full object-cover select-none"
+                                className="w-full h-full object-contain select-none"
                                 draggable={false}
                                 onContextMenu={e => e.preventDefault()}
                             />
