@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import AboutKarla from '@/components/AboutKarla';
+import AboutPerformer from '@/components/AboutPerformer';
 import Link from 'next/link';
 import { useSiteConfig } from '@/hooks/useSiteConfig';
 
@@ -31,7 +31,7 @@ export default function Perfil() {
             </nav>
 
             <div className="space-y-16">
-                <AboutKarla />
+                <AboutPerformer />
 
                 {/* Botón de Acceso a Galería - Única Entrada */}
                 <div className="max-w-4xl mx-auto pt-10 flex flex-col items-center gap-8 border-t border-white/10">

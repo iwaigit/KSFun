@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { useSiteConfig } from '@/hooks/useSiteConfig';
 
-export default function AboutKarla() {
+export default function AboutPerformer() {
     const { name, bio } = useSiteConfig();
     const { t } = useLanguage();
 

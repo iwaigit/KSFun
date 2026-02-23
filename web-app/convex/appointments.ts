@@ -45,7 +45,7 @@ export const getByUser = query({
     },
 });
 
-// Obtener todas las citas para el Panel de Admin de Karla
+// Obtener todas las citas para el Panel de Admin
 export const getAll = query({
     handler: async (ctx) => {
         return await ctx.db.query("appointments").order("desc").collect();

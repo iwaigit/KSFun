@@ -10,7 +10,7 @@ export default defineSchema({
         isVerified: v.boolean(),
         phone: v.optional(v.string()), // Formato internacional +XXXXX
         whatsappVerified: v.optional(v.boolean()),
-        role: v.string(), // 'admin' (developer) | 'promoter' (business owner/Karla) | 'vip' (premium client) | 'client' (standard)
+        role: v.string(), // 'admin' (developer) | 'promoter' (business owner/performer) | 'vip' (premium client) | 'client' (standard)
         permissions: v.optional(v.array(v.string())), // e.g., ['view_logs', 'manage_calendar', 'grant_roles']
         createdAt: v.number(),
     }).index("by_email", ["email"])

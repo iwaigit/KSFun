@@ -4,7 +4,7 @@ import { v } from "convex/values";
 /**
  * Role Definitions:
  * - admin: Developer with full dashboard access and ability to grant all roles
- * - promoter: Business owner (Karla Spice) with access to client logs and calendar management
+ * - promoter: Business owner (Performer) with access to client logs and calendar management
  * - vip: Premium client with special content access
  * - client: Standard registered user
  */
