@@ -32,7 +32,7 @@ export default function MarketingAdmin() {
     return (
         <main className="flex-1 p-8 md:p-12 space-y-12">
             <header className="space-y-2 border-b border-white/5 pb-8">
-                <h2 className="text-5xl font-black uppercase italic tracking-tighter">Marketing <span className="neon-text-cyan">& SEO</span></h2>
+                <h2 className="text-2xl md:text-3xl font-black uppercase italic tracking-tight leading-none whitespace-nowrap">Marketing <span className="neon-text-cyan">& SEO</span></h2>
                 <p className="text-[10px] font-bold text-white/30 uppercase tracking-[0.4em]">Configuración de Mensajes y Enlaces Globales</p>
             </header>
 

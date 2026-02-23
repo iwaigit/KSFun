@@ -19,7 +19,7 @@ export default function AdminDashboard() {
         <main className="flex-1 p-8 md:p-12 space-y-12">
             <header className="flex justify-between items-end">
                 <div className="space-y-1">
-                    <h2 className="text-3xl font-black uppercase italic tracking-tight leading-none">Main <span className="neon-text-cyan">Control</span></h2>
+                    <h2 className="text-2xl md:text-3xl font-black uppercase italic tracking-tight leading-none whitespace-nowrap">Main <span className="neon-text-cyan">Control</span></h2>
                     <p className="text-[9px] font-bold text-white/30 uppercase tracking-[0.3em] font-mono tracking-widest">{name} Enterprise Global Gateway</p>
                 </div>
                 <div className="flex items-center gap-4">

@@ -85,7 +85,7 @@ export default defineSchema({
     siteConfig: defineTable({
         performerName: v.string(),
         tagline: v.string(),
-        logoUrl: v.optional(v.string()),
+        profileImages: v.array(v.string()), // Fotos de perfil (Carrusel)
         primaryColor: v.string(),
         secondaryColor: v.string(),
         socialLinks: v.object({
@@ -97,6 +97,35 @@ export default defineSchema({
         contactEmail: v.string(),
         bio: v.string(),
         metaDescription: v.string(),
+
+        // --- Nuevos campos de Perfil y Servicio ---
+        locations: v.optional(v.array(v.string())), // Ciudades de servicio
+        weight: v.optional(v.string()), // Peso aprox
+        schedule: v.optional(v.object({
+            is24h: v.boolean(),
+            from: v.optional(v.string()),
+            to: v.optional(v.string()),
+            workingDays: v.array(v.string()),
+        })),
+        pricing: v.optional(v.object({
+            h1: v.number(),
+            h2: v.optional(v.number()),
+            night: v.optional(v.number()),
+            customLabel: v.optional(v.string()),
+            customPrice: v.optional(v.number()),
+        })),
+        vesRate: v.optional(v.number()), // Tasa de cambio a Bolívares
+        taxiIncluded: v.optional(v.boolean()),
+        paymentMethods: v.optional(v.array(v.string())),
+        services: v.optional(v.array(v.string())), // Estilos/Servicios ofrecidos
+        targetAudience: v.optional(v.array(v.string())), // Hombres, Mujeres, Parejas
+        activePromo: v.optional(v.object({
+            label: v.string(),
+            description: v.string(),
+            isActive: v.boolean(),
+        })),
+        personalMessage: v.optional(v.string()),
+
         updatedAt: v.number(),
     }),
 });

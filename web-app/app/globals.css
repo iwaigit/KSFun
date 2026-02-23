@@ -52,3 +52,12 @@ body {
     linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
   background-size: 40px 40px;
 }
+
+@keyframes softBlink {
+  0%, 100% { opacity: 1; filter: brightness(1.2); }
+  50% { opacity: 0.6; filter: brightness(0.8); }
+}
+
+.soft-blink {
+  animation: softBlink 2s ease-in-out infinite;
+}

@@ -1,3 +1,5 @@
+'use client';
+
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -28,7 +30,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return (
         <div className="flex min-h-screen bg-[#0d0d12] overflow-x-hidden relative">
             <AdminSidebar isOpen={isOpen} setIsOpen={setIsOpen} />
-            <main className={`flex-1 transition-transform duration-300 ${isOpen ? 'translate-x-56 lg:translate-x-0' : 'translate-x-0'}`}>
+            <main className="flex-1 pt-20 lg:pt-0">
                 {children}
             </main>
         </div>

@@ -19,45 +19,52 @@ export default function AdminSidebar({ isOpen, setIsOpen }: AdminSidebarProps) {
         { name: 'Pedidos', href: '/admin/pedidos', color: 'hover:text-[var(--color-neon-cyan)]' },
         { name: 'Clientes', href: '/admin/clientes', color: 'hover:text-[var(--color-neon-cyan)]' },
         { name: 'Packs VIP', href: '/admin/packs', color: 'hover:text-[var(--color-neon-yellow)]' },
+        { name: 'Configuración', href: '/admin/config', color: 'hover:text-[var(--color-neon-pink)]' },
     ];
 
     return (
         <>
-            {/* Mobile Header */}
-            <header className="lg:hidden bg-[#1a1a25] border-b border-white/5 p-3 flex justify-between items-center sticky top-0 z-50 h-14">
-                <div className="flex items-center gap-2">
-                    <h1 className="lg:block hidden text-lg font-black uppercase italic tracking-tighter neon-text-cyan leading-none">
-                        {initials} <span className="text-white">ADMIN</span>
-                    </h1>
-                </div>
-                <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="p-2 text-white/70 hover:text-white transition-colors"
-                    aria-label="Menu"
-                >
-                    <div className="w-6 h-4 flex flex-col justify-between relative">
-                        <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-[7.5px]' : ''}`} />
-                        <span className={`w-full h-0.5 bg-current transition-opacity duration-300 ${isOpen ? 'opacity-0' : ''}`} />
-                        <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
-                    </div>
-                </button>
-            </header>
+            {/* Mobile Open Button (Always visible when closed) */}
+            <button
+                onClick={() => setIsOpen(true)}
+                className={`lg:hidden fixed top-6 left-6 z-40 p-3 glass-card border-white/10 hover:border-white/20 transition-all ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'
+                    }`}
+            >
+                <div className="w-5 h-0.5 bg-white/40 mb-1" />
+                <div className="w-3 h-0.5 bg-white/40 mb-1" />
+                <div className="w-5 h-0.5 bg-white/40" />
+            </button>
 
-            {/* Overlay Mobile */}
+            {/* Sidebar Overlay */}
             {isOpen && (
                 <div
-                    className="fixed inset-0 bg-black/80 backdrop-blur-md z-[60] lg:hidden animate-in fade-in duration-300"
+                    className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[45] lg:hidden animate-in fade-in duration-300"
                     onClick={() => setIsOpen(false)}
                 />
             )}
 
-            {/* Sidebar */}
             <aside className={`
-                fixed lg:sticky top-0 left-0 w-56 bg-[#1a1a25] border-r border-white/5 p-6 flex flex-col gap-4 text-white h-screen z-[70] transition-transform duration-300 lg:translate-x-0
-                ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+                fixed lg:relative z-[50]
+                h-screen w-64 lg:w-56
+                bg-[#0d0d12]/95 lg:bg-[#0d0d12]
+                border-r border-white/5 p-8
+                flex flex-col
+                transition-transform duration-300 ease-in-out
+                ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
                 ${isOpen ? 'shadow-[10px_0_50px_rgba(0,0,0,0.5)]' : ''}
                 lg:shrink-0
             `}>
+                {/* Mobile Menu Header & Close Button */}
+                <div className="lg:hidden flex justify-between items-center mb-6">
+                    <span className="text-[8px] font-black uppercase tracking-[0.4em] text-white/40 whitespace-nowrap">Menu Performer</span>
+                    <button
+                        onClick={() => setIsOpen(false)}
+                        className="text-white/40 hover:text-white transition-colors text-xl font-light"
+                    >
+                        ×
+                    </button>
+                </div>
+
                 <h1 className="hidden lg:block text-2xl font-black uppercase italic tracking-tighter neon-text-cyan mb-4">
                     {initials} <span className="text-white">ADMIN</span>
                 </h1>

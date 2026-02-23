@@ -150,45 +150,43 @@ export default function Gallery() {
             {/* Lightbox Modal */}
             {selectedImage && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl animate-in fade-in duration-300" onClick={() => setSelectedImage(null)}>
-                    <div className="relative max-w-2xl w-full glass-card p-1 border-[var(--color-neon-pink)]/30 group" onClick={e => e.stopPropagation()}>
+                    <div className="relative max-w-2xl w-full glass-card p-1 border-[var(--color-neon-pink)]/30 group max-h-screen" onClick={e => e.stopPropagation()}>
                         <button onClick={() => setSelectedImage(null)} className="absolute -top-10 right-0 text-white/50 hover:text-white font-black uppercase tracking-widest text-[10px] flex items-center gap-2">
                             {language === 'es' ? 'Cerrar' : 'Close'} <span className="text-xl">×</span>
                         </button>
 
-                        <div className="relative aspect-video md:aspect-[4/5] overflow-hidden rounded-lg border border-white/10">
-                            <div className="absolute inset-0 z-30" />
-
+                        <div className="relative w-full h-[85vh] md:h-[90vh] flex items-center justify-center p-4 bg-black rounded-lg border border-white/10">
                             <img
                                 src={selectedImage.url || ''}
                                 alt={selectedImage.alt}
-                                className="w-full h-full object-contain select-none"
+                                className="max-w-full max-h-full object-contain select-none"
                                 draggable={false}
                                 onContextMenu={e => e.preventDefault()}
                             />
+                        </div>
 
-                            <div className="absolute bottom-0 left-0 right-0 p-6 pt-12 bg-gradient-to-t from-black via-black/40 to-transparent flex justify-between items-end z-40">
-                                <div className="space-y-0.5">
-                                    <h3 className="text-2xl font-black uppercase italic tracking-tighter neon-text-pink">{selectedImage.alt}</h3>
-                                    <p className="text-[8px] font-bold text-white/40 uppercase tracking-[0.3em]">© {name} Fun - No Redistribution</p>
-                                </div>
-                                <button
-                                    onClick={() => addToCart({
-                                        id: `hd_${selectedImage._id}`,
-                                        type: 'product',
-                                        name: `HD Unlock: ${selectedImage.alt}`,
-                                        priceUSD: 10,
-                                        image: selectedImage.url || ''
-                                    })}
-                                    className={`
+                        <div className="absolute bottom-0 left-0 right-0 p-6 pt-12 bg-gradient-to-t from-black via-black/40 to-transparent flex justify-between items-end z-40">
+                            <div className="space-y-0.5">
+                                <h3 className="text-2xl font-black uppercase italic tracking-tighter neon-text-pink">{selectedImage.alt}</h3>
+                                <p className="text-[8px] font-bold text-white/40 uppercase tracking-[0.3em]">© {name} Fun - No Redistribution</p>
+                            </div>
+                            <button
+                                onClick={() => addToCart({
+                                    id: `hd_${selectedImage._id}`,
+                                    type: 'product',
+                                    name: `HD Unlock: ${selectedImage.alt}`,
+                                    priceUSD: 10,
+                                    image: selectedImage.url || ''
+                                })}
+                                className={`
                                         glass-card border border-[var(--color-neon-pink)]
                                         hover:shadow-[0_0_15px_rgba(255,45,117,0.4)]
                                         hover:-translate-y-1 active:scale-95 transition-all duration-300
                                         text-[9px] px-4 py-2 text-white font-black uppercase tracking-widest
                                     `}
-                                >
-                                    {cart.find(item => item.id === `hd_${selectedImage._id}`) ? `${t('cart.add')} (${cart.find(item => item.id === `hd_${selectedImage._id}`)?.quantity})` : t('gallery.buy_hd')}
-                                </button>
-                            </div>
+                            >
+                                {cart.find(item => item.id === `hd_${selectedImage._id}`) ? `${t('cart.add')} (${cart.find(item => item.id === `hd_${selectedImage._id}`)?.quantity})` : t('gallery.buy_hd')}
+                            </button>
                         </div>
                     </div>
                 </div>

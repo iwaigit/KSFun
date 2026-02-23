@@ -21,7 +21,7 @@ export const update = mutation({
     args: {
         performerName: v.string(),
         tagline: v.string(),
-        logoUrl: v.optional(v.string()),
+        profileImages: v.array(v.string()),
         primaryColor: v.string(),
         secondaryColor: v.string(),
         socialLinks: v.object({
@@ -33,6 +33,34 @@ export const update = mutation({
         contactEmail: v.string(),
         bio: v.string(),
         metaDescription: v.string(),
+
+        // Nuevos campos
+        locations: v.optional(v.array(v.string())),
+        weight: v.optional(v.string()),
+        schedule: v.optional(v.object({
+            is24h: v.boolean(),
+            from: v.optional(v.string()),
+            to: v.optional(v.string()),
+            workingDays: v.array(v.string()),
+        })),
+        pricing: v.optional(v.object({
+            h1: v.number(),
+            h2: v.optional(v.number()),
+            night: v.optional(v.number()),
+            customLabel: v.optional(v.string()),
+            customPrice: v.optional(v.number()),
+        })),
+        vesRate: v.optional(v.number()),
+        taxiIncluded: v.optional(v.boolean()),
+        paymentMethods: v.optional(v.array(v.string())),
+        services: v.optional(v.array(v.string())),
+        targetAudience: v.optional(v.array(v.string())),
+        activePromo: v.optional(v.object({
+            label: v.string(),
+            description: v.string(),
+            isActive: v.boolean(),
+        })),
+        personalMessage: v.optional(v.string()),
     },
     handler: async (ctx, args) => {
         const existing = await ctx.db.query("siteConfig").first();
@@ -64,6 +92,10 @@ export const initialize = mutation({
         return await ctx.db.insert("siteConfig", {
             performerName: "Performer Name",
             tagline: "Official Site",
+            profileImages: [
+                "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1000&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1503104834685-7205e8607eb9?q=80&w=1000&auto=format&fit=crop"
+            ],
             primaryColor: "#ff2d75", // Neon Pink
             secondaryColor: "#00f3ff", // Neon Cyan
             socialLinks: {
@@ -74,6 +106,28 @@ export const initialize = mutation({
             contactEmail: "contact@domain.fun",
             bio: "Official digital platform. Exclusive content, personalized experiences, and direct connection.",
             metaDescription: "Official Site - Exclusive Gallery, Content Packs and more.",
+            locations: ["Caracas"],
+            weight: "55kg",
+            schedule: {
+                is24h: true,
+                workingDays: ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"]
+            },
+            pricing: {
+                h1: 100,
+                h2: 180,
+                night: 500
+            },
+            vesRate: 40, // Tasa de ejemplo
+            taxiIncluded: false,
+            paymentMethods: ["Ca$h", "Pago móvil", "Zelle"],
+            services: ["Trato de Novia", "Cita Social"],
+            targetAudience: ["Hombres"],
+            activePromo: {
+                label: "Promo Apertura",
+                description: "1 Hora c/taxi incluido en zona céntrica",
+                isActive: false
+            },
+            personalMessage: "¡Contáctame para una experiencia inolvidable!",
             updatedAt: Date.now(),
         });
     },
@@ -88,6 +142,10 @@ export const resetToDefaults = mutation({
         const defaults = {
             performerName: "Performer Name",
             tagline: "Official Site",
+            profileImages: [
+                "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1000&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1503104834685-7205e8607eb9?q=80&w=1000&auto=format&fit=crop"
+            ],
             primaryColor: "#ff2d75",
             secondaryColor: "#00f3ff",
             socialLinks: {
@@ -98,6 +156,28 @@ export const resetToDefaults = mutation({
             contactEmail: "contact@domain.fun",
             bio: "Official digital platform. Exclusive content, personalized experiences, and direct connection.",
             metaDescription: "Official Site - Exclusive Gallery, Content Packs and more.",
+            locations: ["Caracas"],
+            weight: "55kg",
+            schedule: {
+                is24h: true,
+                workingDays: ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"]
+            },
+            pricing: {
+                h1: 100,
+                h2: 180,
+                night: 500
+            },
+            vesRate: 40,
+            taxiIncluded: false,
+            paymentMethods: ["Ca$h", "Pago móvil", "Zelle"],
+            services: ["Trato de Novia", "Cita Social"],
+            targetAudience: ["Hombres"],
+            activePromo: {
+                label: "Promo Apertura",
+                description: "1 Hora c/taxi incluido en zona céntrica",
+                isActive: false
+            },
+            personalMessage: "¡Contáctame para una experiencia inolvidable!",
             updatedAt: Date.now(),
         };
 
