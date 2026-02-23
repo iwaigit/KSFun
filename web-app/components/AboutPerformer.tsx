@@ -52,10 +52,10 @@ export default function AboutPerformer() {
 
     return (
         <div className="max-w-4xl mx-auto space-y-16 py-6">
-            <div className="grid lg:grid-cols-2 gap-10 items-center">
-                {/* Left: Carrusel de fotos de perfil (Compacto -40% width) */}
-                <div className="relative group w-full flex justify-center lg:justify-start">
-                    <div className="w-full lg:w-[32%] relative">
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
+                {/* Left: Carrusel de fotos de perfil (Fijo 180px desktop) */}
+                <div className="relative group flex-shrink-0 flex justify-center lg:justify-start w-full lg:w-auto">
+                    <div className="w-[55%] sm:w-[40%] lg:w-[180px] relative">
                         <div className="absolute -inset-4 bg-gradient-to-tr from-[#ff2d75] to-[#00f3ff] opacity-10 blur-2xl group-hover:opacity-15 transition-opacity" />
                         <div className="space-y-4">
                             <div className="relative glass-card p-1 border-white/10 group-hover:border-[var(--color-neon-pink)] transition-colors overflow-hidden">
@@ -93,7 +93,7 @@ export default function AboutPerformer() {
                 </div>
 
                 {/* Right: Data & Stats */}
-                <div className="space-y-8">
+                <div className="flex-1 space-y-8">
                     <div className="space-y-2">
                         <h2 className="text-2xl md:text-3xl font-black uppercase italic tracking-tighter leading-none">
                             DATOS <span className="text-[var(--color-neon-cyan)]">PERFORMANCE</span>
