@@ -122,7 +122,7 @@ export default function AboutPerformer() {
                     )}
 
                     <p className="text-[10px] font-bold text-white/40 leading-relaxed max-w-md uppercase tracking-wider">
-                        {bio ? bio.replace('Karla Spice', name) : `Official digital platform of ${name}. Exclusive content, personalized experiences, and direct connection.`}
+                        {bio ? bio : `Zynch by iwai | Official digital platform of ${name}. Exclusive content, personalized experiences, and direct connection.`}
                     </p>
 
                     {/* Quick Traits Grid */}

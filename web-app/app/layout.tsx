@@ -47,9 +47,9 @@ export default function RootLayout({
                   color: '#666',
                   borderTop: '1px solid #1a1a1a',
                 }}>
-                  © 2026 IWAI — Automatización Inteligente |{' '}
-                  <a href="https://www.iwai.work" target="_blank" rel="noopener noreferrer" style={{ color: '#666', textDecoration: 'none' }}>
-                    www.iwai.work
+                  © 2026 Zynch by iwai — Powered by{' '}
+                  <a href="https://www.iwai.work" target="_blank" rel="noopener noreferrer" style={{ color: '#666', textDecoration: 'none', fontWeight: 'bold' }}>
+                    IWAI - Automated Processes
                   </a>
                 </footer>
               </CartProvider>

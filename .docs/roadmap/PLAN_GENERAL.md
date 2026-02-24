@@ -1,4 +1,4 @@
-# 🚀 Plan de Trabajo: KSFun Platform
+# 🚀 Plan de Trabajo: Zynch by iwai Platform
 
 > **Fecha:** 22 de Febrero, 2026  
 > **Estado:** En desarrollo  
@@ -8,12 +8,12 @@
 
 ## 📋 Resumen Ejecutivo
 
-Transformar KSFun de una aplicación personalizada para Karla Spice a una **plataforma extensible multi-performer** que permita:
+Transformar la aplicación de una solución personalizada a **Zynch by iwai**, una **plataforma SaaS extensible multi-usuario** (camaleónica) que permite:
 
-- Cambiar fácilmente la identidad del performer (Karla Spice → Melissa Bennet → Cualquiera)
-- Gestionar datos del performer desde el dashboard admin
-- Seleccionar diferentes templates/plantillas visuales
-- Escalar a múltiples performers en el futuro
+- Identidad dinámica por usuario (Promoter/Performer).
+- Gestión completa desde el dashboard administrativo de IWAI.
+- Sistema de marcas de agua y prefijos (ZN) personalizados.
+- Arquitectura escalable para múltiples clientes bajo demanda.
 
 ---
 
@@ -91,14 +91,13 @@ Transformar KSFun de una aplicación personalizada para Karla Spice a una **plat
 ## 📁 Estructura de Carpetas Propuesta
 
 ```
-KSFun/
+Zynch/
 ├── .docs/
 │   └── roadmap/           # ← ESTE DOCUMENTO
 │       ├── PLAN_GENERAL.md
 │       ├── FASE_1.md
 │       ├── FASE_2.md
-│       ├── FASE_3.md
-│       ├── FASE_4.md
+│       ├── Zynch_SaaS.md
 │       └── CHANGELOG.md
 ├── web-app/
 │   ├── config/

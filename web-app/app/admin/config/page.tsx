@@ -121,8 +121,8 @@ function TagToggle({ options, selected, onChange }: { options: string[]; selecte
                     type="button"
                     onClick={() => onChange(toggleInArray(selected, opt))}
                     className={`text-[9px] font-black uppercase px-2.5 py-1 rounded transition-all border ${selected.includes(opt)
-                            ? 'bg-[var(--color-neon-cyan)]/10 border-[var(--color-neon-cyan)] text-[var(--color-neon-cyan)]'
-                            : 'bg-white/5 border-white/10 text-white/30 hover:border-white/30'
+                        ? 'bg-[var(--color-neon-cyan)]/10 border-[var(--color-neon-cyan)] text-[var(--color-neon-cyan)]'
+                        : 'bg-white/5 border-white/10 text-white/30 hover:border-white/30'
                         }`}
                 >{opt}</button>
             ))}
@@ -274,8 +274,8 @@ export default function AdminConfig() {
                         type="button"
                         onClick={() => setActiveTab(tab.id)}
                         className={`text-[9px] font-black uppercase tracking-widest px-4 py-2.5 border-b-2 transition-all -mb-px ${activeTab === tab.id
-                                ? 'border-[var(--color-neon-cyan)] text-[var(--color-neon-cyan)]'
-                                : 'border-transparent text-white/30 hover:text-white/60'
+                            ? 'border-[var(--color-neon-cyan)] text-[var(--color-neon-cyan)]'
+                            : 'border-transparent text-white/30 hover:text-white/60'
                             }`}
                     >
                         {tab.icon} {tab.label}
@@ -292,7 +292,7 @@ export default function AdminConfig() {
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div>
                                     <FieldLabel>Nombre del Performer</FieldLabel>
-                                    <Input value={formData.performerName} onChange={v => set('performerName', v)} placeholder="Karla Spice" />
+                                    <Input value={formData.performerName} onChange={v => set('performerName', v)} placeholder="Nombre Profesional (EJ: Zynch User)" />
                                 </div>
                                 <div>
                                     <FieldLabel>Tagline / Lema</FieldLabel>
@@ -336,8 +336,8 @@ export default function AdminConfig() {
                                                 type="button"
                                                 onClick={() => set('eyeColor', color)}
                                                 className={`text-[9px] font-black uppercase px-2.5 py-1 rounded transition-all border ${formData.eyeColor === color
-                                                        ? 'bg-[var(--color-neon-cyan)]/10 border-[var(--color-neon-cyan)] text-[var(--color-neon-cyan)]'
-                                                        : 'bg-white/5 border-white/10 text-white/30 hover:border-white/30'
+                                                    ? 'bg-[var(--color-neon-cyan)]/10 border-[var(--color-neon-cyan)] text-[var(--color-neon-cyan)]'
+                                                    : 'bg-white/5 border-white/10 text-white/30 hover:border-white/30'
                                                     }`}
                                             >{color}</button>
                                         ))}
@@ -576,8 +576,8 @@ export default function AdminConfig() {
                                             type="button"
                                             onClick={() => set('schedule', { ...formData.schedule, workingDays: toggleInArray(formData.schedule.workingDays, day) })}
                                             className={`w-10 h-10 rounded text-[9px] font-black uppercase transition-all border ${formData.schedule.workingDays.includes(day)
-                                                    ? 'bg-[var(--color-neon-cyan)]/10 border-[var(--color-neon-cyan)] text-[var(--color-neon-cyan)]'
-                                                    : 'bg-white/5 border-white/10 text-white/30 hover:border-white/30'
+                                                ? 'bg-[var(--color-neon-cyan)]/10 border-[var(--color-neon-cyan)] text-[var(--color-neon-cyan)]'
+                                                : 'bg-white/5 border-white/10 text-white/30 hover:border-white/30'
                                                 }`}
                                         >{day}</button>
                                     ))}

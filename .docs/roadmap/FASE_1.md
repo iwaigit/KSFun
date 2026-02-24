@@ -1,4 +1,4 @@
-# 🏗️ FASE 1: Sistema de Configuración Global
+# 🏗️ FASE 1: Sistema de Configuración Global (Zynch by iwai)
 
 > **Estado:** En progreso  
 > **Fecha inicio:** 2026-02-22  
@@ -26,16 +26,15 @@ Crear un sistema de configuración centralizada que permita cambiar:
 ```typescript
 // Schema propuesto
 {
-  performerName: string,      // "Karla Spice" | "Melissa Bennet"
-  tagline: string,            // "Official Site" | "Modelo Exclusiva"
-  logo: string,               // URL del logo
-  primaryColor: string,       // "#ff6b6b"
-  secondaryColor: string,     // "#4ecdc4"
+  performerName: string,      // "Zynch User" | "Melissa Bennet"
+  tagline: string,            // "Premium Personal Service Platform"
+  primaryColor: string,       // "#ff2d75"
+  secondaryColor: string,     // "#00f3ff"
   socialLinks: {
     instagram?: string,
     twitter?: string,
     onlyfans?: string,
-    // ...
+    tiktok?: string,
   },
   contactEmail: string,
   bio: string,                // Descripción corta
@@ -113,16 +112,16 @@ Integrar con Tailwind usando CSS variables.
 
 ## ✅ Checklist
 
-- [ ] 1.1 Crear schema `config` en Convex
-- [ ] 1.2 Crear queries/mutations para config
-- [ ] 1.3 Crear `config/site.ts`
-- [ ] 1.4 Crear `config/theme.ts`
-- [ ] 1.5 Crear hook `useSiteConfig()`
-- [ ] 1.6 Reemplazar textos en `layout.tsx`
-- [ ] 1.7 Reemplazar textos en `page.tsx`
-- [ ] 1.8 Reemplazar textos en `AboutKarla.tsx`
-- [ ] 1.9 Reemplazar textos en `LinkTree.tsx`
-- [ ] 1.10 Probar cambio de performer completo
+- [x] 1.1 Crear schema `siteConfig` en Convex
+- [x] 1.2 Crear queries/mutations para config
+- [x] 1.3 Crear `config/site.ts`
+- [x] 1.4 Crear `config/theme.ts` (Integrado en siteConfig)
+- [x] 1.5 Crear hook `useSiteConfig()`
+- [x] 1.6 Reemplazar textos en `layout.tsx`
+- [x] 1.7 Reemplazar textos en `page.tsx`
+- [x] 1.8 Reemplazar textos en `AboutPerformer.tsx`
+- [x] 1.9 Reemplazar textos en `LinkTree.tsx`
+- [x] 1.10 Probar rebranding completo (Zynch by iwai)
 
 ---
 

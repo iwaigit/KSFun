@@ -1,6 +1,6 @@
 # Manual de Usuario: Gestión de Galería
 
-Este documento explica cómo utilizar el módulo de **Galería** en el Panel de Administración de KarlasSpiceFun.
+Este documento explica cómo utilizar el módulo de **Galería** en el Panel de Administración de **Zynch by iwai**.
 
 ## 1. Acceso
 Para acceder, inicia sesión como administrador y navega a la sección **Galería** en el menú lateral.
@@ -9,8 +9,8 @@ Para acceder, inicia sesión como administrador y navega a la sección **Galerí
 El sistema cuenta con optimización automática para facilitar tu trabajo:
 *   **Capacidad de Subida:** Puedes subir fotos de hasta **50MB**.
 *   **Compresión Inteligente:** El sistema reduce automáticamente el peso de la imagen a ~300KB sin perder calidad visible.
-*   **Marca de Agua:** Se agrega automáticamente el texto "karlaspice.fun" para proteger tu contenido.
-*   **Renombrado:** Las fotos se guardan con nombres secuenciales (`KSF_01`, `KSF_02`...) para mantener el orden.
+*   **Marca de Agua:** Se agrega automáticamente el texto configurable (por defecto "zynch.fun") para proteger tu contenido.
+*   **Renombrado:** Las fotos se guardan con nombres secuenciales (`ZNF_01`, `ZNF_02`...) para mantener el orden.
 
 ## 3. Cómo Subir una Foto
 1.  Haz clic en el botón grande **+ Subir Nueva Foto** o en el recuadro "Añadir".
@@ -26,4 +26,4 @@ El sistema cuenta con optimización automática para facilitar tu trabajo:
 *   La galería está diseñada para mostrar las mejores **24 fotos**. Si alcanzas el límite, deberás borrar algunas antiguas para subir nuevas.
 
 ---
-*Documento generado por el equipo técnico de KSFUN*
+*Documento generado por el equipo técnico de IWAI - Automated Processes*

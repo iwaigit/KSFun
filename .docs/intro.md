@@ -1,11 +1,11 @@
 # Índice de Documentación
 
-Bienvenido al centro de documentación de **Karla Spice Fun (KSFUN)**. Este directorio contiene todas las especificaciones técnicas y funcionales del proyecto.
+Bienvenido al centro de documentación de **Zynch by iwai**. Este directorio contiene todas las especificaciones técnicas y funcionales del sistema camaleónico SAAS para servicios personales.
 
 ## Estructura del Directorio
 
-*   **[Requerimientos Funcionales](KS.fun.txt):** Desglose detallado de las características principales y la lógica de la aplicación.
-*   **[Especificaciones de Formularios](KS_formulario.txt):** Definiciones para formularios de recolección de datos y reglas de validación.
+*   **[Requerimientos Funcionales](ZN.fun.txt):** Desglose detallado de las características principales y la lógica de la aplicación.
+*   **[Especificaciones de Formularios](ZN_formulario.txt):** Definiciones para formularios de recolección de datos y reglas de validación.
 *   **[Manual de Galería](manual_galeria.md):** Guía de uso para el panel de administración de la galería.
 *   **[Referencias de Diseño]([EJEMPLOS]%20Paginas%20web%20de%20citas.md):** Inspiración y guías de UI/UX basadas en plataformas similares.
 

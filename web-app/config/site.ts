@@ -4,17 +4,17 @@
  * o si no hay datos en la BD.
  */
 export const siteConfig = {
-    name: "Performer Name",
-    tagline: "Official Site",
-    description: "Official digital platform. Exclusive content, personalized experiences, and direct connection.",
-    bio: "Official digital platform. Exclusive content, personalized experiences, and direct connection.",
+    name: "Zynch by iwai",
+    tagline: "Premium Personal Service Platform",
+    description: "Zynch by iwai is a professional digital platform for personal services. Exclusive content, automated appointment management, and direct connection.",
+    bio: "Zynch by iwai is a professional digital platform for personal services. Exclusive content, automated appointment management, and direct connection.",
     links: {
         instagram: "",
         twitter: "",
         onlyfans: "",
         tiktok: "",
     },
-    email: "contact@domain.fun",
+    email: "contact@iwai.work",
     colors: {
         primary: "#ff2d75",   // Neon Pink
         secondary: "#00f3ff", // Neon Cyan

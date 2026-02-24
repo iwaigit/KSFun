@@ -2,10 +2,10 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
-    // Usuarios con registro KS+5números
+    // Usuarios con registro ZN+5números
     users: defineTable({
         email: v.string(),
-        password: v.string(), // Formato: KSXXXXX
+        password: v.string(), // Formato: ZNXXXXX
         birthdate: v.string(),
         isVerified: v.boolean(),
         phone: v.optional(v.string()), // Formato internacional +XXXXX
@@ -84,8 +84,10 @@ export default defineSchema({
     // Configuración Global del Sitio
     siteConfig: defineTable({
         performerName: v.string(),
+        initials: v.optional(v.string()), // Added this field to store initials, defaulting to "ZN" if not set
         tagline: v.string(),
-        profileImages: v.array(v.string()), // Fotos de perfil (Carrusel)
+        profileImages: v.array(v.string()), // URLs externas (fallback/legacy)
+        profileImageIds: v.optional(v.array(v.id("_storage"))), // Convex Storage IDs
         primaryColor: v.string(),
         secondaryColor: v.string(),
         backgroundColor: v.optional(v.string()), // Color de fondo del sitio

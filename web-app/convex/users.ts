@@ -12,7 +12,7 @@ export const register = mutation({
     handler: async (ctx, args) => {
         // Obtenemos la configuración para las iniciales del nombre
         const config = await ctx.db.query("siteConfig").first();
-        const initials = config ? config.performerName.split(' ').map(n => n[0]).join('').toUpperCase() : "KS";
+        const initials = config ? config.performerName.split(' ').map(n => n[0]).join('').toUpperCase() : "ZN";
 
         // Check if email already exists
         const existingUser = await ctx.db
@@ -192,7 +192,7 @@ export const getUserByEmail = query({
 export const createAdminUser = mutation({
     args: {
         email: v.string(),
-        password: v.string(), // Format: KSXXXXX
+        password: v.string(), // Format: ZNXXXXX
         birthdate: v.string(),
         phone: v.string(),
     },
@@ -209,7 +209,7 @@ export const createAdminUser = mutation({
 
         // Validate password format
         const config = await ctx.db.query("siteConfig").first();
-        const initials = config ? config.performerName.split(' ').map(n => n[0]).join('').toUpperCase() : "KS";
+        const initials = config ? config.performerName.split(' ').map(n => n[0]).join('').toUpperCase() : "ZN";
         const passwordRegex = new RegExp(`^${initials}\\d{5}$`);
         if (!passwordRegex.test(args.password)) {
             throw new Error(`La contraseña debe empezar por '${initials}' seguido de 5 números.`);

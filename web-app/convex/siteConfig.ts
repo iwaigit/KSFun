@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { Id } from "./_generated/dataModel";
 
 const statSchema = v.object({
     label: v.string(),
@@ -15,13 +16,92 @@ const DEFAULT_STATS = [
 ];
 
 /**
+ * Genera una URL de subida para las fotos de perfil en Convex Storage.
+ */
+export const generateProfileImageUploadUrl = mutation(async (ctx) => {
+    return await ctx.storage.generateUploadUrl();
+});
+
+/**
+ * Guarda el storageId de una foto de perfil en la posición indicada (0 o 1).
+ * Elimina la imagen anterior si existía en storage.
+ */
+export const saveProfileImage = mutation({
+    args: {
+        storageId: v.id("_storage"),
+        index: v.number(), // 0 = primera, 1 = segunda
+    },
+    handler: async (ctx, args) => {
+        const existing = await ctx.db.query("siteConfig").first();
+        if (!existing) throw new Error("siteConfig no existe. Inicializa primero.");
+
+        const currentIds: (Id<"_storage"> | null)[] = [
+            ...(existing.profileImageIds || [null, null]),
+        ];
+
+        // Eliminar imagen anterior de storage si existe
+        const oldId = currentIds[args.index];
+        if (oldId) {
+            try { await ctx.storage.delete(oldId); } catch { /* ignorar si ya fue eliminada */ }
+        }
+
+        // Insertar nueva ID en la posición correcta
+        while (currentIds.length <= args.index) currentIds.push(null);
+        currentIds[args.index] = args.storageId;
+
+        await ctx.db.patch(existing._id, {
+            profileImageIds: currentIds.filter((id): id is Id<"_storage"> => id !== null),
+            updatedAt: Date.now(),
+        });
+    },
+});
+
+/**
+ * Elimina una foto de perfil del storage y limpia su ID del siteConfig.
+ */
+export const deleteProfileImage = mutation({
+    args: { index: v.number() },
+    handler: async (ctx, args) => {
+        const existing = await ctx.db.query("siteConfig").first();
+        if (!existing) return;
+
+        const currentIds = [...(existing.profileImageIds || [])];
+        const idToDelete = currentIds[args.index];
+        if (idToDelete) {
+            try { await ctx.storage.delete(idToDelete); } catch { /* ignorar */ }
+            currentIds.splice(args.index, 1);
+            await ctx.db.patch(existing._id, {
+                profileImageIds: currentIds,
+                updatedAt: Date.now(),
+            });
+        }
+    },
+});
+
+/**
  * Obtiene la configuración actual del sitio.
+ * Resuelve los storageIds de fotos de perfil a URLs públicas.
  */
 export const get = query({
     args: {},
     handler: async (ctx) => {
         const config = await ctx.db.query("siteConfig").first();
-        return config;
+        if (!config) return null;
+
+        // Resolver IDs de storage a URLs públicas
+        let resolvedProfileImages = [...(config.profileImages || [])];
+        if (config.profileImageIds && config.profileImageIds.length > 0) {
+            const storageUrls = await Promise.all(
+                config.profileImageIds.map(id => ctx.storage.getUrl(id))
+            );
+            // Las fotos de storage tienen prioridad sobre las URLs externas
+            resolvedProfileImages = storageUrls.filter((url): url is string => url !== null);
+        }
+
+        return {
+            ...config,
+            profileImages: resolvedProfileImages,
+        };
     },
 });
 
@@ -93,8 +173,7 @@ export const update = mutation({
 });
 
 /**
- * Inicializa la configuración con datos por defecto (Seed).
- * Solo crea si no existe.
+ * Inicializa con valores por defecto si no existe. (Seed)
  */
 export const initialize = mutation({
     args: {},
@@ -106,13 +185,24 @@ export const initialize = mutation({
 });
 
 /**
- * Fuerza el reset al estado por defecto (marca blanca).
+ * Resetea todo a los valores de marca blanca.
+ * TAMBIÉN elimina las fotos de perfil del storage.
  */
 export const resetToDefaults = mutation({
     args: {},
     handler: async (ctx) => {
         const existing = await ctx.db.query("siteConfig").first();
-        const defaults = getDefaults();
+        const defaults = { ...getDefaults(), profileImageIds: undefined };
+
+        // Eliminar fotos de storage si existían
+        if (existing?.profileImageIds) {
+            await Promise.all(
+                existing.profileImageIds.map(id =>
+                    ctx.storage.delete(id).catch(() => { /* ignorar */ })
+                )
+            );
+        }
+
         if (existing) {
             await ctx.db.patch(existing._id, defaults);
             return existing._id;
@@ -133,12 +223,7 @@ function getDefaults() {
         primaryColor: "#ff2d75",
         secondaryColor: "#00f3ff",
         backgroundColor: "#0d0d12",
-        socialLinks: {
-            instagram: "",
-            twitter: "",
-            onlyfans: "",
-            tiktok: "",
-        },
+        socialLinks: { instagram: "", twitter: "", onlyfans: "", tiktok: "" },
         contactEmail: "contact@domain.fun",
         bio: "Official digital platform. Exclusive content, personalized experiences, and direct connection.",
         metaDescription: "Official Site - Exclusive Gallery, Content Packs and more.",
@@ -147,21 +232,14 @@ function getDefaults() {
         locations: ["Caracas"],
         weight: "55kg",
         stats: DEFAULT_STATS,
-        schedule: {
-            is24h: true,
-            workingDays: ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"],
-        },
+        schedule: { is24h: true, workingDays: ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"] },
         pricing: { h1: 100, h2: 180, night: 500 },
         vesRate: 40,
         taxiIncluded: false,
         paymentMethods: ["Ca$h", "Pago móvil", "Zelle"],
         services: ["Trato de Novia", "Cita Social", "Masajes Relajantes"],
         targetAudience: ["Hombres"],
-        activePromo: {
-            label: "Promo Apertura",
-            description: "1 Hora c/taxi incluido en zona céntrica",
-            isActive: false,
-        },
+        activePromo: { label: "Promo Apertura", description: "1 Hora c/taxi incluido en zona céntrica", isActive: false },
         personalMessage: "¡Contáctame para una experiencia inolvidable!",
         updatedAt: Date.now(),
     };
