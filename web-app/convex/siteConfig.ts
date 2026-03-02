@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { Id } from "./_generated/dataModel";
+import { requireTenantAccess, requireStaff } from "./permissions";
 
 const statSchema = v.object({
     label: v.string(),
@@ -17,13 +18,19 @@ const DEFAULT_STATS = [
 
 /**
  * Genera una URL de subida para las fotos de perfil en Convex Storage.
+ * Solo usuarios autenticados del tenant pueden generar URLs.
  */
-export const generateProfileImageUploadUrl = mutation(async (ctx) => {
-    return await ctx.storage.generateUploadUrl();
+export const generateProfileImageUploadUrl = mutation({
+    args: { tenantId: v.id("tenants") },
+    handler: async (ctx, args) => {
+        await requireStaff(ctx, args.tenantId);
+        return await ctx.storage.generateUploadUrl();
+    },
 });
 
 /**
  * Guarda el storageId de una foto de perfil en la posición indicada (0 o 1).
+ * Solo staff del tenant puede modificar fotos de perfil.
  */
 export const saveProfileImage = mutation({
     args: {
@@ -32,6 +39,9 @@ export const saveProfileImage = mutation({
         index: v.number(), // 0 = primera, 1 = segunda
     },
     handler: async (ctx, args) => {
+        // Verificar que el usuario sea staff del tenant
+        await requireStaff(ctx, args.tenantId);
+        
         const existing = await ctx.db
             .query("siteConfig")
             .withIndex("by_tenant", (q) => q.eq("tenantId", args.tenantId))
