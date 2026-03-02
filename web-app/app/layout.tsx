@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
+import { headers } from "next/headers";
 import "./globals.css";
 
 const inter = Inter({
@@ -31,8 +32,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Obtener headers del middleware (tenant detection)
+  const headersList = headers();
+  const tenantSlug = headersList.get('x-tenant-slug') || 'default';
+  const tenantDetection = headersList.get('x-tenant-detection') || 'fallback';
+  
   return (
     <html lang="es">
+      <head>
+        {/* Inyectar tenant info para que useTenant() lo lea en cliente */}
+        <meta name="x-tenant-slug" content={tenantSlug} />
+        <meta name="x-tenant-detection" content={tenantDetection} />
+      </head>
       <body className={`${inter.variable} ${outfit.variable}`} style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
         <ConvexClientProvider>
           <LanguageProvider>
@@ -47,7 +58,7 @@ export default function RootLayout({
                   color: '#666',
                   borderTop: '1px solid #1a1a1a',
                 }}>
-                  © 2026 Zynch by iwai — Powered by{' '}
+                  2026 Zynch by iwai — Powered by{' '}
                   <a href="https://www.iwai.work" target="_blank" rel="noopener noreferrer" style={{ color: '#666', textDecoration: 'none', fontWeight: 'bold' }}>
                     IWAI - Automated Processes
                   </a>
