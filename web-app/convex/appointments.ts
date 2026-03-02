@@ -15,10 +15,11 @@ export const create = mutation({
     handler: async (ctx, args) => {
         const existing = await ctx.db
             .query("appointments")
-            .withIndex("by_date", (q) => q.eq("date", args.date))
+            .withIndex("by_tenant_date", (q) =>
+                q.eq("tenantId", args.tenantId).eq("date", args.date)
+            )
             .filter((q) => q.eq(q.field("time"), args.time))
-            .filter((q) => q.eq(q.field("tenantId"), args.tenantId))
-            .unique();
+            .first();
 
         if (existing) {
             throw new Error("Este horario ya no está disponible.");

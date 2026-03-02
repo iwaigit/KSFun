@@ -29,7 +29,7 @@ export default defineSchema({
 
     // Sistema de Citas Profesional
     appointments: defineTable({
-        tenantId: v.id("tenants"),
+        tenantId: v.optional(v.id("tenants")),
         userId: v.id("users"),
         date: v.string(),
         time: v.string(),
@@ -44,7 +44,7 @@ export default defineSchema({
 
     // Tienda y Pedidos
     products: defineTable({
-        tenantId: v.id("tenants"),
+        tenantId: v.optional(v.id("tenants")),
         name: v.string(),
         description: v.string(),
         priceUSD: v.number(),
@@ -57,7 +57,7 @@ export default defineSchema({
     }).index("by_tenant", ["tenantId"]),
 
     orders: defineTable({
-        tenantId: v.id("tenants"),
+        tenantId: v.optional(v.id("tenants")),
         userId: v.id("users"),
         items: v.array(v.object({
             id: v.string(),
@@ -83,7 +83,7 @@ export default defineSchema({
 
     // Logs de Actividad (CRM)
     activityLogs: defineTable({
-        tenantId: v.id("tenants"),
+        tenantId: v.optional(v.id("tenants")),
         userId: v.id("users"),
         action: v.string(),
         details: v.string(),
@@ -100,7 +100,7 @@ export default defineSchema({
 
     // Galería de Fotos (Marketing)
     gallery: defineTable({
-        tenantId: v.id("tenants"),
+        tenantId: v.optional(v.id("tenants")),
         storageId: v.id("_storage"),
         alt: v.string(),
         order: v.number(),
@@ -110,11 +110,11 @@ export default defineSchema({
 
     // Configuración Específica del Inquilino (Perfil/Branding)
     siteConfig: defineTable({
-        tenantId: v.id("tenants"),
+        tenantId: v.optional(v.id("tenants")),
         performerName: v.string(),
         initials: v.optional(v.string()),
         tagline: v.string(),
-        profileImages: v.array(v.string()),
+        profileImages: v.optional(v.array(v.string())),
         profileImageIds: v.optional(v.array(v.id("_storage"))),
         primaryColor: v.string(),
         secondaryColor: v.string(),

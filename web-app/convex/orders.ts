@@ -17,6 +17,16 @@ export const createOrder = mutation({
         totalUSD: v.number(),
     },
     handler: async (ctx, args) => {
+        // Validar que todos los items pertenezcan al inquilino (si son productos)
+        for (const item of args.items) {
+            if (item.type === 'product') {
+                const product = await ctx.db.get(item.id as any) as any;
+                if (!product || product.tenantId !== args.tenantId) {
+                    throw new Error(`El producto ${item.name} no pertenece a este inquilino.`);
+                }
+            }
+        }
+
         const orderId = await ctx.db.insert("orders", {
             tenantId: args.tenantId,
             userId: args.userId,

@@ -16,6 +16,18 @@ export const getActive = query({
 });
 
 /**
+ * Obtener un producto por ID con validación de inquilino
+ */
+export const getById = query({
+    args: { productId: v.id("products"), tenantId: v.id("tenants") },
+    handler: async (ctx, args) => {
+        const product = await ctx.db.get(args.productId);
+        if (!product || product.tenantId !== args.tenantId) return null;
+        return product;
+    },
+});
+
+/**
  * Crear un nuevo producto
  */
 export const create = mutation({

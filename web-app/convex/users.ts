@@ -24,10 +24,11 @@ export const register = mutation({
         const existingUser = await ctx.db
             .query("users")
             .withIndex("by_email", (q) => q.eq("email", args.email.toLowerCase()))
-            .unique();
+            .filter((q) => q.eq(q.field("tenantId"), args.tenantId))
+            .first();
 
         if (existingUser) {
-            throw new Error("Este correo electrónico ya está registrado.");
+            throw new Error("Este correo electrónico ya está registrado en este sitio.");
         }
 
         const birthDate = new Date(args.birthdate);
@@ -77,7 +78,8 @@ export const login = mutation({
         const user = await ctx.db
             .query("users")
             .withIndex("by_email", (q) => q.eq("email", args.email.toLowerCase()))
-            .unique();
+            .filter((q) => q.eq(q.field("tenantId"), args.tenantId))
+            .first();
 
         if (!user || user.password !== args.password.toUpperCase()) {
             throw new Error("Credenciales inválidas.");
