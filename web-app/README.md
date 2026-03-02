@@ -1,24 +1,24 @@
 # Zynch by iwai 🦎
 
-**Zynch by iwai** is a high-performance, camouflaged multi-user SAAS platform designed for personal service professionals. Built with Next.js and Convex, it offers a seamless experience for managing appointments, galleries, and digital products with a fully customizable "camaleonic" identity.
+**Zynch by iwai** es una plataforma SAAS multi-usuario de alto rendimiento y camaleónica diseñada para profesionales de servicios personales. Construida con Next.js y Convex, ofrece una experiencia fluida para la gestión de citas, galerías y productos digitales con una identidad completamente personalizable.
 
-## Features
+## Características
 
-- **Camaleonic Identity**: Fully customizable branding per user (colors, logos, stats).
-- **Automated Appointments**: Streamlined scheduling system.
-- **Premium Gallery**: High-quality media management.
-- **IWAI Core**: Powered by IWAI - Automated Processes.
+- **Identidad Camaleónica**: Branding totalmente personalizable por usuario (colores, logos, estadísticas).
+- **Citas Automatizadas**: Sistema de programación simplificado.
+- **Galería Premium**: Gestión de medios de alta calidad.
+- **IWAI Core**: Potenciado por IWAI - Automated Processes.
 
-## Getting Started
+## Comenzando
 
-First, run the development server:
+Primero, inicia el servidor de desarrollo:
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre [http://localhost:3000](http://localhost:3000) en tu navegador para ver el resultado.
 
-## Powered by IWAI
-This project is part of the IWAI ecosystem of intelligent automation.
+## Potenciado por IWAI
+Este proyecto es parte del ecosistema IWAI de automatización inteligente.
 [www.iwai.work](https://www.iwai.work)

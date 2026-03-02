@@ -1,17 +1,17 @@
-# Zynch AI Orchestrator 🤖🤝🦎
+# Orquestador de IA Zynch 🤖🤝🦎
 
-This directory houses the logic and agents for **CrewAI**, which works in tandem with **Antigravity** to maintain and evolve the Zynch platform.
+Este directorio alberga la lógica y los agentes para **CrewAI**, que trabajan en conjunto con **Antigravity** para mantener y evolucionar la plataforma Zynch.
 
-## 👥 The Crew (Proposed Roles)
+## 👥 El Equipo (Roles Propuestos)
 
-1.  **SaaS Architect**: Focuses on database normalization, scaling patterns, and multi-tenant isolation.
-2.  **Security Officer**: Audits permissions in Convex and ensures no data leaks between tenants.
-3.  **Bussiness Strategist**: Identifies new "Camaleonic" features based on market trends (provided by IWAI).
+1.  **Arquitecto SaaS**: Se enfoca en la normalización de la base de datos, patrones de escalado y aislamiento multi-inquilino.
+2.  **Oficial de Seguridad**: Audita los permisos en Convex y asegura que no haya fugas de datos entre inquilinos.
+3.  **Estratega de Negocios**: Identifica nuevas características "Camaleónicas" basadas en las tendencias del mercado (proporcionadas por IWAI).
 
-## 🛠️ Tools
-- **CrewAI Framework**: Orchestrating agent interactions.
-- **Convex CLI**: For database auditing.
-- **Next.js Analysis**: For frontend performance optimization.
+## 🛠️ Herramientas
+- **Framework CrewAI**: Orquestando la interacción entre agentes.
+- **Convex CLI**: Para la auditoría de la base de datos.
+- **Análisis Next.js**: Para la optimización del rendimiento del frontend.
 
 ---
-*Collaborative Intelligence by IWAI*
+*Inteligencia Colaborativa por IWAI*
