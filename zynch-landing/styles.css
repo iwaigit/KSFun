@@ -216,15 +216,15 @@ body {
 
 .floating-card {
     position: absolute;
-    width: 125px;
-    /* 50% de 250px */
-    height: 165px;
-    /* Ajuste proporcional */
+    width: 280px;
+    /* Redimensionado para armonía con carrusel */
+    height: 370px;
     animation: float 6s ease-in-out infinite;
     cursor: pointer;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.6s;
     user-select: none;
     overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 .card-img {
@@ -235,27 +235,97 @@ body {
 
 .tenant-badge {
     position: absolute;
-    bottom: 8px;
+    bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
     color: white;
-    padding: 3px 8px;
-    font-size: 9px;
+    padding: 6px 14px;
+    font-size: 11px;
     font-weight: 900;
     text-transform: uppercase;
-    border-radius: 4px;
+    border-radius: 6px;
     white-space: nowrap;
     z-index: 5;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
+    backdrop-filter: blur(4px);
 }
 
 .card-1 .tenant-badge {
-    background: var(--neon-pink);
+    background: rgba(190, 46, 87, 0.85);
 }
 
 .card-2 .tenant-badge {
-    background: var(--neon-cyan);
+    background: rgba(158, 173, 92, 0.85);
     color: #1a1a1a;
+}
+
+.card-1 {
+    transform: rotate(-10deg);
+    z-index: 2;
+}
+
+.card-2 {
+    transform: translate(120px, 60px) rotate(10deg);
+    z-index: 1;
+    animation-delay: 2s;
+}
+
+/* Estado Intercambiado */
+.hero-visual.is-swapped .card-1 {
+    z-index: 1;
+    transform: translate(120px, 60px) rotate(8deg);
+}
+
+.hero-visual.is-swapped .card-2 {
+    z-index: 2;
+    transform: translate(0, 0) rotate(-8deg);
+}
+
+/* Responsive Hero Visuals */
+@media (max-width: 992px) {
+    .floating-card {
+        width: 200px;
+        height: 260px;
+    }
+
+    .card-2,
+    .hero-visual.is-swapped .card-1 {
+        transform: translate(80px, 40px) rotate(10deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 140px;
+    }
+
+    .hero-content {
+        margin-bottom: 80px;
+    }
+
+    .hero-visual {
+        height: 400px;
+        width: 100%;
+    }
+
+    .floating-card {
+        width: 180px;
+        height: 240px;
+    }
+}
+
+@media (max-width: 480px) {
+    .floating-card {
+        width: 150px;
+        height: 200px;
+    }
+
+    .card-2,
+    .hero-visual.is-swapped .card-1 {
+        transform: translate(50px, 25px) rotate(10deg);
+    }
 }
 
 .card-1 {
