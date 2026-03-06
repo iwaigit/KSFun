@@ -357,6 +357,26 @@ export const getAppointments = query({
 
 ---
 
+## 12. Estrategia de Comunicación Segura (Zynch Connect) - [Marzo 2026]
+
+Para garantizar la longevidad del negocio y proteger a los inquilinos de las políticas restrictivas de WhatsApp (Meta), se establece el sistema **"Zynch Connect"**.
+
+### El Embudo de Comunicación:
+1.  **Puerta de Enlace (WhatsApp):** Uso de WhatsApp únicamente para el primer contacto y marketing externo. Reducción de riesgo de baneo mediante mensajes cortos y derivación inmediata.
+2.  **Migración de Tráfico:** Los inquilinos invitan al cliente a continuar en el **Chat Interno de Zynch** mediante incentivos (fotos 4K sin compresión, marcas de agua dinámicas, agendamiento seguro).
+3.  **Chat Privado (Zynch App):** 
+    *   **Independencia:** Si WhatsApp banea un número, la comunicación con el cliente sigue intacta en la plataforma.
+    *   **Privacidad Elite:** Mensajes efímeros, bloqueo de capturas de pantalla y control total de la base de datos de contactos.
+    *   **Fidelización:** El cliente permanece dentro del ecosistema Zynch, aumentando el MRR (Monthly Recurring Revenue).
+
+### Valor Añadido por Plan:
+*   **Plan Pro:** Gateway básico de WhatsApp.
+*   **Plan Elite:** Acceso completo a **Zynch Connect**, envío de packs por chat y notificaciones push ilimitadas.
+
+---
+
+**Nota del Arquitecto:** El roadmap es el documento vivo que guía cada línea de código. Se revisa y actualiza en cada sesión para asegurar que la construcción del "edificio Zynch" sea coherente con la visión de negocio a largo plazo.
+
 ## 11. Decisiones Arquitectónicas Recientes (Marzo 2026)
 
 ### 11.1 Separación de Marketing y Producto
@@ -367,7 +387,7 @@ Se ha decidido formalmente separar la experiencia de usuario en dos entornos dis
 ### 11.2 Rediseño de Navegación (Conversión)
 Para alinear el landing page con los estándares de la industria SaaS (tipo Stripe/Vercel), se implementan cambios en la jerarquía visual de la barra de navegación:
 - **Login (Acceso):** Link sutil tipo "Ingresar" para usuarios existentes, evitando ruido visual.
-- **CTA Principal (Registro):** Botón destacado "Crear Negocio" que redirige al flujo de onboarding en la aplicación.
+- **CTA Principal (Registro)::** Botón destacado "Crear Negocio" que redirige al flujo de onboarding en la aplicación.
 - **Acceso Directo:** El botón del Hero se sincroniza con el CTA de la navegación para una experiencia consistente.
 
 ---
