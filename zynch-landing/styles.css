@@ -120,7 +120,22 @@ body {
     transition: color 0.3s;
 }
 
-.nav-links a:hover {
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.nav-login-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+.nav-login-link:hover {
     color: var(--neon-cyan);
 }
 
@@ -799,6 +814,14 @@ body {
     }
 
     .nav-links a {
+        font-size: 12px;
+    }
+
+    .nav-actions {
+        gap: 15px;
+    }
+
+    .nav-login-link {
         font-size: 12px;
     }
 

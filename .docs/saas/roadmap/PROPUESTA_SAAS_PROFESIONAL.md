@@ -353,6 +353,21 @@ export const getAppointments = query({
 
 ---
 
+## 11. Decisiones Arquitectónicas Recientes (Marzo 2026)
+
+### 11.1 Separación de Marketing y Producto
+Se ha decidido formalmente separar la experiencia de usuario en dos entornos distintos para maximizar la conversión y la seguridad:
+- **Marketing (Landing Page):** `www.zynch.app`. Enfocado en la captación, velocidad de carga (SEO) y presentación de beneficios/precios.
+- **Producto (SaaS App):** `app.zynch.app`. Entorno dinámico y seguro donde reside la lógica de autenticación (Clerk/Convex), el dashboard del inquilino y la gestión de datos.
+
+### 11.2 Rediseño de Navegación (Conversión)
+Para alinear el landing page con los estándares de la industria SaaS (tipo Stripe/Vercel), se implementan cambios en la jerarquía visual de la barra de navegación:
+- **Login (Acceso):** Link sutil tipo "Ingresar" para usuarios existentes, evitando ruido visual.
+- **CTA Principal (Registro):** Botón destacado "Crear Negocio" que redirige al flujo de onboarding en la aplicación.
+- **Acceso Directo:** El botón del Hero se sincroniza con el CTA de la navegación para una experiencia consistente.
+
+---
+
 ## Conclusión
 
 Zynch tiene una base técnica sólida (Convex multi-tenant, Next.js camaleónico). La profesionalización requiere:
@@ -365,9 +380,14 @@ Zynch tiene una base técnica sólida (Convex multi-tenant, Next.js camaleónico
 
 ---
 
+**Documento actualizado:** 2026-03-06  
+**Cambios por:** Antigravity AI (en nombre de Alberto CEO)
+
+---
+
 **Documento preparado para:** Alberto CEO & Pablo Weber - IWAI Automated Processes  
 **Fecha de revisión:** [Pendiente - agregar fecha cuando se discuta]  
-**Próximo paso:** Reunión de decisión sobre roadmap y asignación de recursos
+**Próximo paso:** Implementación técnica de navegación responsiva y CTAs en Home
 
 ---
 
