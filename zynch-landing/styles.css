@@ -178,19 +178,52 @@ body {
     flex: 1;
 }
 
-.hero-title {
-    font-family: var(--font-heading);
-    font-size: 64px;
-    line-height: 1.1;
-    font-weight: 900;
-    margin-bottom: 24px;
+.hero-brand {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-transform: uppercase;
 }
 
-.gradient-text {
-    background: linear-gradient(to right, var(--neon-cyan), var(--sky-blue), var(--neon-pink));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+.hero-logo {
+    height: 120px;
+    width: auto;
+    filter: drop-shadow(0 0 20px rgba(158, 173, 92, 0.3));
+}
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: 85px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -2px;
+    margin: 0;
+    padding-top: 10px;
+}
+
+.hero-tagline {
+    font-size: 16px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--neon-cyan);
+    margin-bottom: 40px;
+    font-weight: 700;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+.tagline-sep {
+    color: var(--text-muted);
+    font-weight: 300;
+    margin: 0 10px;
+}
+
+.hero-headline {
+    font-family: var(--font-heading);
+    font-size: 42px;
+    line-height: 1.2;
+    font-weight: 700;
+    margin-bottom: 24px;
 }
 
 .hero-subtitle {
@@ -776,16 +809,36 @@ body {
         min-height: auto;
     }
 
+    .hero-brand {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .hero-logo {
+        height: 80px;
+    }
+
+    .hero-title {
+        font-size: 50px;
+    }
+
+    .hero-tagline {
+        font-size: 12px;
+        letter-spacing: 2px;
+        margin-bottom: 30px;
+    }
+
+    .hero-headline {
+        font-size: 32px;
+    }
+
     .hero-content {
         margin-bottom: 60px;
     }
 
-    .hero-title {
-        font-size: 48px;
-    }
-
     .hero-subtitle {
         margin: 0 auto 40px;
+        font-size: 16px;
     }
 
     .hero-cta {
@@ -831,8 +884,21 @@ body {
 
 /* Mobile (Small) */
 @media (max-width: 480px) {
+    .hero-logo {
+        height: 60px;
+    }
+
     .hero-title {
         font-size: 38px;
+    }
+
+    .hero-tagline {
+        font-size: 10px;
+        letter-spacing: 1px;
+    }
+
+    .hero-headline {
+        font-size: 28px;
     }
 
     .hero-cta {
