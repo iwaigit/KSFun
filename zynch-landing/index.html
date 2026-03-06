@@ -198,82 +198,108 @@
         <!-- Pricing Section -->
         <section id="planes" class="pricing">
             <div class="section-header">
-                <span class="badge">Modelos de Negocio</span>
-                <h2>Planes a tu <span class="neon-cyan">Medida</span></h2>
-                <p>Sin contratos ocultos. Escala a tu ritmo. Cancela cuando quieras.</p>
+                <span class="badge">Inversión</span>
+                <h2>Planes para <span class="gradient-text">Crecer</span></h2>
+                <p>Elige el motor que impulsará tu marca. Sin costos ocultos, solo resultados.</p>
             </div>
 
-            <div class="pricing-grid pricing-grid-3">
+            <!-- Billing cycle toggle -->
+            <div class="pricing-toggle-container">
+                <span class="toggle-label monthly active">Mensual</span>
+                <div class="pricing-toggle-switch" onclick="togglePricing()">
+                    <div class="toggle-puck"></div>
+                </div>
+                <span class="toggle-label quarterly">Trimestral <span class="discount-badge">-10%</span></span>
+                <span class="toggle-label semestral">Semestral <span class="discount-badge">-20%</span></span>
+            </div>
 
-                <!-- Free -->
+            <div class="pricing-grid-4">
+                <!-- Plan Free -->
                 <div class="price-card glass-card">
-                    <div class="plan-icon"><i data-lucide="rocket"></i></div>
+                    <div class="plan-icon"><i data-lucide="zap"></i></div>
                     <div class="price-header">
-                        <h3>Free Trial</h3>
-                        <div class="price">$0<span>/15 días</span></div>
-                        <p class="plan-tagline">Explora sin compromiso</p>
+                        <h3>Free</h3>
+                        <div class="price">$0<span>/mes</span></div>
+                        <p class="plan-tagline">Para empezar hoy mismo</p>
                     </div>
                     <ul class="price-features">
                         <li><i data-lucide="check"></i> 1 Tenant activo</li>
-                        <li><i data-lucide="check"></i> 5 fotos en Galería</li>
-                        <li><i data-lucide="check"></i> Tienda básica</li>
-                        <li><i data-lucide="check"></i> Analytics básico</li>
-                        <li><i data-lucide="check"></i> Soporte por email</li>
-                        <li class="feature-no"><i data-lucide="x"></i> Dominio propio</li>
-                        <li class="feature-no"><i data-lucide="x"></i> Comisión: 15% / transacción</li>
-                        <li class="feature-no"><i data-lucide="x"></i> Storage: 1 GB</li>
+                        <li><i data-lucide="check"></i> 3 Fotos de perfil</li>
+                        <li><i data-lucide="check"></i> Perfil camaleónico</li>
+                        <li><i data-lucide="check"></i> Calendario básico</li>
+                        <li><i data-lucide="check"></i> "Powered by Zynch"</li>
+                        <li><i data-lucide="check"></i> Soporte por comunidad</li>
+                        <li><i data-lucide="check"></i> Storage: 500 MB</li>
                     </ul>
                     <div class="plan-commission">15% comisión</div>
-                    <a href="https://app.zynch.app/onboarding" class="btn btn-outline btn-full">Comenzar Gratis</a>
+                    <a href="https://app.zynch.app/onboarding" class="btn btn-outline btn-full">Empezar Gratis</a>
                 </div>
 
-                <!-- Pro -->
-                <div class="price-card glass-card featured">
-                    <div class="featured-badge">Más Popular</div>
-                    <div class="plan-icon icon-pink"><i data-lucide="zap"></i></div>
+                <!-- Plan Pro -->
+                <div class="price-card glass-card pro">
+                    <div class="plan-icon"><i data-lucide="star"></i></div>
                     <div class="price-header">
                         <h3>Pro</h3>
-                        <div class="price">$49<span>/mes</span></div>
-                        <p class="plan-tagline">Tu marca, sin límites</p>
+                        <div class="price" id="price-pro" data-monthly="60" data-quarterly="54" data-semestral="48">
+                            $60<span>/mes</span></div>
+                        <p class="plan-tagline">Marca profesional</p>
                     </div>
                     <ul class="price-features">
                         <li><i data-lucide="check"></i> 1 Tenant activo</li>
-                        <li><i data-lucide="check"></i> Fotos ilimitadas</li>
+                        <li><i data-lucide="check"></i> 6 Fotos en galería</li>
                         <li><i data-lucide="check"></i> Custom domain propio</li>
-                        <li><i data-lucide="check"></i> Gestión de Clientes VIP</li>
-                        <li><i data-lucide="check"></i> Branding 100% tuyo</li>
-                        <li><i data-lucide="check"></i> WhatsApp &amp; Telegram (n8n)</li>
-                        <li><i data-lucide="check"></i> Promo codes &amp; bundles</li>
-                        <li><i data-lucide="check"></i> Analytics avanzado + export</li>
-                        <li><i data-lucide="check"></i> Soporte prioritario</li>
-                        <li><i data-lucide="check"></i> Onboarding asistido</li>
-                        <li><i data-lucide="check"></i> Storage: 10 GB</li>
+                        <li><i data-lucide="check"></i> Calendario esencial</li>
+                        <li><i data-lucide="check"></i> Sin marca de agua</li>
+                        <li><i data-lucide="check"></i> WhatsApp Directo</li>
+                        <li><i data-lucide="check"></i> Storage: 5 GB</li>
                     </ul>
-                    <div class="plan-commission commission-pro">10% comisión</div>
+                    <div class="plan-commission">10% comisión</div>
                     <a href="https://app.zynch.app/onboarding" class="btn btn-primary btn-full">Adquirir Pro</a>
+                </div>
+
+                <!-- Plan Elite (NUEVO) -->
+                <div class="price-card glass-card elite featured">
+                    <div class="popular-badge">Más Vendido</div>
+                    <div class="plan-icon icon-pink"><i data-lucide="trophy"></i></div>
+                    <div class="price-header">
+                        <h3>Elite</h3>
+                        <div class="price" id="price-elite" data-monthly="95" data-quarterly="85" data-semestral="76">
+                            $95<span>/mes</span></div>
+                        <p class="plan-tagline">Potencia máxima individual</p>
+                    </div>
+                    <ul class="price-features">
+                        <li><i data-lucide="check"></i> 1 Tenant activo</li>
+                        <li><i data-lucide="check"></i> <strong>12 Fotos (Máximo)</strong></li>
+                        <li><i data-lucide="check"></i> <strong>Tienda de Packs</strong></li>
+                        <li><i data-lucide="check"></i> Calendario Ilimitado</li>
+                        <li><i data-lucide="check"></i> Gestión VIP avanzada</li>
+                        <li><i data-lucide="check"></i> Promo codes & bundles</li>
+                        <li><i data-lucide="check"></i> Storage: 20 GB</li>
+                    </ul>
+                    <div class="plan-commission">8% comisión</div>
+                    <a href="https://app.zynch.app/onboarding" class="btn btn-primary btn-full">Suscribirse Elite</a>
                 </div>
 
                 <!-- Enterprise -->
                 <div class="price-card glass-card enterprise">
-                    <div class="enterprise-badge">Escala Máxima</div>
+                    <div class="enterprise-badge">Agencias</div>
                     <div class="plan-icon icon-cyan"><i data-lucide="building-2"></i></div>
                     <div class="price-header">
                         <h3>Enterprise</h3>
-                        <div class="price">$199<span>/mes</span></div>
-                        <p class="plan-tagline">Franquicia multi-tenant</p>
+                        <div class="price" id="price-enterprise" data-monthly="199" data-quarterly="179"
+                            data-semestral="159">$199<span>/mes</span></div>
+                        <p class="plan-tagline">Multi-tenant illimitado</p>
                     </div>
                     <ul class="price-features">
-                        <li><i data-lucide="check"></i> Múltiples tenants (franquicia)</li>
-                        <li><i data-lucide="check"></i> White-label completo</li>
-                        <li><i data-lucide="check"></i> API access + webhooks</li>
-                        <li><i data-lucide="check"></i> Analytics con API</li>
+                        <li><i data-lucide="check"></i> Múltiples tenants</li>
+                        <li><i data-lucide="check"></i> White-label total</li>
+                        <li><i data-lucide="check"></i> API & Webhooks</li>
                         <li><i data-lucide="check"></i> Soporte dedicado 24/7</li>
-                        <li><i data-lucide="check"></i> Onboarding white-glove</li>
-                        <li><i data-lucide="check"></i> Storage: 100 GB</li>
+                        <li><i data-lucide="check"></i> Onboarding asistido</li>
+                        <li><i data-lucide="check"></i> Storage: 100 GB+</li>
                         <li><i data-lucide="check"></i> Setup personalizado</li>
-                        <li><i data-lucide="check"></i> Contrato anual disponible</li>
                     </ul>
-                    <div class="plan-commission commission-enterprise">5% comisión o flat fee</div>
+                    <div class="plan-commission">5% comisión</div>
                     <a href="mailto:hola@zynch.app" class="btn btn-enterprise btn-full">Contactar Ventas</a>
                 </div>
 
@@ -355,6 +381,7 @@
         </div>
     </footer>
 
+    <script src="js/pricing.js"></script>
     <script>
         // Initialize Icons
         lucide.createIcons();

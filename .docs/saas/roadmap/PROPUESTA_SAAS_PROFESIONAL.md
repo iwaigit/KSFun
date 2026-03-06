@@ -186,19 +186,23 @@ POST /api/admin/tenants  o  POST /api/onboard (self-service)
 
 ### Estructura de planes propuesta:
 
-| Feature | Free | Pro ($49/mes) | Enterprise ($199/mes) |
-|---------|------|---------------|----------------------|
-| **Tenants** | 1 | 1 | Múltiples (franquicia) |
-| **Branding** | "Powered by Zynch" | Custom domain | White-label completo |
-| **Comisión** | 15% por transacción | 10% | 5% o flat fee |
-| **Storage** | 1GB | 10GB | 100GB |
-| **Analytics** | Básico | Avanzado + export | API access |
-| **Soporte** | Email | Prioridad | Dedicado |
-| **Onboarding** | Self-service | Asistido | White-glove |
-| **Features** | Core | + Promo codes, bundles | + API, webhooks |
+| Feature | Free | Pro ($60/mes) | Elite ($95/mes) | Enterprise ($199/mes) |
+|---------|------|---------------|-----------------|-----------------------|
+| **Tenants** | 1 | 1 | 1 | Múltiples (franquicia) |
+| **Fotos** | 3 | 6 | 12 | Ilimitadas |
+| **Tienda** | No | No | Sí (Packs) | Sí (Full) |
+| **Calendario** | Básico | Básico | Ilimitado | Avanzado |
+| **Branding** | "Zynch" | Custom domain | Custom domain | White-label |
+| **Comisión** | 15% | 10% | 8% | 5% o flat fee |
+| **Storage** | 500MB | 5GB | 20GB | 100GB |
+
+### Estrategia de Retención (Commitment Discount):
+- **Mensual:** Precio base.
+*   **Trimestral (3 meses):** 10% de descuento (Pago único adelantado).
+*   **Semestral (6 meses):** 20% de descuento (Mejor valor).
 
 ### Revenue Streams:
-1. **Suscripción mensual** (MRR)
+1. **Suscripción mensual/anual** (MRR)
 2. **Comisión por transacción** (citaspagadas, packs vendidos)
 3. **Add-ons:** SMS notifications, extra storage, custom domain
 4. **Enterprise:** Setup fee ($2,000-5,000) + contrato anual
