@@ -14,12 +14,11 @@
 > Se ha alcanzado la estabilidad en el núcleo del sistema con aislamiento multi-tenant estricto y auditoría de IA activa.
 
 ## Estructura del Proyecto
-
-- **[![Zynch](./.assets/zynch-icon.ico)](./#)** [web-app](./web-app/): La aplicación principal construida con Next.js 16, Tailwind CSS y Convex.
-- **[![Zynch](./.assets/zynch-icon.ico)](./#)** [ai-orchestrator](./ai-orchestrator/): Sistema de agentes de IA para auditoría de seguridad y arquitectura.
-- **[![Zynch](./.assets/zynch-icon.ico)](./#)** [.docs](./.docs/): Documentación técnica y funcional (Sincronizada con GitBook).
-- **[![Zynch](./.assets/zynch-icon.ico)](./#)** [.docs/references](./.docs/references/): Archivos de referencia y benchmarks.
-- **[![Zynch](./.assets/zynch-icon.ico)](./#)** [Email Infrastructure Roadmap](./.docs/saas/roadmap/ZYNCH_EMAIL_IMPLEMENTATION_PLAN.md): Plan completo de implementación multi-tenant con Mailgun, auditoría Convex y casos críticos (recibos, estados de cuenta, verificación).
+- **[![Zynch](./.assets/zynch-icon-30.ico)](./#)** [web-app](./web-app/): La aplicación principal construida con Next.js 16, Tailwind CSS y Convex.
+- **[![Zynch](./.assets/zynch-icon-30.ico)](./#)** [ai-orchestrator](./ai-orchestrator/): Sistema de agentes de IA para auditoría de seguridad y arquitectura.
+- **[![Zynch](./.assets/zynch-icon-30.ico)](./#)** [.docs](./.docs/): Documentación técnica y funcional (Sincronizada con GitBook).
+- **[![Zynch](./.assets/zynch-icon-30.ico)](./#)** [.docs/references](./.docs/references/): Archivos de referencia y benchmarks.
+- **[![Zynch](./.assets/zynch-icon-30.ico)](./#)** [Email Infrastructure Roadmap](./.docs/saas/roadmap/ZYNCH_EMAIL_IMPLEMENTATION_PLAN.md): Plan completo de implementación multi-tenant con Mailgun, auditoría Convex y casos críticos (recibos, estados de cuenta, verificación).
 
 ## Identidad: Zynch by iwai
 
