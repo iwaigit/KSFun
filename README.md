@@ -19,6 +19,7 @@
 - **[ai-orchestrator/](./ai-orchestrator/)**: Sistema de agentes de IA para auditoría de seguridad y arquitectura.
 - **[.docs/](./.docs/)**: Documentación técnica y funcional (Sincronizada con GitBook).
 - **[.docs/references/](./.docs/references/)**: Archivos de referencia y benchmarks.
+- **[📧 Email Infrastructure Roadmap](./.docs/saas/roadmap/ZYNCH_EMAIL_IMPLEMENTATION_PLAN.md)**: Plan completo de implementación multi-tenant con Mailgun, auditoría Convex y casos críticos (recibos, estados de cuenta, verificación).
 
 ## Identidad: Zynch by iwai
 
