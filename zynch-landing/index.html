@@ -91,6 +91,20 @@
             }
         }
 
+        .zynchito-logo {
+            width: 140px;
+            height: auto;
+            margin-bottom: 1.5rem;
+            animation: float 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(190, 46, 87, 0.4));
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
         .logo {
             font-family: 'Outfit', sans-serif;
             font-size: 5rem;
@@ -221,6 +235,7 @@
     <div class="glow"></div>
 
     <div class="container">
+        <img src="./zynchito.png" alt="Zynchito Logo" class="zynchito-logo" />
         <div class="badge">Próximo Lanzamiento</div>
         <div class="logo">zynch.app</div>
         <div class="subtitle">Estamos construyendo el **SaaS élite** que redefinirá la gestión de tu negocio
