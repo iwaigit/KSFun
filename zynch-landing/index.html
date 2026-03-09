@@ -11,15 +11,23 @@
     <!-- Fuentes premium de Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
-            /* Paleta Oficial Zynch */
-            --bg-dark: #09090b;
-            --primary: #FF2D55;
-            --secondary: #00F0FF;
-            --text-light: #f8fafc;
+            /* Paleta Oficial Zynch - NO MODIFICAR - */
+            --bg-dark: #312a30;
+            --neon-pink: #be2e57;
+            --neon-cyan: #9ead5c;
+            --sky-blue: #9fd7fb;
+            --deep-red: #840824;
+            --text-light: #ffffff;
+            --text-muted: #a2bfcc;
+            /* Mapeo de colores para compatibilidad */
+            --primary: var(--neon-pink);
+            --secondary: var(--neon-cyan);
         }
 
         body,
@@ -30,7 +38,7 @@
             height: 100%;
             background-color: var(--bg-dark);
             color: var(--text-light);
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Inter', sans-serif;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -38,12 +46,12 @@
             overflow: hidden;
         }
 
-        /* Efecto de resplandor dinámico de fondo (Glassmorphism & Gradients) */
+        /* Efecto de resplandor usando los tonos oficiales */
         .glow {
             position: absolute;
             width: 800px;
             height: 800px;
-            background: radial-gradient(circle, rgba(255, 45, 85, 0.15) 0%, rgba(0, 240, 255, 0.1) 50%, rgba(9, 9, 11, 0) 70%);
+            background: radial-gradient(circle, rgba(158, 173, 92, 0.15) 0%, rgba(190, 46, 87, 0.1) 50%, transparent 70%);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -84,11 +92,13 @@
         }
 
         .logo {
+            font-family: 'Outfit', sans-serif;
             font-size: 5rem;
             font-weight: 900;
-            letter-spacing: -2px;
+            letter-spacing: 2px;
             margin-bottom: 0.5rem;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: lowercase;
@@ -155,7 +165,8 @@
             font-weight: 700;
             line-height: 1;
             margin-bottom: 0.5rem;
-            background: linear-gradient(180deg, #ffffff, #a1a1aa);
+            background: linear-gradient(180deg, #ffffff, #a2bfcc);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
