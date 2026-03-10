@@ -40,3 +40,8 @@ jobs:
       - name: Build check
         run: npm run build
         working-directory: ./web-app
+
+      - name: Test Convex functions
+        run: npx convex dev --once --no-open
+        working-directory: ./web-app
+        continue-on-error: true # Temporal hasta tener tests formales
