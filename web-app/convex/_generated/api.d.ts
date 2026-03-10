@@ -9,6 +9,7 @@
  */
 
 import type * as activityLogs from "../activityLogs.js";
+import type * as antiAbuse from "../antiAbuse.js";
 import type * as appointments from "../appointments.js";
 import type * as crm from "../crm.js";
 import type * as gallery from "../gallery.js";
@@ -17,8 +18,10 @@ import type * as otp from "../otp.js";
 import type * as permissions from "../permissions.js";
 import type * as products from "../products.js";
 import type * as siteConfig from "../siteConfig.js";
+import type * as storage from "../storage.js";
 import type * as tenants from "../tenants.js";
 import type * as users from "../users.js";
+import type * as utils from "../utils.js";
 
 import type {
   ApiFromModules,
@@ -28,6 +31,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   activityLogs: typeof activityLogs;
+  antiAbuse: typeof antiAbuse;
   appointments: typeof appointments;
   crm: typeof crm;
   gallery: typeof gallery;
@@ -36,8 +40,10 @@ declare const fullApi: ApiFromModules<{
   permissions: typeof permissions;
   products: typeof products;
   siteConfig: typeof siteConfig;
+  storage: typeof storage;
   tenants: typeof tenants;
   users: typeof users;
+  utils: typeof utils;
 }>;
 
 /**

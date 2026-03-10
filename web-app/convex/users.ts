@@ -1,6 +1,8 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 import { Id } from "./_generated/dataModel";
+import { requireAuth, requireTenantAccess, requireStaff } from "./permissions";
+import { checkWhatsAppAvailability, checkDeviceAvailability, checkEmailAvailability } from "./antiAbuse";
 
 /**
  * Registrar un nuevo prospecto (Lead)
@@ -12,8 +14,22 @@ export const register = mutation({
         password: v.string(), // Temporal hasta Clerk
         birthdate: v.string(),
         phone: v.string(),
+        userId: v.optional(v.id("users")), // TEMPORAL: hasta Clerk
+        deviceId: v.string(), // Para anti-abuso
+        planType: v.optional(v.string()), // 'free', 'pro', etc.
     },
     handler: async (ctx, args) => {
+        // RLS: Verificar que el usuario tenga acceso al tenant
+        await requireTenantAccess(ctx, args.tenantId, args.userId);
+        
+        // Anti-Abuse: Verificar disponibilidad si es plan free
+        const planType = args.planType || "free";
+        if (planType === "free") {
+            await checkWhatsAppAvailability(ctx, args.phone);
+            await checkDeviceAvailability(ctx, args.deviceId);
+            await checkEmailAvailability(ctx, args.email);
+        }
+        
         const config = await ctx.db
             .query("siteConfig")
             .withIndex("by_tenant", (q) => q.eq("tenantId", args.tenantId))
@@ -59,6 +75,21 @@ export const register = mutation({
             createdAt: Date.now(),
         });
 
+        // Anti-Abuse: Crear registro de control si es plan free
+        if (planType === "free") {
+            await ctx.db.insert("freePlanControls", {
+                telefono: args.phone,
+                deviceId: args.deviceId,
+                email: args.email,
+                tenantId: args.tenantId,
+                planStatus: "free",
+                canCreateNewFree: false,
+                createdAt: Date.now(),
+                lastActiveAt: Date.now(),
+                suspiciousFlags: [],
+            });
+        }
+
         return userId;
     },
 });
@@ -68,8 +99,14 @@ export const login = mutation({
         tenantId: v.optional(v.id("tenants")),
         email: v.string(),
         password: v.string(),
+        userId: v.optional(v.id("users")), // TEMPORAL: hasta Clerk
     },
     handler: async (ctx, args) => {
+        // RLS: Si se especifica tenantId, verificar acceso
+        if (args.tenantId) {
+            await requireTenantAccess(ctx, args.tenantId, args.userId);
+        }
+
         const user = await ctx.db
             .query("users")
             .withIndex("by_email", (q) => q.eq("email", args.email.toLowerCase()))
@@ -80,6 +117,7 @@ export const login = mutation({
             throw new Error("Credenciales inválidas.");
         }
 
+        // Validación adicional de tenant (doble seguridad)
         if (args.tenantId && user.tenantId !== args.tenantId && user.role !== "admin") {
             throw new Error("No tienes acceso a este sitio.");
         }

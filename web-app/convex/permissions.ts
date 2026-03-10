@@ -11,17 +11,41 @@ import { Id } from "./_generated/dataModel";
  */
 
 /**
- * Verifica autenticación básica y retorna el usuario
+ * Verifica autenticación básica y retorna el usuario autenticado
+ * TEMPORAL: Requiere userId como argumento hasta integrar Clerk
  * @throws Error si no hay usuario autenticado
  */
-export async function requireAuth(ctx: QueryCtx | MutationCtx) {
-    // En Convex, la autenticación se maneja via auth.uid() o similar
-    // Por ahora, buscamos el userId en el contexto o argumentos
-    // Esto es un placeholder - implementación real depende de cómo manejes auth
+export async function requireAuth(ctx: QueryCtx | MutationCtx, userId?: Id<"users">) {
+    // TODO: Cuando integremos Clerk, usaremos ctx.auth.getUserId()
+    // Por ahora, requerimos userId como parámetro temporal
+    
+    if (!userId) {
+        throw new Error("Authentication required: userId must be provided until Clerk is integrated");
+    }
+    
+    const user = await ctx.db.get(userId);
+    
+    if (!user) {
+        throw new Error("Authentication required: User not found");
+    }
+    
+    return user;
+}
+
+/**
+ * Versión temporal de requireAuth para mutations que no tienen userId
+ * TEMPORAL: Busca primer usuario (solo para development)
+ * @deprecated Usar requireAuth con userId cuando sea posible
+ */
+export async function requireAuthTemp(ctx: QueryCtx | MutationCtx) {
+    // TEMPORAL: Esto es inseguro, solo para development
+    console.warn("⚠️ Using insecure requireAuthTemp - integrate Clerk ASAP");
+    
     const user = await ctx.db.query("users").first();
     if (!user) {
-        throw new Error("Authentication required");
+        throw new Error("No users found in database");
     }
+    
     return user;
 }
 
@@ -31,9 +55,10 @@ export async function requireAuth(ctx: QueryCtx | MutationCtx) {
  */
 export async function requireTenantAccess(
     ctx: QueryCtx | MutationCtx,
-    tenantId: Id<"tenants">
+    tenantId: Id<"tenants">,
+    userId?: Id<"users">
 ) {
-    const user = await requireAuth(ctx);
+    const user = await requireAuth(ctx, userId);
     
     // Admin global puede acceder a todos los tenants
     if (user.role === "admin") {
@@ -57,8 +82,8 @@ export async function requireTenantAccess(
  * Verifica que el usuario sea admin global
  * @throws Error si no es admin
  */
-export async function requireAdmin(ctx: QueryCtx | MutationCtx) {
-    const user = await requireAuth(ctx);
+export async function requireAdmin(ctx: QueryCtx | MutationCtx, userId?: Id<"users">) {
+    const user = await requireAuth(ctx, userId);
     if (user.role !== "admin") {
         throw new Error("Access denied: Admin role required");
     }
@@ -69,8 +94,8 @@ export async function requireAdmin(ctx: QueryCtx | MutationCtx) {
  * Verifica que el usuario sea admin o promoter del tenant
  * @throws Error si no tiene permisos de staff
  */
-export async function requireStaff(ctx: QueryCtx | MutationCtx, tenantId: Id<"tenants">) {
-    const user = await requireTenantAccess(ctx, tenantId);
+export async function requireStaff(ctx: QueryCtx | MutationCtx, tenantId: Id<"tenants">, userId?: Id<"users">) {
+    const user = await requireTenantAccess(ctx, tenantId, userId);
     if (user.role !== "admin" && user.role !== "promoter") {
         throw new Error("Access denied: Staff role required");
     }
@@ -83,9 +108,10 @@ export async function requireStaff(ctx: QueryCtx | MutationCtx, tenantId: Id<"te
  */
 export async function requireOwnerOrAdmin(
     ctx: QueryCtx | MutationCtx,
-    resourceOwnerId: Id<"users">
+    resourceOwnerId: Id<"users">,
+    userId?: Id<"users">
 ) {
-    const user = await requireAuth(ctx);
+    const user = await requireAuth(ctx, userId);
     if (user.role === "admin") return user;
     if (user._id !== resourceOwnerId) {
         throw new Error("Access denied: You can only access your own resources");
@@ -99,9 +125,10 @@ export async function requireOwnerOrAdmin(
  */
 export async function requirePermission(
     ctx: QueryCtx | MutationCtx,
-    permission: string
+    permission: string,
+    userId?: Id<"users">
 ) {
-    const user = await requireAuth(ctx);
+    const user = await requireAuth(ctx, userId);
     
     // Admin tiene todos los permisos
     if (user.role === "admin") return user;

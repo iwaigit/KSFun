@@ -1,5 +1,6 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
+import { requireTenantAccess, requireStaff } from "./permissions";
 
 /**
  * Crear una nueva solicitud de cita
@@ -11,8 +12,11 @@ export const create = mutation({
         date: v.string(), // ISO String
         time: v.string(), // ej: "14:00"
         notes: v.optional(v.string()),
+        requestingUserId: v.optional(v.id("users")), // TEMPORAL: hasta Clerk
     },
     handler: async (ctx, args) => {
+        // RLS: Verificar acceso al tenant
+        await requireTenantAccess(ctx, args.tenantId, args.requestingUserId);
         const existing = await ctx.db
             .query("appointments")
             .withIndex("by_tenant_date", (q) =>
@@ -45,9 +49,13 @@ export const create = mutation({
 export const getByUser = query({
     args: {
         tenantId: v.id("tenants"),
-        userId: v.id("users")
+        userId: v.id("users"),
+        requestingUserId: v.optional(v.id("users")), // TEMPORAL: hasta Clerk
     },
     handler: async (ctx, args) => {
+        // RLS: Verificar acceso al tenant
+        await requireTenantAccess(ctx, args.tenantId, args.requestingUserId);
+        
         return await ctx.db
             .query("appointments")
             .withIndex("by_tenant_user", (q) =>
@@ -58,11 +66,17 @@ export const getByUser = query({
 });
 
 /**
- * Obtener todas las citas de un inquilino
+ * Obtener todas las citas de un inquilino (solo staff)
  */
 export const getAll = query({
-    args: { tenantId: v.id("tenants") },
+    args: { 
+        tenantId: v.id("tenants"),
+        requestingUserId: v.optional(v.id("users")), // TEMPORAL: hasta Clerk
+    },
     handler: async (ctx, args) => {
+        // RLS: Solo staff puede ver todas las citas
+        await requireStaff(ctx, args.tenantId, args.requestingUserId);
+        
         return await ctx.db
             .query("appointments")
             .withIndex("by_tenant", (q) => q.eq("tenantId", args.tenantId))
@@ -72,15 +86,18 @@ export const getAll = query({
 });
 
 /**
- * Actualizar estado de cita
+ * Actualizar estado de cita (solo staff)
  */
 export const updateStatus = mutation({
     args: {
         id: v.id("appointments"),
         tenantId: v.id("tenants"),
         status: v.string(), // 'confirmed', 'rejected'
+        requestingUserId: v.optional(v.id("users")), // TEMPORAL: hasta Clerk
     },
     handler: async (ctx, args) => {
+        // RLS: Solo staff puede actualizar citas
+        await requireStaff(ctx, args.tenantId, args.requestingUserId);
         const appointment = await ctx.db.get(args.id);
         if (!appointment || appointment.tenantId !== args.tenantId) {
             throw new Error("Unauthorized: Appointment not found or doesn't belong to this tenant.");

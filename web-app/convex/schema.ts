@@ -193,4 +193,66 @@ export default defineSchema({
 
         updatedAt: v.number(),
     }).index("by_tenant", ["tenantId"]),
+    
+    // --- Anti-Abuso Freemium: Control de Identidad ---
+    
+    // Verificación de identidad para tenants (Pro/Elite)
+    tenantVerification: defineTable({
+        tenantId: v.id("tenants"),
+        rif: v.string(),              // OBLIGATORIO - Validar contra SENIAT
+        cedulaFront: v.id("_storage"),      // Foto frontal cédula
+        cedulaBack: v.id("_storage"),       // Foto trasera cédula
+        selfieWithCedula: v.id("_storage"), // Selfie con cédula en mano
+        nombreLegal: v.string(),      // Como aparece en documento
+        verifiedAt: v.number(),
+        status: v.union(v.literal("pending"), v.literal("approved"), v.literal("rejected")),
+        rejectionReason: v.optional(v.string()),
+    }).index("by_tenant", ["tenantId"])
+      .index("by_status", ["status"]),
+
+    // Control de planes free para prevenir abuso
+    freePlanControls: defineTable({
+        telefono: v.string(),         // WhatsApp verificado (único)
+        deviceId: v.string(),         // Device fingerprint
+        email: v.string(),            // Email asociado
+        tenantId: v.id("tenants"),   // Tenant actual
+        planStatus: v.union(v.literal("free"), v.literal("pro"), v.literal("elite"), v.literal("enterprise")),
+        canCreateNewFree: v.boolean(), // Reset solo con pago
+        createdAt: v.number(),
+        lastActiveAt: v.number(),
+        suspiciousFlags: v.optional(v.array(v.string())), // Banderas de sospecha
+    }).index("by_telefono", ["telefono"])
+      .index("by_device", ["deviceId"])
+      .index("by_email", ["email"])
+      .index("by_status", ["planStatus"]),
+
+    // Contratos digitales firmados por tenants
+    tenantContracts: defineTable({
+        tenantId: v.id("tenants"),
+        planType: v.union(v.literal("pro"), v.literal("elite"), v.literal("enterprise")),
+        contractVersion: v.string(),
+        signedAt: v.number(),
+        ipAddress: v.string(),
+        deviceFingerprint: v.string(),
+        legalAccepted: v.boolean(),
+        contractUrl: v.optional(v.string()), // URL del PDF firmado
+    }).index("by_tenant", ["tenantId"])
+      .index("by_plan", ["planType"]),
+    
+    // --- Storage por Tenant: Control de Archivos ---
+    
+    // Metadatos de archivos de storage por tenant
+    storageFiles: defineTable({
+        tenantId: v.id("tenants"),
+        originalFileId: v.id("_storage"),      // ID del archivo en Convex Storage
+        storagePath: v.string(),               // Ruta virtual: tenants/{tenantId}/{type}/{filename}
+        type: v.string(),                      // 'gallery', 'profile', 'cedula_front', 'cedula_back', 'selfie'
+        filename: v.string(),                  // Nombre del archivo (con watermark si aplica)
+        uploadedAt: v.number(),
+        uploadedBy: v.optional(v.id("users")),  // Quién subió el archivo
+        metadata: v.optional(v.any()),         // Metadata adicional (watermark info, etc.)
+    }).index("by_tenant", ["tenantId"])
+      .index("by_tenant_type", ["tenantId", "type"])
+      .index("by_original_file", ["originalFileId"]),
+
 });
