@@ -405,13 +405,12 @@
 
     <!-- Script de lógica de cuenta regresiva para 2 meses (60 días aprox) -->
     <script>
-        // Configurar la fecha objetivo a 2 meses desde hoy (Mayo 9, 2026 aprox)
-        const targetDate = new Date();
-        targetDate.setMonth(targetDate.getMonth() + 2);
+        // Configurar la fecha objetivo fija: Lanzamiento Oficial SaaS (30 de Julio, 2026)
+        const targetDate = new Date("July 30, 2026 00:00:00").getTime();
 
         function updateCountdown() {
             const now = new Date().getTime();
-            const distance = targetDate.getTime() - now;
+            const distance = targetDate - now;
 
             if (distance < 0) {
                 document.getElementById("countdown").innerHTML = "<div class='subtitle' style='margin:0'>¡Ya estamos en vivo!</div>";

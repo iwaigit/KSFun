@@ -1,7 +1,7 @@
 # 🚀 Plan de Trabajo: Zynch by iwai Platform
 
-> **Fecha:** 10 de Marzo, 2026  
-> **Estado:** FASE 0 Completada - Landing Page en Vivo  
+> **Fecha:** 11 de Marzo, 2026  
+> **Estado:** FASE 0 Completada | Estimación Profesional de Lanzamiento: **30 de Julio, 2026**
 > **Colaboradores:** iwaigit + Antigravity (IA)
 
 ---
@@ -136,10 +136,10 @@ Zynch/
 ## ✅ Checklist General
 
 - [x] FASE 0 completada (Landing Page & Dominio)
-- [ ] FASE 1 completada
-- [ ] FASE 2 completada
-- [ ] FASE 3 completada (futuro)
-- [ ] FASE 4 completada
+- [ ] FASE 1-2 (Configuración & Perfil) - *En progreso interno*
+- [ ] FASE 3 (Multi-tenancy Core) - *Meta: Junio 2026*
+- [ ] FASE 4 (Templates & Billing) - *Meta: Julio 2026*
+- [ ] Lanzamiento Oficial SaaS - **30 de Julio, 2026**
 - [x] Documentación actualizada
 - [x] Pruebas en local aprobadas
 - [x] Ready para producción (Landing)

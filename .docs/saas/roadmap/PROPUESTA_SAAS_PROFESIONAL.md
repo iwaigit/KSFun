@@ -10,7 +10,7 @@
 
 ## Resumen Ejecutivo
 
-Zynch by iwai ha evolucionado de una implementación personalizada (KSFun) a una plataforma SaaS multi-tenant "camaleónica". Este documento propone una arquitectura profesional para escalar el producto, permitir nuevos clientes (tenants) de forma automatizada y establecer la base para monetización.
+Zynch by iwai ha evolucionado de una implementación personalizada a una plataforma SaaS multi-tenant "camaleónica". Este documento propone una arquitectura profesional para escalar el producto, permitir nuevos clientes (tenants) de forma automatizada y establecer la base para monetización.
 
 ---
 
@@ -39,7 +39,7 @@ Zynch/
 │   └── edge-config/            # Configuración edge (Vercel)
 └── docs/
     ├── saas-core/              # Arquitectura, APIs, decisiones técnicas
-    ├── tenants/                # Un subfolder por cliente (karla-spice, etc.)
+    ├── tenants/                # Un subfolder por cliente (zynch-alpha, etc.)
     └── runbooks/               # Procedimientos operativos
 ```
 
@@ -59,7 +59,7 @@ Zynch/
 // Schema actual (ya correcto)
 tenants: defineTable({
   name: v.string(),
-  slug: v.string(),           // URL identifier: "karla-spice"
+  slug: v.string(),           // URL identifier: "zynch-alpha"
   ownerId: v.optional(v.id("users")),
   plan: v.string(),           // 'free' | 'pro' | 'enterprise'
   createdAt: v.number(),
@@ -95,8 +95,8 @@ users, appointments, orders, gallery, siteConfig, etc.
 
 **Propuesta A: Subdominios (Recomendada)**
 ```
-karla-spice.zynch.fun    → Carga config de "karla-spice"
-melissa-bennet.zynch.fun → Carga config de "melissa-bennet"
+alpha.zynch.app    → Carga config de "zynch-alpha"
+melissa-bennet.zynch.app → Carga config de "melissa-bennet"
 ```
 
 **Implementación:**
@@ -104,7 +104,7 @@ melissa-bennet.zynch.fun → Carga config de "melissa-bennet"
 // middleware.ts
 export function middleware(req: NextRequest) {
   const hostname = req.headers.get('host') || '';
-  const tenantSlug = hostname.replace('.zynch.fun', '');
+  const tenantSlug = hostname.replace('.zynch.app', '');
   
   // Verificar slug existe en Convex
   // Inyectar tenant en headers para usar en layout.tsx
@@ -115,8 +115,8 @@ export function middleware(req: NextRequest) {
 
 **Propuesta B: Path-based (Fallback)**
 ```
-zynch.fun/karla-spice
-zynch.fun/melissa-bennet
+zynch.app/zynch-alpha
+zynch.app/melissa-bennet
 ```
 
 **Propuesta C: Custom Domains (Enterprise)**
@@ -222,7 +222,7 @@ POST /api/admin/tenants  o  POST /api/onboard (self-service)
 - Soporte técnico nivel 2
 
 ### Tenant Admin (Performer/Promoter)
-**Ej: Karla Spice, Melissa Bennet**
+**Ej: Zynch Alpha, Melissa Bennet**
 - Contenido (fotos, bio, descripciones)
 - Configuración de precios y horarios
 - Gestión de citas y pedidos

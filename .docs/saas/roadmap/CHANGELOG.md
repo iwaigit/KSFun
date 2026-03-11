@@ -1,4 +1,4 @@
-# 📋 CHANGELOG - KSFun Platform
+# 📋 CHANGELOG - Zynch by iwai Platform
 
 > Registro de cambios y avances del proyecto
 
@@ -34,7 +34,7 @@
 - Componentes: Gallery, Shop, RegisterForm, etc.
 
 ### Commit inicial
-`a7467ca` - Initial commit for Karla Spice Fun project
+`a7467ca` - Initial commit for Zynch by iwai (Alpha phase)
 
 ---
 
@@ -81,6 +81,16 @@
 - [FASE-1] Crear tabla `config` en Convex
 - [FASE-1] Configuración centralizada del sitio
 - [FASE-2] Expansión del perfil de usuario
+
+## [ESTRATEGIA] Ajuste de Roadmap y Fecha de Lanzamiento - 2026-03-11
+
+### Modificado
+- `PLAN_GENERAL.md`: Se ajustó la fecha de lanzamiento a un estimado realista (**30 de Julio, 2026**) basado en la complejidad del sistema multi-tenant y la capacidad de un solo desarrollador.
+- `index.html` (Landing): Se fijó el contador para el lanzamiento oficial.
+
+### Análisis
+- El backend (`convex/schema.ts`) está avanzado al 85% para multi-tenancy.
+- El foco principal ahora es la integración del frontend con subdominios y el flujo de onboarding.
 
 ---
 
