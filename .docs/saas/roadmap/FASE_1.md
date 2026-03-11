@@ -8,12 +8,9 @@
 
 ## 🎯 Objetivo General
 
-Crear un sistema de configuración centralizada que permita cambiar:
-- Nombre del performer
-- Branding (logo, colores, fuentes)
-- Textos y descripciones
-- Redes sociales
 - Todo desde UN solo lugar
+- **Modularidad Elástica**: Activar/desactivar funciones (Citas, Tienda, Galería, Links) según el plan.
+- **LinkTree-style Buttons**: Botones personalizados con imágenes para enlaces externos.
 
 ---
 
@@ -39,6 +36,19 @@ Crear un sistema de configuración centralizada que permita cambiar:
   contactEmail: string,
   bio: string,                // Descripción corta
   metaDescription: string,    // Para SEO
+  planType: 'free' | 'pro_ip' | 'elite_ps', // Control de módulos
+  features: {                 // Switches de visibilidad
+    showGallery: boolean,
+    showAppointments: boolean,
+    showShop: boolean,
+    showCustomLinks: boolean,
+  },
+  customLinks: Array<{        // Botones estilo LinkTree
+    label: string,
+    url: string,
+    imageUrl?: string,
+    isActive: boolean
+  }>
 }
 ```
 

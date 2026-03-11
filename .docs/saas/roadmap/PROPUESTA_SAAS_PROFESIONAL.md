@@ -185,12 +185,24 @@ POST /api/admin/tenants  o  POST /api/onboard (self-service)
 
 ## 4. Modelos de Negocio (Pricing)
 
-### Estructura de planes propuesta:
+### 4.1 Estructura de Módulos (Elasticidad)
 
-| Feature | Free | Pro ($60/mes) | Elite ($95/mes) | Enterprise ($199/mes) |
+| Módulo | Plan FREE | Plan PRO (IP) | Plan ELITE (PS) |
+| :--- | :--- | :--- | :--- |
+| **Identidad (ADN Zynch)** | ✅ | ✅ | ✅ |
+| **Galería / Fotos** | ✅ (máx 3) | ✅ (máx 12) | ✅ (Ilimitado) |
+| **Citas / Agenda** | ✅ | ✅ | ✅ |
+| **LinkTree (Botones Custom)** | ❌ | ✅ | ✅ |
+| **Packs Virtuales** | ❌ | ❌ | ✅ |
+| **Tienda (Carrito/Pagos)** | ❌ | ❌ | ✅ |
+| **Efecto Camaleón** | ❌ (ADN Zynch) | ✅ | ✅ |
+
+### 4.2 Estructura de precios:
+
+| Feature | Free | Pro (IP) ($60/mes) | Elite (PS) ($95/mes) | Enterprise ($199/mes) |
 |---------|------|---------------|-----------------|-----------------------|
 | **Tenants** | 1 | 1 | 1 | Múltiples (franquicia) |
-| **Fotos** | 3 | 6 | 12 | Ilimitadas |
+| **Fotos** | 3 | 12 | Ilimitadas | Ilimitadas |
 | **Tienda** | No | No | Sí (Packs) | Sí (Full) |
 | **Calendario** | Básico | Básico | Ilimitado | Avanzado |
 | **Branding** | "Zynch" | Custom domain | Custom domain | White-label |

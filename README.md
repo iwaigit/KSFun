@@ -30,6 +30,23 @@ Zynch está diseñado como una solución de marca blanca ("white label"). Aunque
 - **Galería Multimedia**: Gestión de contenido seguro con procesamiento de imágenes.
 - **IA de Auditoría**: Agentes que supervisan la integridad y seguridad del código en tiempo real.
 
+## 🧱 Modelo de Módulos (Elasticidad)
+
+Zynch es una plataforma modular donde las funciones se activan según el perfil y necesidad del suscriptor:
+
+| Módulo | Plan FREE | Plan PRO (IP) | Plan ELITE (PS) |
+| :--- | :--- | :--- | :--- |
+| **Identidad (ADN Zynch)** | ✅ | ✅ | ✅ |
+| **Galería / Fotos** | ✅ (máx 3) | ✅ (máx 12) | ✅ (Ilimitado) |
+| **Citas / Agenda** | ✅ | ✅ | ✅ |
+| **LinkTree (Botones Custom)** | ❌ | ✅ | ✅ |
+| **Packs Virtuales** | ❌ | ❌ | ✅ |
+| **Tienda (Carrito/Pagos)** | ❌ | ❌ | ✅ |
+| **Efecto Camaleón** | ❌ (ADN Zynch) | ✅ | ✅ |
+
+*   **Plan Pro - Influencer/Performer (IP)**: Optimizado para quienes buscan gestión de agenda y portafolio visual.
+*   **Plan Elite - Professional Services (PS)**: Incluye todas las herramientas de monetización y tienda virtual.
+
 ## Documentación (GitBook)
 
 Para guías detalladas, por favor consulte el [Índice de Documentación](./.docs/intro.md).
