@@ -49,6 +49,7 @@ import { ConvexClientProvider } from "@/components/ConvexClientProvider";
 import UniversalCart from "@/components/UniversalCart";
 import SubscriptionBanner from "@/components/SaaS/SubscriptionBanner";
 import PoweredByFooter from "@/components/SaaS/PoweredByFooter";
+import PwaInstallBanner from "@/components/SaaS/PwaInstallBanner";
 
 export default async function RootLayout({
   children,
@@ -74,6 +75,7 @@ export default async function RootLayout({
               <CartProvider>
                 <SubscriptionBanner />
                 {children}
+                <PwaInstallBanner />
                 <UniversalCart />
                 <PoweredByFooter />
               </CartProvider>
