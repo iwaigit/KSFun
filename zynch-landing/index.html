@@ -56,9 +56,9 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            overflow-x: hidden; /* Prevenir scroll horizontal */
-            overflow-y: auto; /* Permitir scroll vertical si es necesario */
+            overflow: hidden; /* Prevenir TODO scroll */
             min-height: 100vh; /* Asegurar altura mínima */
+            position: relative; /* Para posicionamiento absoluto del banner */
         }
 
         /* Efecto de resplandor usando los tonos oficiales */
@@ -472,7 +472,7 @@
             bottom: 20px;
             left: 20px;
             right: 20px;
-            z-index: 10000;
+            z-index: 999999; /* Muy alto para estar sobre todo */
             animation: slide-up 0.5s ease-out;
             display: none; /* Oculto por defecto */
         }
