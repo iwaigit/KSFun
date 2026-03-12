@@ -308,13 +308,14 @@
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            gap: 15px;
+            padding: 8px 0;
         }
-        .install-header-logo {
-            width: 32px;
-            height: 32px;
+        .install-btn-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
             object-fit: contain;
         }
         .install-header-btn {
@@ -328,6 +329,8 @@
             cursor: pointer;
             transition: all 0.2s ease;
             box-shadow: 0 4px 12px rgba(139, 155, 67, 0.3);
+            display: flex;
+            align-items: center;
         }
         .install-header-btn:hover {
             transform: translateY(-1px);
@@ -337,21 +340,20 @@
 
         @media (max-width: 768px) {
             .install-header-content {
-                flex-direction: column;
-                gap: 10px;
-                text-align: center;
+                padding: 6px 0;
             }
-            .install-header-logo {
-                width: 28px;
-                height: 28px;
+            .install-btn-icon {
+                width: 18px;
+                height: 18px;
+                margin-right: 6px;
             }
             .install-header-btn {
-                width: 100%;
-                max-width: 200px;
+                font-size: 12px;
+                padding: 6px 12px;
             }
             .container {
                 padding: 1rem;
-                margin-top: 80px; /* Espacio para header */
+                margin-top: 60px; /* Espacio reducido para header */
             }
 
             .zynchito-logo {
@@ -426,10 +428,12 @@
     <div class="glow"></div>
 
     <!-- Header con Link Permanente de Instalación -->
-    <div class="install-header">
+    <div class="install-header" style="display: none;">
         <div class="install-header-content">
-            <img src="./zynchito.png" alt="Zynchito Logo" class="install-header-logo" />
-            <button id="install-app-header-btn" class="install-header-btn">Instalar App</button>
+            <button id="install-app-header-btn" class="install-header-btn">
+                <img src="./zynchito.png" alt="Zynchito Logo" class="install-btn-icon" />
+                Instalar App
+            </button>
         </div>
     </div>
 
@@ -660,6 +664,8 @@
 
         closeBtn.addEventListener('click', () => {
             pwaBanner.style.display = 'none';
+            // Mostrar header cuando se pulsa "Después"
+            document.querySelector('.install-header').style.display = 'block';
         });
 
         window.addEventListener('appinstalled', () => {
