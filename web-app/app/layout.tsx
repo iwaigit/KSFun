@@ -26,13 +26,18 @@ export const metadata: Metadata = {
     siteName: 'Zynch',
     images: [
       {
-        url: '/.assets/zynch.png', 
+        url: 'https://zynch.app/.assets/zynch.png', 
         width: 800,
         height: 600,
       },
     ],
     locale: 'es_MX',
     type: 'website',
+  },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico', // O apple-touch-icon.png si prefieres
   },
   robots: "index, follow", // Cambiado de noindex para empezar a posicionar
 };
