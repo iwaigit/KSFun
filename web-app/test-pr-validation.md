@@ -10,4 +10,4 @@ Este archivo es para probar que el workflow de PRs funciona correctamente.
 - ✅ Multi-tenant validation
 
 ## Multi-tenant test:
-// tenant = "hardcoded_tenant_id"  ← Esto debería ser detectado por el CI
+// tenant_example = "hardcoded_tenant_id"  ← Esto debería ser detectado por el CI
