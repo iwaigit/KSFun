@@ -440,6 +440,125 @@
         setInterval(updateCountdown, 1000);
         updateCountdown(); // Llamada inicial instantánea
     </script>
+    <!-- PWA Install Banner UI -->
+    <div id="pwa-banner" style="display: none;" class="pwa-banner-fixed">
+        <div class="pwa-banner-content">
+            <div class="pwa-accent"></div>
+            <div class="pwa-flex">
+                <div class="pwa-icon">🦎</div>
+                <div class="pwa-text">
+                    <h3>Instala Zynch.app</h3>
+                    <p>Accede más rápido instalando nuestra App en tu inicio.</p>
+                    <div class="pwa-buttons">
+                        <button id="pwa-install-btn" class="btn-primary">Instalar Ahora</button>
+                        <button id="pwa-close-btn" class="btn-secondary">Después</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .pwa-banner-fixed {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            z-index: 10000;
+            animation: slide-up 0.5s ease-out;
+        }
+        @media (min-width: 768px) {
+            .pwa-banner-fixed {
+                left: auto;
+                right: 30px;
+                width: 360px;
+            }
+        }
+        .pwa-banner-content {
+            position: relative;
+            background: rgba(26, 26, 26, 0.9);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+        .pwa-accent {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 4px;
+            background: #be2e57;
+        }
+        .pwa-flex { display: flex; gap: 15px; align-items: flex-start; }
+        .pwa-icon { 
+            font-size: 24px; 
+            background: rgba(190, 46, 87, 0.1); 
+            width: 45px; height: 45px; 
+            display: flex; align-items: center; justify-content: center; 
+            border-radius: 12px;
+        }
+        .pwa-text h3 { margin: 0; font-size: 16px; color: white; font-weight: 700; }
+        .pwa-text p { margin: 5px 0 0 0; font-size: 13px; color: #a1a1aa; line-height: 1.4; }
+        .pwa-buttons { margin-top: 15px; display: flex; gap: 10px; }
+        .btn-primary { 
+            flex: 1; background: #be2e57; border: none; color: white; 
+            padding: 8px 15px; border-radius: 8px; font-weight: 700; font-size: 13px;
+            cursor: pointer; transition: transform 0.2s;
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.05); border: none; color: #a1a1aa;
+            padding: 8px 15px; border-radius: 8px; font-weight: 500; font-size: 13px;
+            cursor: pointer;
+        }
+        @keyframes slide-up {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+
+    <!-- PWA Logic Script -->
+    <script>
+        let deferredPrompt;
+        const pwaBanner = document.getElementById('pwa-banner');
+        const installBtn = document.getElementById('pwa-install-btn');
+        const closeBtn = document.getElementById('pwa-close-btn');
+
+        // Registro de Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW registrado', reg))
+                    .catch(err => console.log('SW error', err));
+            });
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            pwaBanner.style.display = 'block';
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User response: ${outcome}`);
+            deferredPrompt = null;
+            pwaBanner.style.display = 'none';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            pwaBanner.style.display = 'none';
+        });
+
+        window.addEventListener('appinstalled', () => {
+            pwaBanner.style.display = 'none';
+            deferredPrompt = null;
+        });
+    </script>
 </body>
 
 </html>
