@@ -637,6 +637,92 @@
             padding: 8px 15px; border-radius: 8px; font-weight: 500; font-size: 13px;
             cursor: pointer;
         }
+        .install-instructions-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .instructions-content {
+            background: rgba(26, 26, 26, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        .instructions-content h3 {
+            margin: 0 0 16px 0;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .instructions-content p {
+            margin: 0 0 16px 0;
+            color: #a1a1aa;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .instructions-content ol {
+            text-align: left;
+            margin: 0 0 20px 0;
+            color: #a1a1aa;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .instructions-content li {
+            margin-bottom: 8px;
+        }
+        .instructions-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .btn-instructions-close {
+            background: rgba(255, 255, 255, 0.1);
+            color: #a1a1aa;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-instructions-install {
+            background: #be2e57;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-instructions-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .btn-instructions-install:hover {
+            background: #d03a67;
+            transform: translateY(-1px);
+        }
+        @media (max-width: 768px) {
+            .instructions-content {
+                padding: 20px;
+                margin: 10px;
+            }
+            .instructions-buttons {
+                flex-direction: column;
+            }
+        }
         @keyframes slide-up {
             from { transform: translateY(100px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
@@ -661,19 +747,55 @@
             });
         }
 
+        // Función para detectar versión de Android
+        function getAndroidVersion() {
+            const userAgent = navigator.userAgent;
+            const match = userAgent.match(/Android (\d+(?:\.\d+)?)/);
+            return match ? parseInt(match[1]) : null;
+        }
+
+        // Función para mostrar instrucciones de instalación (fallback Android 16+)
+        function showInstallInstructions() {
+            // Mostrar banner con instrucciones simples
+            const instructionsBanner = document.createElement('div');
+            instructionsBanner.className = 'install-instructions-banner';
+            instructionsBanner.innerHTML = `
+                <div class="instructions-content">
+                    <h3>📱 Instalar Zynch.app</h3>
+                    <p>Para instalar en Android 16+:</p>
+                    <ol>
+                        <li>Toca el menú (⋮) arriba a la derecha</li>
+                        <li>Selecciona "Instalar aplicación" o "Añadir a pantalla de inicio"</li>
+                        <li>Confirma "Añadir a pantalla de inicio"</li>
+                    </ol>
+                    <div class="instructions-buttons">
+                        <button onclick="this.closest('.install-instructions-banner').remove()" class="btn-instructions-close">Entendido</button>
+                        <button onclick="document.querySelector('.install-header').style.display='block'; this.closest('.install-instructions-banner').remove()" class="btn-instructions-install">Más Tarde</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(instructionsBanner);
+        }
+
         // Función para mostrar install prompt
         function showInstallPrompt() {
-            if (!deferredPrompt) {
-                // Si no hay prompt, mostrar mensaje informativo
-                alert('Para instalar Zynch.app:\n\n1. En Chrome: Toca el menú (⋮) → "Instalar aplicación"\n2. En Safari: Toca el botón de compartir → "Añadir a pantalla de inicio"\n\n¡Gracias por unirte al ecosistema Zynch!');
-                return;
-            }
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choiceResult) => {
-                console.log(`User response: ${choiceResult.outcome}`);
-                deferredPrompt = null;
+            // Detectar versión Android
+            const androidVersion = getAndroidVersion();
+            const supportsInstallPrompt = androidVersion < 16;
+
+            if (supportsInstallPrompt && deferredPrompt) {
+                // Android 12-15: instalación automática
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    console.log(`User response: ${choiceResult.outcome}`);
+                    deferredPrompt = null;
+                    pwaBanner.style.display = 'none';
+                });
+            } else {
+                // Android 16+ o sin prompt: mostrar instrucciones
+                showInstallInstructions();
                 pwaBanner.style.display = 'none';
-            });
+            }
         }
 
         // Event Listeners
