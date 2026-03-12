@@ -663,7 +663,7 @@
             top: 20px;
             left: 20px;
             right: 20px;
-            bottom: 20px;
+            bottom: auto; /* No ocupa toda la pantalla */
             background: rgba(26, 26, 26, 0.9);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -672,6 +672,9 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             overflow: hidden;
             z-index: 999999; /* Encima de todo */
+            max-width: 350px; /* Ajustado al contenido */
+            width: auto; /* No toma toda la pantalla */
+            height: auto; /* Ajustado al contenido */
         }
         .help-close-x {
             position: absolute;
@@ -704,27 +707,30 @@
             width: 90%;
             text-align: center;
         }
-        .instructions-content h3 {
+        .help-content h3 {
             margin: 0 0 16px 0;
-            color: white;
-            font-size: 18px;
-            font-weight: 700;
+            color: #e2e2e2; /* Color suave y reconfortante */
+            font-size: 16px; /* Reducido */
+            font-weight: 600; /* Reducido */
         }
-        .instructions-content p {
+        .help-content p {
             margin: 0 0 16px 0;
-            color: #a1a1aa;
-            font-size: 14px;
+            color: #e2e2e2; /* Color suave y reconfortante */
+            font-size: 13px; /* Reducido */
             line-height: 1.4;
         }
-        .instructions-content ol {
+        .help-content ol {
             text-align: left;
             margin: 0 0 20px 0;
-            color: #a1a1aa;
-            font-size: 13px;
+            color: #e2e2e2; /* Color suave y reconfortante */
+            font-size: 12px; /* Reducido */
             line-height: 1.6;
         }
-        .instructions-content li {
+        .help-content li {
             margin-bottom: 8px;
+        }
+        .help-content strong {
+            color: #ffffff; /* Solo los strong en blanco */
         }
         .instructions-buttons {
             display: flex;
@@ -846,8 +852,8 @@
             helpModal.className = 'help-modal';
             helpModal.innerHTML = `
                 <div class="help-content">
-                    <button class="help-close-x" onclick="this.closest('.help-modal').remove()">×</button>
-                    <h3>📱 Ayuda Instalación</h3>
+                    <button class="help-close-x" onclick="this.closest('.help-modal').remove()">?</button>
+                    <h3>Ayuda Instalación</h3>
                     <p><strong>Google Play Protect activado:</strong></p>
                     <ol>
                         <li>Ve a <strong>Settings</strong></li>
