@@ -298,7 +298,7 @@
             top: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(135deg, rgba(158, 173, 92, 0.9), rgba(132, 8, 36, 0.9));
+            background: #8b9b43ff; /* Verde Zynn minimalista */
             backdrop-filter: blur(10px);
             z-index: 999998;
             padding: 12px 20px;
@@ -312,27 +312,27 @@
             align-items: center;
             gap: 15px;
         }
-        .install-text {
-            color: white;
-            font-size: 14px;
-            font-weight: 500;
-            flex: 1;
+        .install-header-logo {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
         }
         .install-header-btn {
-            background: linear-gradient(135deg, #9ead5c, #840824);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 8px 16px;
             border-radius: 8px;
             font-weight: 600;
             font-size: 13px;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(158, 173, 92, 0.3);
+            box-shadow: 0 4px 12px rgba(139, 155, 67, 0.3);
         }
         .install-header-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(158, 173, 92, 0.4);
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 6px 16px rgba(139, 155, 67, 0.4);
         }
 
         @media (max-width: 768px) {
@@ -341,8 +341,9 @@
                 gap: 10px;
                 text-align: center;
             }
-            .install-text {
-                font-size: 12px;
+            .install-header-logo {
+                width: 28px;
+                height: 28px;
             }
             .install-header-btn {
                 width: 100%;
@@ -427,7 +428,7 @@
     <!-- Header con Link Permanente de Instalación -->
     <div class="install-header">
         <div class="install-header-content">
-            <span class="install-text">📱 ¿Listo para el ecosistema Zynch?</span>
+            <img src="./zynchito.png" alt="Zynchito Logo" class="install-header-logo" />
             <button id="install-app-header-btn" class="install-header-btn">Instalar App</button>
         </div>
     </div>
@@ -522,7 +523,7 @@
                 </div>
                 <div class="pwa-text">
                     <h3>Instala Zynch.app</h3>
-                    <p>Accede más rápido instalando nuestra App en tu inicio.</p>
+                    <p>El ambiente Zynch.app te espera, solo influencers y Enterprise, instala nuestra App en tu inicio!</p>
                     <div class="pwa-buttons">
                         <button id="pwa-install-btn" class="btn-primary">Instalar Ahora</button>
                         <button id="pwa-close-btn" class="btn-secondary">Después</button>
@@ -664,11 +665,22 @@
         window.addEventListener('appinstalled', () => {
             pwaBanner.style.display = 'none';
             deferredPrompt = null;
-            // Mostrar mensaje de éxito
-            const installText = document.querySelector('.install-text');
-            installText.textContent = '🎉 ¡Zynch.app instalada! Bienvenido al ecosistema';
-            headerInstallBtn.textContent = '✅ App Instalada';
-            headerInstallBtn.disabled = true;
+            
+            // Mostrar mensaje temporal de bienvenida
+            const installHeader = document.querySelector('.install-header');
+            const installHeaderContent = installHeader.querySelector('.install-header-content');
+            
+            // Cambiar header a mensaje de bienvenida
+            installHeaderContent.innerHTML = `
+                <div style="color: white; font-size: 14px; font-weight: 500; text-align: center;">
+                    🎉 ¡Bienvenido al ecosistema Zynch! App instalada con éxito
+                </div>
+            `;
+            
+            // Ocultar header después de 5 segundos
+            setTimeout(() => {
+                installHeader.style.display = 'none';
+            }, 5000);
         });
     </script>
 </body>
