@@ -11,6 +11,7 @@
 - Todo desde UN solo lugar
 - **Modularidad Elástica**: Activar/desactivar funciones (Citas, Tienda, Galería, Links) según el plan.
 - **LinkTree-style Buttons**: Botones personalizados con imágenes para enlaces externos.
+- **Moderación de Seguridad**: Todas las fotos deben ser aprobadas (IA + Manual) antes de publicarse.
 
 ---
 
@@ -48,7 +49,11 @@
     url: string,
     imageUrl?: string,
     isActive: boolean
-  }>
+  }>,
+  moderationSettings: {
+    autoApprovePhotos: boolean,
+    requireManualReview: boolean
+  }
 }
 ```
 

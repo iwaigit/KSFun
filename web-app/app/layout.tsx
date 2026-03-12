@@ -16,9 +16,25 @@ const outfit = Outfit({
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: `${siteConfig.name} | ${siteConfig.tagline}`,
+  title: siteConfig.name + " | " + siteConfig.tagline,
   description: siteConfig.description,
-  robots: "noindex, nofollow",
+  keywords: siteConfig.keywords,
+  openGraph: {
+    title: 'Zynch by iwai',
+    description: 'Eleva tu carrera profesional con nuestra infraestructura modular segura.',
+    url: 'https://zynch.app',
+    siteName: 'Zynch',
+    images: [
+      {
+        url: '/.assets/zynch.png', 
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: 'es_MX',
+    type: 'website',
+  },
+  robots: "index, follow", // Cambiado de noindex para empezar a posicionar
 };
 
 import { LanguageProvider } from "@/context/LanguageContext";

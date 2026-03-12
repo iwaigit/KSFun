@@ -197,7 +197,17 @@ POST /api/admin/tenants  o  POST /api/onboard (self-service)
 | **Tienda (Carrito/Pagos)** | ❌ | ❌ | ✅ |
 | **Efecto Camaleón** | ❌ (ADN Zynch) | ✅ | ✅ |
 
-### 4.2 Estructura de precios:
+### 4.3 Escalamiento de Templates (Visual Experience)
+
+Para incentivar la progresión entre planes, la variedad de diseños (templates) será incremental:
+
+1.  **Plan FREE**: 1 Template base (ADN Zynch). Estructura fija y no personalizable.
+2.  **Plan Pro (IP)**: **5 Templates exclusivos**. Diseños optimizados para impacto visual, redes sociales y LinkTree integrado.
+3.  **Plan Elite (PS)**: **10 Templates en total**. Los 5 de IP + 5 adicionales enfocados en conversión de ventas, catálogos complejos y agendamiento avanzado.
+4.  **Plan Enterprise**: 5 Templates maestros (compartidos con IP/PS) o diseño bajo demanda según contrato.
+
+> [!TIP]
+> **Enfoque Técnico:** No construiremos 10 sitios diferentes. Desarrollaremos un **Sistema de Layouts Modulares** (Component-Based) donde cada template sea una configuración única de componentes pre-validados.
 
 | Feature | Free | Pro (IP) ($60/mes) | Elite (PS) ($95/mes) | Enterprise ($199/mes) |
 |---------|------|---------------|-----------------|-----------------------|

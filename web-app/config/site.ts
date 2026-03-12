@@ -4,10 +4,11 @@
  * o si no hay datos en la BD.
  */
 export const siteConfig = {
-    name: "Zynch by iwai",
-    tagline: "Premium Personal Service Platform",
-    description: "Zynch by iwai is a professional digital platform for personal services. Exclusive content, automated appointment management, and direct connection.",
-    bio: "Zynch by iwai is a professional digital platform for personal services. Exclusive content, automated appointment management, and direct connection.",
+    name: "Zynch.app",
+    tagline: "Gestión Profesional y Citas para Performers",
+    description: "Zynch.app: La plataforma camaleónica para gestionar tus citas, vender packs virtuales y proteger tu marca personal con total discreción y seguridad IA.",
+    keywords: ["Zynch", "iwai", "gestión de citas", "performers", "marca blanca", "packs virtuales", "agenda segura", "multi-tenant saas"],
+    bio: "Zynch.app is a professional digital platform for personal services. Exclusive content, automated appointment management, and direct connection.",
     links: {
         instagram: "",
         twitter: "",

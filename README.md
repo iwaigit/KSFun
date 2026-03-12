@@ -10,8 +10,11 @@
 **Zynch by iwai** es una plataforma SAAS profesional desarrollada por **IWAI - Automated Processes**. Este repositorio contiene el sistema completo "Camaleónico" diseñado para proveedores de servicios personales.
 
 > [!IMPORTANT]
-> **Estado Actual: v1.0.0-rc.1 (Latest)**
-> Se ha alcanzado la estabilidad en el núcleo del sistema con aislamiento multi-tenant estricto y auditoría de IA activa.
+> **Estado Actual: v1.0.0-rc.2 (Latest)**
+> Se ha activado la optimización SEO y metadatos profesionales para indexación global. Se ha alcanzado la estabilidad en el núcleo del sistema con aislamiento multi-tenant estricto y auditoría de IA activa.
+
+## 📜 Historial de Cambios
+Puedes consultar el detalle técnico de las actualizaciones en el [CHANGELOG.md](./CHANGELOG.md).
 
 ## Estructura del Proyecto
 - **[![Zynch](./.assets/zynch-icon-30.ico)](./#)** [web-app](./web-app/): La aplicación principal construida con Next.js 16, Tailwind CSS y Convex.
@@ -43,6 +46,7 @@ Zynch es una plataforma modular donde las funciones se activan según el perfil 
 | **Packs Virtuales** | ❌ | ❌ | ✅ |
 | **Tienda (Carrito/Pagos)** | ❌ | ❌ | ✅ |
 | **Efecto Camaleón** | ❌ (ADN Zynch) | ✅ | ✅ |
+| **Variedad de Templates** | 1 Estilo | 5 Estilos | 10 Estilos |
 
 *   **Plan Pro - Influencer/Performer (IP)**: Optimizado para quienes buscan gestión de agenda y portafolio visual.
 *   **Plan Elite - Professional Services (PS)**: Incluye todas las herramientas de monetización y tienda virtual.
