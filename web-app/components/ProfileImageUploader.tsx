@@ -94,8 +94,9 @@ export default function ProfileImageUploader({
 
             setProgress('');
             onUploaded?.();
-        } catch (err: any) {
-            setError(err?.message || 'Error inesperado al subir la foto.');
+        } catch (err: unknown) {
+            const error = err as Error;
+            setError(error?.message || 'Error inesperado al subir la foto.');
             setPreviewUrl(null);
         } finally {
             setIsUploading(false);
