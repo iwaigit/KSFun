@@ -2,8 +2,6 @@ const CACHE_NAME = 'zynch-v1';
 const ASSETS = [
     '/',
     '/index.html',
-    '/styles.css',
-    '/js/main.js',
     '/manifest.json',
     '/zynchito.png',
     '/assets/favicon.ico',
