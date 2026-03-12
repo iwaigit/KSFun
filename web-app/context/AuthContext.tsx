@@ -41,19 +41,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         console.log('[AuthProvider] useEffect - loading user from localStorage');
+        let isMounted = true;
+        
         const savedUser = localStorage.getItem('ks-auth');
         if (savedUser) {
             try {
                 const parsed = JSON.parse(savedUser);
                 console.log('[AuthProvider] Found saved user:', parsed.email);
-                setUser(parsed);
+                if (isMounted) {
+                    setUser(parsed);
+                }
             } catch (e) {
                 console.error('[AuthProvider] Error loading auth', e);
             }
         } else {
             console.log('[AuthProvider] No saved user found');
         }
-        setLoading(false);
+        
+        if (isMounted) {
+            setLoading(false);
+        }
+        
+        return () => { isMounted = false; };
     }, []);
 
     useEffect(() => {
