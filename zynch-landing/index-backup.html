@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zynch.app | Gestión Profesional y Citas para Performers</title>
+    <!-- SEO Avanzado -->
+    <meta name="description" content="Zynch.app: La plataforma camaleónica para gestionar tus citas, vender packs virtuales y proteger tu marca personal con total discreción y seguridad IA.">
+    <meta name="keywords" content="Zynch, iwai, gestión de citas, performers, marca blanca, packs virtuales, agenda segura, multi-tenant saas">
+
+    <!-- Favicon & PWA -->
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#be2e57">
+
+    <!-- OpenGraph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zynch.app/">
+    <meta property="og:title" content="Zynch by iwai | Infraestructura Elite">
+    <meta property="og:description" content="Eleva tu carrera profesional con nuestra infraestructura modular segura.">
+    <meta property="og:image" content="https://zynch.app/assets/zynch.png">
+
+    <!-- Fuentes premium de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            /* Paleta Oficial Zynch - NO MODIFICAR - */
+            --bg-dark: #312a30;
+            --neon-pink: #be2e57;
+            --neon-cyan: #9ead5c;
+            --sky-blue: #9fd7fb;
+            --deep-red: #840824;
+            --text-light: #ffffff;
+            --text-muted: #a2bfcc;
+            /* Mapeo de colores para compatibilidad */
+            --primary: var(--neon-pink);
+            --secondary: var(--neon-cyan);
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Efecto de resplandor usando los tonos oficiales */
+        .glow {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(158, 173, 92, 0.15) 0%, rgba(190, 46, 87, 0.1) 50%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+            animation: pulse-glow 8s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        .container {
+            z-index: 1;
+            text-align: center;
+            padding: 2rem;
+            animation: fade-in 1.5s ease-out;
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .zynchito-logo {
+            display: block;
+            margin: 0 auto 1.5rem auto;
+            width: 140px;
+            max-width: 80%;
+            height: auto;
+            animation: float 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(190, 46, 87, 0.4));
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 0.4rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: lowercase;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 45, 85, 0.1);
+            border: 1px solid rgba(255, 45, 85, 0.3);
+            color: var(--primary);
+            padding: 0.32rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.2rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #a1a1aa;
+            margin: 0 auto 2rem auto;
+            max-width: 600px;
+            line-height: 1.4;
+        }
+
+        .subtitle strong {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .description {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 3rem auto;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .description p {
+            margin-bottom: 1rem;
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #25D366, #1da851);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-decoration: none;
+            margin-top: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .whatsapp-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(37, 211, 102, 0.6);
+        }
+
+        .whatsapp-btn:hover::before {
+            left: 100%;
+        }
+
+        .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Contador Regresivo */
+        .countdown {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .time-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            min-width: 100px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .time-box:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 240, 255, 0.2);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .number {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(180deg, #ffffff, #a2bfcc);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .label {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .footer {
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            font-size: 0.72rem;
+            color: #52525b;
+            z-index: 1;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .zynchito-logo {
+                width: 90px;
+                margin-bottom: 0.8rem;
+            }
+
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+                margin-bottom: 1.2rem;
+            }
+
+            .description {
+                font-size: 0.75rem;
+                margin-bottom: 1.6rem;
+            }
+
+            .whatsapp-btn {
+                padding: 0.65rem 1.2rem;
+                font-size: 0.75rem;
+            }
+
+            .badge {
+                font-size: 0.55rem;
+                padding: 0.25rem 0.65rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .countdown {
+                gap: 0.6rem;
+            }
+
+            .time-box {
+                padding: 0.65rem 0.8rem;
+                min-width: 50px;
+                border-radius: 12px;
+            }
+
+            .number {
+                font-size: 1.6rem;
+            }
+
+            .label {
+                font-size: 0.55rem;
+                letter-spacing: 2px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .logo {
+                font-size: 2rem;
+            }
+
+            .number {
+                font-size: 1.4rem;
+            }
+
+            .time-box {
+                min-width: 45px;
+                padding: 0.5rem 0.65rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Efecto visual de fondo -->
+    <div class="glow"></div>
+
+    <div class="container">
+        <img src="./zynchito.png" alt="Zynchito Logo" class="zynchito-logo" />
+        <div class="badge">Próximo Lanzamiento</div>
+        <div class="logo">zynch.app</div>
+        <div class="subtitle">Estamos construyendo el **SaaS élite** que redefinirá la gestión de tu negocio
+            independiente.</div>
+
+        <div class="description">
+            <p><strong>Zynch</strong> es la plataforma definitiva diseñada exclusivamente para profesionales que buscan
+                centralizar su marca personal, automatizar la gestión de citas y ofrecer contenido VIP en un entorno
+                seguro y premium.</p>
+            <p>Olvidate de cobros, contratos, multas abusivas, publicidad en web anticuadas y plataformas fragmentas.
+                Con Zynch, tendrás tu propia aplicación web
+                (ej: <em>tu-nombre.zynch.app</em>) bajo tu control total.</p>
+        </div>
+
+        <div class="countdown" id="countdown">
+            <div class="time-box">
+                <div class="number" id="days">00</div>
+                <div class="label">Días</div>
+            </div>
+            <div class="time-box">
+                <div class="number" id="hours">00</div>
+                <div class="label">Horas</div>
+            </div>
+            <div class="time-box">
+                <div class="number" id="minutes">00</div>
+                <div class="label">Minutos</div>
+            </div>
+            <div class="time-box">
+                <div class="number" id="seconds">00</div>
+                <div class="label">Segundos</div>
+            </div>
+        </div>
+
+        <a href="https://wa.me/584141320652?text=Hola,%20estoy%20interesado/a%20en%20el%20lanzamiento%20de%20la%20plataforma%20Zynch%20SaaS%20y%20quisiera%20m%C3%A1s%20informaci%C3%B3n."
+            class="whatsapp-btn" target="_blank" rel="noopener noreferrer">
+            <svg class="whatsapp-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                    d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zM223.9 414.8c-32 0-63.3-8.6-90.8-24.8l-6.5-3.8-67.4 17.7 18-65.7-4.2-6.7c-17.7-28-27.1-60.5-27.1-93.5 0-103.5 84.3-187.8 187.8-187.8 59.4 0 115 23.2 157 65.2 42.1 42 65.2 97.6 65.2 157.1 0 103.4-84.3 187.5-187.4 187.5zM326.6 288.6c-5.6-2.8-33.3-16.4-38.5-18.3-5.2-1.9-9-2.8-12.8 2.8s-14.7 18.3-18 22c-3.3 3.8-6.6 4.2-12.2 1.4-5.6-2.8-23.7-8.8-45.2-27.9-16.7-14.9-28-33.3-31.3-38.9-3.3-5.6-.4-8.7 2.4-11.5 2.5-2.5 5.6-6.6 8.5-9.9 2.8-3.3 3.8-5.6 5.6-9.4 1.9-3.8.9-7.1-.5-9.9s-12.8-30.9-17.5-42.3c-4.6-11.1-9.2-9.6-12.8-9.8-3.3-.2-7.1-.2-10.8-.2s-9.9 1.4-15 7.1c-5.2 5.6-19.7 19.3-19.7 47.1s20.2 54.6 23 58.4c2.8 3.8 39.8 60.8 96.5 85.3 13.5 5.8 24 9.3 32.2 11.9 13.5 4.3 25.8 3.7 35.6 2.2 10.9-1.6 33.3-13.6 38-26.8 4.7-13.2 4.7-24.4 3.3-26.8-1.5-2.6-5.3-3.8-10.9-6.6z" />
+            </svg>
+            Contáctanos por WhatsApp
+        </a>
+
+        <div class="footer">
+            &copy; 2026 Zynch. Arquitectura por IWAI.<br>
+            Caracas, Venezuela.
+        </div>
+    </div>
+
+    <!-- Script de lógica de cuenta regresiva para 2 meses (60 días aprox) -->
+    <script>
+        // Configurar la fecha objetivo fija: Lanzamiento Oficial SaaS (30 de Julio, 2026)
+        const targetDate = new Date("July 30, 2026 00:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "<div class='subtitle' style='margin:0'>¡Ya estamos en vivo!</div>";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Actualizar el DOM agregando un cero inicial si es menor a 10
+            document.getElementById("days").innerText = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+        }
+
+        // Actualizar cada segundo
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Llamada inicial instantánea
+    </script>
+    <!-- PWA Install Banner UI - VERSIÓN SIMPLE Y FUNCIONAL -->
+    <div id="pwa-banner" style="display: none;" class="pwa-banner-fixed">
+        <div class="pwa-banner-content">
+            <div class="pwa-accent"></div>
+            <div class="pwa-flex">
+                <div class="pwa-icon">🦎</div>
+                <div class="pwa-text">
+                    <h3>Instala Zynch.app</h3>
+                    <p>Accede más rápido instalando nuestra App en tu inicio.</p>
+                    <div class="pwa-buttons">
+                        <button id="pwa-install-btn" class="btn-primary">Instalar Ahora</button>
+                        <button id="pwa-close-btn" class="btn-secondary">Después</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .pwa-banner-fixed {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            z-index: 10000;
+            animation: slide-up 0.5s ease-out;
+            display: none; /* Oculto por defecto */
+        }
+        
+        /* VISIBLE EN MÓVILES Y TABLETS */
+        @media (max-width: 1024px) {
+            .pwa-banner-fixed {
+                display: block; /* Visible en mobile y tablets */
+                left: 15px;
+                right: 15px;
+            }
+        }
+        
+        /* OCULTO EN DESKTOP GRANDE */
+        @media (min-width: 1025px) {
+            .pwa-banner-fixed {
+                display: none !important; /* Oculto en desktop grande */
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .pwa-banner-fixed {
+                left: auto;
+                right: 30px;
+                width: 360px;
+            }
+        }
+        .pwa-banner-content {
+            position: relative;
+            background: rgba(26, 26, 26, 0.9);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+        .pwa-accent {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 4px;
+            background: #be2e57;
+        }
+        .pwa-flex { display: flex; gap: 15px; align-items: flex-start; }
+        .pwa-icon { 
+            font-size: 24px; 
+            background: rgba(190, 46, 87, 0.1); 
+            width: 45px; height: 45px; 
+            display: flex; align-items: center; justify-content: center; 
+            border-radius: 12px;
+        }
+        .pwa-text h3 { margin: 0; font-size: 16px; color: white; font-weight: 700; }
+        .pwa-text p { margin: 5px 0 0 0; font-size: 13px; color: #a1a1aa; line-height: 1.4; }
+        .pwa-buttons { margin-top: 15px; display: flex; gap: 10px; }
+        .btn-primary { 
+            flex: 1; background: #be2e57; border: none; color: white; 
+            padding: 8px 15px; border-radius: 8px; font-weight: 700; font-size: 13px;
+            cursor: pointer; transition: transform 0.2s;
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.05); border: none; color: #a1a1aa;
+            padding: 8px 15px; border-radius: 8px; font-weight: 500; font-size: 13px;
+            cursor: pointer;
+        }
+        @keyframes slide-up {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+
+    <!-- PWA Logic Script -->
+    <script>
+        let deferredPrompt;
+        const pwaBanner = document.getElementById('pwa-banner');
+        const installBtn = document.getElementById('pwa-install-btn');
+        const closeBtn = document.getElementById('pwa-close-btn');
+
+        // Registro de Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW registrado', reg))
+                    .catch(err => console.log('SW error', err));
+            });
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            pwaBanner.style.display = 'block';
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User response: ${outcome}`);
+            deferredPrompt = null;
+            pwaBanner.style.display = 'none';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            pwaBanner.style.display = 'none';
+        });
+
+        window.addEventListener('appinstalled', () => {
+            pwaBanner.style.display = 'none';
+            deferredPrompt = null;
+        });
+    </script>
+</body>
+
+</html>
