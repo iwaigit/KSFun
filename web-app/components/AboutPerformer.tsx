@@ -142,7 +142,7 @@ export default function AboutPerformer() {
                             <span className="text-[8px] font-black uppercase bg-[var(--color-neon-cyan)] text-black px-1.5 py-0.5 soft-blink">Activa Ahora</span>
                         </div>
                         <p className="font-black text-[11px] text-white mb-2">
-                            {schedule?.is24h ? '24 Horas / Full Time' : `${schedule?.from} - ${schedule?.to}`}
+                            {schedule?.is24h ? '24 Horas / Full Time' : `${schedule?.from || ''} - ${schedule?.to || ''}`}
                         </p>
                         <div className="flex gap-1.5">
                             {schedule?.workingDays?.map((day: string) => (
@@ -186,9 +186,9 @@ export default function AboutPerformer() {
                     <div className="space-y-4">
                         {[
                             { label: '1 Hora de Servicio', val: pricing?.h1 },
-                            { label: '2 Horas de Servicio', val: pricing?.h2 },
-                            { label: 'Cita Nocturna', val: pricing?.night },
-                            { label: pricing?.customLabel || 'Servicio Extra', val: pricing?.customPrice },
+                            { label: '2 Horas de Servicio', val: pricing?.h2 || undefined },
+                            { label: 'Cita Nocturna', val: pricing?.night || undefined },
+                            { label: pricing?.customLabel || 'Servicio Extra', val: pricing?.customPrice || undefined },
                         ].filter(p => p.val).map(item => (
                             <div key={item.label} className="glass-card p-6 flex justify-between items-center border-white/5 group hover:border-[var(--color-neon-cyan)]/30 transition-all translate-x-0 overflow-hidden">
                                 <div className="space-y-1">

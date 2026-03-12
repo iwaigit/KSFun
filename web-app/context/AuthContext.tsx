@@ -32,30 +32,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     console.log('[AuthProvider] Current user:', user);
 
     // Query to check if user is verified in Convex
-    const isVerifiedQuery = useQuery(
-        api.users.isUserVerified,
-        user?.id ? { userId: user.id as Id<"users"> } : "skip"
-    );
+    // TODO: Implement isUserVerified query in Convex
+    // const isVerifiedQuery = useQuery(
+    //     api.users.isUserVerified,
+    //     user?.id ? { userId: user.id as Id<"users"> } : "skip"
+    // );
+    const isVerifiedQuery = false; // Temporal hasta implementar la query
 
     console.log('[AuthProvider] isVerifiedQuery:', isVerifiedQuery);
 
     useEffect(() => {
         console.log('[AuthProvider] useEffect - loading user from localStorage');
         let isMounted = true;
+        let parsed = null;
         
         const savedUser = localStorage.getItem('ks-auth');
         if (savedUser) {
             try {
-                const parsed = JSON.parse(savedUser);
+                parsed = JSON.parse(savedUser);
                 console.log('[AuthProvider] Found saved user:', parsed.email);
-                if (isMounted) {
-                    setUser(parsed);
-                }
             } catch (e) {
                 console.error('[AuthProvider] Error loading auth', e);
             }
         } else {
             console.log('[AuthProvider] No saved user found');
+        }
+        
+        if (isMounted && parsed) {
+            setUser(parsed);
         }
         
         if (isMounted) {

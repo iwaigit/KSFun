@@ -82,8 +82,9 @@ export function useTenant(): UseTenantReturn {
   // Detectar tenant en mount
   useEffect(() => {
     let isMounted = true;
-    const info = getTenantFromMeta();
-    if (isMounted) {
+    let info = null;
+    info = getTenantFromMeta();
+    if (isMounted && info) {
       setTenantInfo(info);
     }
     return () => { isMounted = false; };
@@ -103,14 +104,16 @@ export function useTenant(): UseTenantReturn {
   
   useEffect(() => {
     let isMounted = true;
+    let errorToSet = null;
+    
     if (siteConfig === null && tenantInfo.slug) {
-      if (isMounted) {
-        setError(new Error(`Tenant "${tenantInfo.slug}" no encontrado`));
-      }
+      errorToSet = new Error(`Tenant "${tenantInfo.slug}" no encontrado`);
     } else {
-      if (isMounted) {
-        setError(null);
-      }
+      errorToSet = null;
+    }
+    
+    if (isMounted) {
+      setError(errorToSet);
     }
     return () => { isMounted = false; };
   }, [siteConfig, tenantInfo.slug]);
@@ -133,8 +136,9 @@ export function useTenantSlug(): string | null {
   
   useEffect(() => {
     let isMounted = true;
-    const info = getTenantFromMeta();
-    if (isMounted) {
+    let info = null;
+    info = getTenantFromMeta();
+    if (isMounted && info) {
       setSlug(info.slug);
     }
     return () => { isMounted = false; };
