@@ -331,6 +331,26 @@
             box-shadow: 0 4px 12px rgba(190, 46, 81, 0.3);
             display: flex;
             align-items: center;
+            margin-right: 8px;
+        }
+        .help-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .help-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
         }
         .install-header-btn:hover {
             transform: translateY(-1px);
@@ -434,6 +454,7 @@
                 <img src="./zynchito.png" alt="Zynchito Logo" class="install-btn-icon" />
                 Instalar App
             </button>
+            <button id="help-btn" class="help-btn">?</button>
         </div>
     </div>
 
@@ -710,9 +731,20 @@
         .btn-instructions-close:hover {
             background: rgba(255, 255, 255, 0.2);
         }
-        .btn-instructions-install:hover {
-            background: #d03a67;
-            transform: translateY(-1px);
+        .btn-help-close {
+            background: rgba(255, 255, 255, 0.1);
+            color: #a1a1aa;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 20px;
+        }
+        .btn-help-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
         }
         @media (max-width: 768px) {
             .instructions-content {
@@ -737,6 +769,7 @@
         const closeBtn = document.getElementById('pwa-close-btn');
         const closeXBtn = document.getElementById('pwa-close-x');
         const headerInstallBtn = document.getElementById('install-app-header-btn');
+        const helpBtn = document.getElementById('help-btn');
 
         // Registro de Service Worker
         if ('serviceWorker' in navigator) {
@@ -777,7 +810,33 @@
             document.body.appendChild(instructionsBanner);
         }
 
-        // Función para mostrar install prompt
+        // Función para mostrar modal de ayuda
+        function showHelpModal() {
+            // Remover modal existente si hay
+            const existingModal = document.querySelector('.help-modal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+
+            // Crear modal de ayuda
+            const helpModal = document.createElement('div');
+            helpModal.className = 'help-modal';
+            helpModal.innerHTML = `
+                <div class="help-content">
+                    <h3>📱 Ayuda Instalación</h3>
+                    <p><strong>Google Play Protect activado:</strong></p>
+                    <ol>
+                        <li>Ve a <strong>Settings</strong></li>
+                        <li>Busca <strong>Apps</strong></li>
+                        <li>Toca <strong>Special access</strong></li>
+                        <li>Activa <strong>"Install unknown apps"</strong></li>
+                        <li>Vuelve a zynch.app y toca <strong>"Instalar App"</strong></li>
+                    </ol>
+                    <button onclick="this.closest('.help-modal').remove()" class="btn-help-close">Entendido</button>
+                </div>
+            `;
+            document.body.appendChild(helpModal);
+        }
         function showInstallPrompt() {
             // Detectar versión Android
             const androidVersion = getAndroidVersion();
@@ -813,6 +872,7 @@
 
         installBtn.addEventListener('click', showInstallPrompt);
         headerInstallBtn.addEventListener('click', showInstallPrompt);
+        helpBtn.addEventListener('click', showHelpModal);
 
         closeBtn.addEventListener('click', () => {
             pwaBanner.style.display = 'none';
