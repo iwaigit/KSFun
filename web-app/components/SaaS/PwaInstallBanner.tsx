@@ -13,8 +13,8 @@ export default function PwaInstallBanner() {
             e.preventDefault();
             // Guardar el evento para dispararlo luego
             setDeferredPrompt(e);
-            // Mostrar nuestro banner personalizado
-            setShowBanner(true);
+            // Mostrar nuestro banner personalizado después de 5 segundos
+            setTimeout(() => setShowBanner(true), 5000);
         };
 
         window.addEventListener('beforeinstallprompt', handler);
