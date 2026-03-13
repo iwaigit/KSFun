@@ -1,4 +1,3 @@
-# Workflow optimizado para Zynch: Compila la landing desde la subcarpeta zynch-landing
 name: Deploy Next.js site to Pages
 
 on:
@@ -22,40 +21,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Detect package manager
-        id: detect-package-manager
-        run: |
-          if [ -f "${{ github.workspace }}/zynch-landing/yarn.lock" ]; then
-            echo "manager=yarn" >> $GITHUB_OUTPUT
-            echo "command=install" >> $GITHUB_OUTPUT
-            echo "runner=yarn" >> $GITHUB_OUTPUT
-            exit 0
-          elif [ -f "${{ github.workspace }}/zynch-landing/package.json" ]; then
-            echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "command=ci" >> $GITHUB_OUTPUT
-            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
-            exit 0
-          else
-            echo "Unable to determine package manager"
-            exit 1
-          fi
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
-          cache-dependency-path: ./zynch-landing/package-lock.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-        working-directory: ./zynch-landing
-
-      - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build
         working-directory: ./zynch-landing
 
       - name: Upload artifact
@@ -64,11 +41,10 @@ jobs:
           path: ./zynch-landing/out
 
   deploy:
+    needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
