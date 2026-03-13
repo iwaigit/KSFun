@@ -68,10 +68,13 @@ export default function PwaInstallBanner() {
                                 Instalar Ahora
                             </button>
                             <button
-                                onClick={() => setShowBanner(false)}
+                                onClick={() => {
+                                    // Mostrar barra de instalación como el botón "Instalar Ahora"
+                                    handleInstallClick();
+                                }}
                                 className="rounded-lg bg-white/5 px-4 py-2 text-sm font-medium text-gray-400 transition-all hover:bg-white/10"
                             >
-                                Después
+                                ×
                             </button>
                         </div>
                     </div>
