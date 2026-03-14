@@ -22,6 +22,7 @@ Transformar la aplicación de una solución personalizada a **Zynch by iwai**, u
 | Documento | Descripción | Enlace |
 |-----------|-------------|--------|
 | **CHANGELOG** | Registro de todos los cambios | [Ver](./CHANGELOG.md) |
+| **ARQUITECTURA (El Conserje / P2P)** | Estrategia Comercial de Zynch ID y Pagos descentralizados | [Ver](./ARQUITECTURA_ONBOARDING_P2P.md) |
 | **FASE 1** | Sistema de Configuración Global | [Ver](./FASE_1.md) |
 | **FASE 2** | Expansión del Perfil (próximamente) | - |
 | **FASE 3** | Sistema Multi-Performer (futuro) | - |
@@ -107,6 +108,7 @@ Zynch/
 ├── .docs/
 │   └── roadmap/           # ← ESTE DOCUMENTO
 │       ├── PLAN_GENERAL.md
+│       ├── ARQUITECTURA_ONBOARDING_P2P.md
 │       ├── FASE_1.md
 │       ├── FASE_2.md
 │       ├── Zynch_SaaS.md

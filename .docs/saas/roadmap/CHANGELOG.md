@@ -94,4 +94,20 @@
 
 ---
 
-*Mantenido por: iwaigit*
+## [ARQUITECTURA] Sesión Modo Arquitecto (El Conserje y Flujo P2P) - 2026-03-14
+
+### Agregado
+- `ARQUITECTURA_ONBOARDING_P2P.md`: Documento de diseño arquitectónico y de producto B2B.
+- Definición oficial del `Zynch ID` (Ej: `Z26-Alfanumérico-Plan`) para trazabilidad infalible y auditoría interna contable.
+- Definición de marketing del `Zynch Pass` (Código QR personal para el ecosistema de Tenants/Talents).
+- **Decisión Crítica:** Zynch **no** fungirá como procesador de pagos para e-commerce (Flujo B), operará exclusivamente como infraestructura P2P entre Tenants y Clientes finales para eludir responsabilidad de contracargos y dolores fiscales.
+- Diseño del esquema "El Conserje" para un onboarding corporativo. Verificación inamovible de correo por OTP para fijar identidad digital comercial del `Talent`.
+- Incorporación de sistema de **Tickets/Soporte Internos y Notificaciones**.
+
+### Modificado
+- `PLAN_GENERAL.md` actualizado para enlazar el nuevo documento arquitectónico.
+- Creada estructura de Agentes Inteligentes en SDK `/.agent/skills/` definiendo *Modo Arquitecto*, *Modo Coding* y *Modo Pana*.
+
+---
+
+*Mantenido por: Alberto (Iwai Automated Processes)*
