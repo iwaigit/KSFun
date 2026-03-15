@@ -31,16 +31,17 @@
     <style>
         :root {
             /* Paleta Oficial Zynch - NO MODIFICAR - */
+            --primary-zynch: #be2e57;
+            --secondary-zynch: #9ead5c;
             --bg-dark: #312a30;
-            --neon-pink: #be2e57;
-            --neon-cyan: #9ead5c;
-            --sky-blue: #9fd7fb;
+            --accent-sky: #9fd7fb;
             --deep-red: #840824;
             --text-light: #ffffff;
             --text-muted: #a2bfcc;
-            /* Mapeo de colores para compatibilidad */
-            --primary: var(--neon-pink);
-            --secondary: var(--neon-cyan);
+            
+            /* Mapeo para compatibilidad */
+            --primary: var(--primary-zynch);
+            --secondary: var(--secondary-zynch);
         }
 
         body,
@@ -293,87 +294,188 @@
         }
 
         /* Header de Instalación Permanente */
+        /* --- [Módulo Floating UI - Zynch Landing - Issue #3] --- */
         .install-header {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            background: rgba(49, 42, 48, 0.75); /* --bg-dark translúcido */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000000;
+            padding: 8px 16px;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: none; /* Se activa vía JS */
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-logo-img {
+            height: 28px;
+            width: auto;
+        }
+
+        .header-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, var(--primary-zynch), var(--secondary-zynch));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .install-header-btn {
+            background: var(--neon-pink);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(190, 46, 87, 0.3);
+            display: flex;
+            align-items: center;
+        }
+
+        .install-header-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(190, 46, 87, 0.5);
+        }
+
+        .menu-toggle {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background 0.2s;
+        }
+
+        .menu-toggle:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Sidebar Glassmorphism */
+        .sidebar-overlay {
             position: fixed;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 1000001;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            height: 100%;
+            background: rgba(49, 42, 48, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000002;
+            padding: 30px 20px;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-menu.active {
             right: 0;
-            background: rgba(190, 46, 81, 1); /* Color cambiado a #be2e51ff */
-            backdrop-filter: blur(10px);
-            z-index: 999998;
-            padding: 8px 20px; /* Reducido en 30% */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .install-header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 4px 0; /* Reducido en 30% */
+
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
         }
-        .install-btn-icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 8px;
-            object-fit: contain;
-        }
-        .install-header-btn {
-            background: rgba(255, 255, 255, 0.2);
+
+        .sidebar-close {
+            align-self: flex-end;
+            background: none;
+            border: none;
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 6px 12px; /* Reducido en 30% */
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 12px; /* Reducido en 30% */
+            font-size: 2rem;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(190, 46, 81, 0.3);
-            display: flex;
-            align-items: center;
-            margin-right: 8px;
         }
-        .help-btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        .sidebar-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 12px 15px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            transition: all 0.2s;
         }
-        .help-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
+
+        .sidebar-link:hover {
+            background: rgba(190, 46, 87, 0.1);
+            color: var(--neon-pink);
+            transform: translateX(5px);
+        }
+
+        .login-btn-sidebar {
+            margin-top: auto;
+            background: var(--neon-pink);
             color: white;
-        }
-        .install-header-btn:hover {
-            transform: translateY(-1px);
-            background: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 6px 16px rgba(190, 46, 81, 0.4);
+            text-align: center;
+            padding: 15px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(190, 46, 87, 0.3);
         }
 
         @media (max-width: 768px) {
-            .install-header-content {
-                padding: 3px 0; /* Reducido en 30% */
+            .install-header {
+                width: 95%;
+                top: 10px;
+                padding: 6px 12px;
             }
-            .install-btn-icon {
-                width: 16px; /* Reducido en 30% */
-                height: 16px;
-                margin-right: 6px;
-            }
-            .install-header-btn {
-                font-size: 11px; /* Reducido en 30% */
-                padding: 4px 8px; /* Reducido en 30% */
-            }
+            .header-title { font-size: 1rem; }
+            .install-header-btn { padding: 6px 14px; font-size: 0.75rem; }
+            .menu-toggle { width: 34px; height: 34px; font-size: 1rem; }
             .container {
                 padding: 1rem;
-                margin-top: 50px; /* Reducido para header más delgado */
+                margin-top: 60px;
             }
 
             .zynchito-logo {
@@ -448,15 +550,35 @@
     <div class="glow"></div>
 
     <!-- Header con Link Permanente de Instalación -->
-    <div class="install-header" style="display: none;">
-        <div class="install-header-content">
+    <!-- Header Flotante Premium (Issue #3) -->
+    <header class="install-header" style="display: none;" id="floating-header">
+        <div class="header-brand">
+            <img src="./zynchito.png" alt="Zynchito" class="header-logo-img">
+            <span class="header-title">zynch</span>
+        </div>
+        <div class="header-actions">
             <button id="install-app-header-btn" class="install-header-btn">
-                <img src="./zynchito.png" alt="Zynchito Logo" class="install-btn-icon" />
                 Instalar App
             </button>
-            <button id="help-btn" class="help-btn">?</button>
+            <button id="menu-toggle-btn" class="menu-toggle">
+                ☰
+            </button>
         </div>
-    </div>
+    </header>
+
+    <!-- Sidebar Menu Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <nav class="sidebar-menu" id="sidebar-menu">
+        <button class="sidebar-close" id="sidebar-close-btn">&times;</button>
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="./zynchito.png" alt="Zynchito" style="height: 60px;">
+            <h3 style="color: var(--neon-pink); margin-top: 10px;">Zynch Menu</h3>
+        </div>
+        <a href="#" class="sidebar-link">Inicio</a>
+        <a href="#countdown" class="sidebar-link">Lanzamiento</a>
+        <a href="https://wa.me/584141320652" class="sidebar-link">Soporte WhatsApp</a>
+        <a href="#" class="login-btn-sidebar" style="margin-top: auto;">Iniciar Sesión Zynch</a>
+    </nav>
 
     <div class="container">
         <img src="./zynchito.png" alt="Zynchito Logo" class="zynchito-logo" />
@@ -538,7 +660,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown(); // Llamada inicial instantánea
     </script>
-    <!-- PWA Install Banner UI - VERSIÓN SIMPLE Y FUNCIONAL -->
+    <!-- PWA Install Banner - Optimizado Responsive -->
     <div id="pwa-banner" style="display: none;" class="pwa-banner-fixed">
         <div class="pwa-banner-content">
             <div class="pwa-accent"></div>
@@ -549,7 +671,7 @@
                 </div>
                 <div class="pwa-text">
                     <h3>Instala Zynch.app</h3>
-                    <p>Bienvenidos Influencers/Performer/Personal Service/Enterprise - a Zynch by Iwai. Instala nuestra App en tu mobile!</p>
+                    <p>Instala nuestra app en tu dispositivo</p>
                     <div class="pwa-buttons">
                         <button id="pwa-install-btn" class="btn-primary">Instalar Ahora</button>
                         <button id="pwa-close-btn" class="btn-secondary">Después</button>
@@ -560,49 +682,72 @@
     </div>
 
     <style>
+        /* PWA Banner - Optimizado con Variables Zynch */
         .pwa-banner-fixed {
             position: fixed;
             bottom: 20px;
             left: 20px;
             right: 20px;
-            z-index: 999999; /* Muy alto para estar sobre todo */
+            z-index: 999999;
             animation: slide-up 0.5s ease-out;
-            display: none; /* Oculto por defecto */
+            display: none;
         }
         
-        /* VISIBLE EN MÓVILES Y TABLETS */
+        /* Mobile First: Visible en móviles y tablets */
         @media (max-width: 1024px) {
             .pwa-banner-fixed {
-                display: block; /* Visible en mobile y tablets */
+                display: block;
                 left: 15px;
                 right: 15px;
             }
         }
         
-        /* OCULTO EN DESKTOP GRANDE */
+        /* Oculto en desktop grande */
         @media (min-width: 1025px) {
             .pwa-banner-fixed {
-                display: none !important; /* Oculto en desktop grande */
+                display: none !important;
             }
         }
         
+        /* Tablets: Ajuste de posición */
         @media (min-width: 768px) {
             .pwa-banner-fixed {
                 left: auto;
                 right: 30px;
                 width: 360px;
+                max-width: 90vw;
             }
         }
+        
+        /* Móviles pequeños: Ajustes extremos */
+        @media (max-width: 400px) {
+            .pwa-banner-fixed {
+                left: 10px;
+                right: 10px;
+                bottom: 15px;
+            }
+        }
+        
         .pwa-banner-content {
             position: relative;
-            background: rgba(26, 26, 26, 0.9);
+            background: rgba(49, 42, 48, 0.95); /* --bg-dark con transparencia */
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 16px; /* Reducido de 20px */
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(190, 46, 87, 0.3); /* --primary-zynch con opacidad */
+            border-radius: 24px; /* Bordes redondeados estilo translate.it */
+            padding: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             overflow: hidden;
         }
+        
+        /* Responsive padding */
+        @media (max-width: 480px) {
+            .pwa-banner-content {
+                padding: 12px;
+                border-radius: 20px;
+            }
+        }
+        
         .pwa-close-x {
             position: absolute;
             top: 8px;
@@ -621,200 +766,203 @@
             justify-content: center;
             transition: all 0.2s ease;
         }
+        
         .pwa-close-x:hover {
             background: rgba(255, 255, 255, 0.2);
             color: white;
         }
+        
+        /* Responsive close button */
+        @media (max-width: 480px) {
+            .pwa-close-x {
+                width: 20px;
+                height: 20px;
+                font-size: 14px;
+                top: 6px;
+                right: 6px;
+            }
+        }
+        
         .pwa-accent {
             position: absolute;
             top: 0;
             left: 0;
             height: 100%;
             width: 4px;
-            background: #be2e57;
+            background: var(--primary-zynch); /* Variable oficial */
         }
-        .pwa-flex { display: flex; gap: 15px; align-items: flex-start; }
+        
+        .pwa-flex { 
+            display: flex; 
+            gap: 15px; 
+            align-items: flex-start; 
+        }
+        
+        /* Responsive gap */
+        @media (max-width: 480px) {
+            .pwa-flex {
+                gap: 12px;
+            }
+        }
+        
         .pwa-icon { 
-            background: rgba(190, 46, 87, 0.1); 
-            width: 40px; height: 40px; /* Reducido de 45px */
-            display: flex; align-items: center; justify-content: center; 
+            background: rgba(190, 46, 87, 0.1); /* --primary-zynch con opacidad */
+            width: 40px; 
+            height: 40px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
             border-radius: 12px;
+            flex-shrink: 0; /* No encoger en móviles */
         }
+        
+        /* Responsive icon */
+        @media (max-width: 480px) {
+            .pwa-icon {
+                width: 35px;
+                height: 35px;
+                border-radius: 10px;
+            }
+        }
+        
         .pwa-zynchito-logo {
-            width: 28px; /* Reducido de 32px */
+            width: 28px;
             height: 28px;
             object-fit: contain;
         }
-        .pwa-text h3 { margin: 0; font-size: 15px; color: white; font-weight: 700; }
-        .pwa-text p { margin: 4px 0 0 0; font-size: 12px; color: #a1a1aa; line-height: 1.3; }
-        .pwa-buttons { margin-top: 12px; display: flex; gap: 8px; }
+        
+        /* Responsive logo */
+        @media (max-width: 480px) {
+            .pwa-zynchito-logo {
+                width: 24px;
+                height: 24px;
+            }
+        }
+        
+        .pwa-text { 
+            flex: 1;
+            min-width: 0; /* Permite que el texto haga wrap */
+        }
+        
+        .pwa-text h3 { 
+            margin: 0; 
+            font-size: 15px; 
+            color: white; 
+            font-weight: 700; 
+            line-height: 1.2;
+        }
+        
+        /* Responsive heading */
+        @media (max-width: 480px) {
+            .pwa-text h3 {
+                font-size: 14px;
+            }
+        }
+        
+        .pwa-text p { 
+            margin: 4px 0 0 0; 
+            font-size: 12px; 
+            color: var(--text-muted); /* Variable oficial */
+            line-height: 1.3;
+        }
+        
+        /* Responsive description */
+        @media (max-width: 480px) {
+            .pwa-text p {
+                font-size: 11px;
+            }
+        }
+        
+        .pwa-buttons { 
+            margin-top: 12px; 
+            display: flex; 
+            gap: 8px; 
+        }
+        
+        /* Responsive buttons */
+        @media (max-width: 480px) {
+            .pwa-buttons {
+                gap: 6px;
+                margin-top: 10px;
+            }
+        }
+        
         .btn-primary { 
-            flex: 1; background: #be2e57; border: none; color: white; 
-            padding: 8px 15px; border-radius: 8px; font-weight: 700; font-size: 13px;
-            cursor: pointer; transition: transform 0.2s;
+            flex: 1; 
+            background: var(--primary-zynch); /* Variable oficial */
+            border: none; 
+            color: white; 
+            padding: 8px 15px; 
+            border-radius: 8px; 
+            font-weight: 700; 
+            font-size: 13px;
+            cursor: pointer; 
+            transition: transform 0.2s;
+            min-width: 0; /* Permite que el botón se encoja */
         }
+        
+        /* Responsive primary button */
+        @media (max-width: 480px) {
+            .btn-primary {
+                padding: 6px 12px;
+                font-size: 12px;
+                border-radius: 6px;
+            }
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.02);
+            opacity: 0.9;
+        }
+        
         .btn-secondary {
-            background: rgba(255,255,255,0.05); border: none; color: #a1a1aa;
-            padding: 8px 15px; border-radius: 8px; font-weight: 500; font-size: 13px;
-            cursor: pointer;
-        }
-        .help-modal {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: auto; /* No ocupa toda la pantalla */
-            background: rgba(26, 26, 26, 0.9);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 16px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            overflow: hidden;
-            z-index: 999999; /* Encima de todo */
-            max-width: 350px; /* Ajustado al contenido */
-            width: auto; /* No toma toda la pantalla */
-            height: auto; /* Ajustado al contenido */
-        }
-        .help-close-x {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: rgba(255, 255, 255, 0.6);
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-        .help-close-x:hover {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-        .instructions-content {
-            background: rgba(26, 26, 26, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 24px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-        }
-        .help-content h3 {
-            margin: 0 0 16px 0;
-            color: #e2e2e2; /* Color suave y reconfortante */
-            font-size: 16px; /* Reducido */
-            font-weight: 600; /* Reducido */
-        }
-        .help-content p {
-            margin: 0 0 16px 0;
-            color: #e2e2e2; /* Color suave y reconfortante */
-            font-size: 13px; /* Reducido */
-            line-height: 1.4;
-        }
-        .help-content ol {
-            text-align: left;
-            margin: 0 0 20px 0;
-            color: #e2e2e2; /* Color suave y reconfortante */
-            font-size: 12px; /* Reducido */
-            line-height: 1.6;
-        }
-        .help-content li {
-            margin-bottom: 8px;
-        }
-        .help-content strong {
-            color: #ffffff; /* Solo los strong en blanco */
-        }
-        .help-title-icon {
-            background: rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            font-size: 12px;
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 8px;
-        }
-        .instructions-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-        }
-        .btn-instructions-close {
-            background: rgba(255, 255, 255, 0.1);
-            color: #a1a1aa;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 10px 16px;
-            border-radius: 8px;
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            color: var(--text-muted); /* Variable oficial */
+            padding: 8px 15px; 
+            border-radius: 8px; 
+            font-weight: 500; 
             font-size: 13px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
+            white-space: nowrap; /* Evita que el texto se rompa */
         }
-        .btn-instructions-install {
-            background: #be2e57;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 8px;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .btn-instructions-close:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        .btn-help-close {
-            background: rgba(255, 255, 255, 0.1);
-            color: #a1a1aa;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 10px 16px;
-            border-radius: 8px;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 20px;
-        }
-        .btn-help-close:hover {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-        @media (max-width: 768px) {
-            .instructions-content {
-                padding: 20px;
-                margin: 10px;
-            }
-            .instructions-buttons {
-                flex-direction: column;
+        
+        /* Responsive secondary button */
+        @media (max-width: 480px) {
+            .btn-secondary {
+                padding: 6px 12px;
+                font-size: 12px;
+                border-radius: 6px;
             }
         }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
         @keyframes slide-up {
-            from { transform: translateY(100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from { 
+                transform: translateY(100px); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateY(0); 
+                opacity: 1; 
+            }
         }
     </style>
 
-    <!-- PWA Logic Script -->
+    <!-- PWA Logic Script - Optimizado -->
     <script>
         let deferredPrompt;
         const pwaBanner = document.getElementById('pwa-banner');
         const installBtn = document.getElementById('pwa-install-btn');
         const closeBtn = document.getElementById('pwa-close-btn');
         const closeXBtn = document.getElementById('pwa-close-x');
-        const headerInstallBtn = document.getElementById('install-app-header-btn');
-        const helpBtn = document.getElementById('help-btn');
 
-        // Registro de Service Worker
+        // Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
@@ -823,71 +971,30 @@
             });
         }
 
-        // Función para detectar versión de Android
+        // Mobile Detection Optimized
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
         function getAndroidVersion() {
-            const userAgent = navigator.userAgent;
-            const match = userAgent.match(/Android (\d+(?:\.\d+)?)/);
+            const match = navigator.userAgent.match(/Android (\d+(?:\.\d+)?)/);
             return match ? parseInt(match[1]) : null;
         }
 
-        // Función para mostrar instrucciones de instalación (fallback Android 16+)
-        function showInstallInstructions() {
-            // Mostrar banner con instrucciones simples
-            const instructionsBanner = document.createElement('div');
-            instructionsBanner.className = 'install-instructions-banner';
-            instructionsBanner.innerHTML = `
-                <div class="instructions-content">
-                    <h3>📱 Instalar Zynch.app</h3>
-                    <p>Para instalar en Android 16+:</p>
-                    <ol>
-                        <li>Toca el menú (⋮) arriba a la derecha</li>
-                        <li>Selecciona "Instalar aplicación" o "Añadir a pantalla de inicio"</li>
-                        <li>Confirma "Añadir a pantalla de inicio"</li>
-                    </ol>
-                    <div class="instructions-buttons">
-                        <button onclick="this.closest('.install-instructions-banner').remove()" class="btn-instructions-close">Entendido</button>
-                        <button onclick="document.querySelector('.install-header').style.display='block'; this.closest('.install-instructions-banner').remove()" class="btn-instructions-install">Más Tarde</button>
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(instructionsBanner);
-        }
-
-        // Función para mostrar modal de ayuda
-        function showHelpModal() {
-            // Remover modal existente si hay
-            const existingModal = document.querySelector('.help-modal');
-            if (existingModal) {
-                existingModal.remove();
+        // Show banner con delay de 5 segundos
+        setTimeout(() => {
+            if (isMobile() && !localStorage.getItem('pwa-banner-dismissed')) {
+                pwaBanner.style.display = 'block';
             }
+        }, 5000);
 
-            // Crear modal de ayuda (como banner flotante)
-            const helpModal = document.createElement('div');
-            helpModal.className = 'help-modal';
-            helpModal.innerHTML = `
-                <div class="help-content">
-                    <button class="help-close-x" onclick="this.closest('.help-modal').remove()">×</button>
-                    <h3><span class="help-title-icon">?</span> Ayuda Instalación</h3>
-                    <p><strong>Google Play Protect activado:</strong></p>
-                    <ol>
-                        <li>Ve a <strong>Settings</strong></li>
-                        <li>Busca <strong>Apps</strong></li>
-                        <li>Toca <strong>Special access</strong></li>
-                        <li>Activa <strong>"Install unknown apps"</strong></li>
-                        <li>Vuelve a zynch.app y toca <strong>"Instalar App"</strong></li>
-                    </ol>
-                    <button onclick="this.closest('.help-modal').remove()" class="btn-help-close">Entendido</button>
-                </div>
-            `;
-            document.body.appendChild(helpModal);
-        }
+        // Install Function Optimized
         function showInstallPrompt() {
-            // Detectar versión Android
             const androidVersion = getAndroidVersion();
-            const supportsInstallPrompt = androidVersion < 16;
+            const supportsPrompt = androidVersion && androidVersion < 16;
 
-            if (supportsInstallPrompt && deferredPrompt) {
-                // Android 12-15: instalación automática
+            if (supportsPrompt && deferredPrompt) {
+                // Android 12-15: instalación nativa
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((choiceResult) => {
                     console.log(`User response: ${choiceResult.outcome}`);
@@ -895,59 +1002,47 @@
                     pwaBanner.style.display = 'none';
                 });
             } else {
-                // Android 16+ o sin prompt: mostrar instrucciones
+                // Android 16+ o iOS: mostrar instrucciones simples
                 showInstallInstructions();
                 pwaBanner.style.display = 'none';
             }
         }
 
-        // Event Listeners
+        // Instrucciones simplificadas
+        function showInstallInstructions() {
+            const instructionsBanner = document.createElement('div');
+            instructionsBanner.className = 'install-instructions-banner';
+            instructionsBanner.innerHTML = `
+                <div class="instructions-content">
+                    <h3>📱 Instalar Zynch.app</h3>
+                    <p>Toca el botón de compartir y luego "Añadir a pantalla de inicio"</p>
+                    <button onclick="this.closest('.install-instructions-banner').remove()" class="btn-instructions-close">Entendido</button>
+                </div>
+            `;
+            document.body.appendChild(instructionsBanner);
+        }
+
+        // Event Listeners Optimized
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            pwaBanner.style.display = 'block';
         });
 
-        // Detectar iOS y mostrar banner igual
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-        if (isIOS) {
-            pwaBanner.style.display = 'block';
-        }
-
         installBtn.addEventListener('click', showInstallPrompt);
-        headerInstallBtn.addEventListener('click', showInstallPrompt);
-        helpBtn.addEventListener('click', showHelpModal);
-
         closeBtn.addEventListener('click', () => {
             pwaBanner.style.display = 'none';
-            // Mostrar header cuando se pulsa "Después"
-            document.querySelector('.install-header').style.display = 'block';
+            localStorage.setItem('pwa-banner-dismissed', 'true');
         });
 
         closeXBtn.addEventListener('click', () => {
             pwaBanner.style.display = 'none';
-            // No mostrar header al cerrar con X (opción directa de cerrar)
+            localStorage.setItem('pwa-banner-dismissed', 'true');
         });
 
         window.addEventListener('appinstalled', () => {
             pwaBanner.style.display = 'none';
             deferredPrompt = null;
-            
-            // Mostrar mensaje temporal de bienvenida
-            const installHeader = document.querySelector('.install-header');
-            const installHeaderContent = installHeader.querySelector('.install-header-content');
-            
-            // Cambiar header a mensaje de bienvenida
-            installHeaderContent.innerHTML = `
-                <div style="color: white; font-size: 14px; font-weight: 500; text-align: center;">
-                    🎉 ¡Bienvenido al ecosistema Zynch! App instalada con éxito
-                </div>
-            `;
-            
-            // Ocultar header después de 5 segundos
-            setTimeout(() => {
-                installHeader.style.display = 'none';
-            }, 5000);
+            localStorage.setItem('pwa-banner-dismissed', 'true');
         });
     </script>
 </body>
