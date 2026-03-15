@@ -11,17 +11,49 @@ Zynch no tiene un solo estilo; se adapta a la identidad de cada cliente. Este sk
 
 No uses colores estáticos de Tailwind (ej: `text-pink-500`) para elementos de marca. Usa variables cargadas desde la configuración del tenant.
 
-### Configuración en `globals.css`:
+### Configuración Oficial Zynch:
+
+**Variables CSS (`:root`):**
 ```css
 :root {
-  --primary: #ff2d75;
-  --secondary: #00f3ff;
-  --background: #0a0a0a;
+  --primary-zynch: #be2e57;
+  --secondary-zynch: #9ead5c;
+  --bg-dark: #312a30;
+  --accent-sky: #9fd7fb;
+  --deep-red: #840824;
+  --text-muted: #a2bfcc;
 }
+```
 
-[data-theme="custom"] {
-  --primary: var(--tenant-primary);
-  --secondary: var(--tenant-secondary);
+**JSON Object:**
+```json
+{
+  "zynch_palette": {
+    "primary": "#be2e57",
+    "secondary": "#9ead5c",
+    "background": "#312a30",
+    "accent": "#9fd7fb",
+    "deep_red": "#840824",
+    "text_muted": "#a2bfcc"
+  }
+}
+```
+
+**Tailwind Config Extension:**
+```javascript
+theme: {
+  extend: {
+    colors: {
+      zynch: {
+        primary: '#be2e57',
+        secondary: '#9ead5c',
+        dark: '#312a30',
+        sky: '#9fd7fb',
+        deep: '#840824',
+        muted: '#a2bfcc',
+      }
+    }
+  }
 }
 ```
 
