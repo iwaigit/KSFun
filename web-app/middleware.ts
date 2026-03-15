@@ -62,7 +62,13 @@ export async function middleware(req: NextRequest) {
       return response;
     }
     
-    // 4. Default - Redirigir a marketing
+    // 4. Localhost / Dev Tunnels Support
+    if (hostname.includes('localhost') || hostname.includes('devtunnels.ms') || hostname.includes('192.168')) {
+      console.log('💻 Local dev environment, passing through');
+      return NextResponse.next();
+    }
+
+    // 5. Default - Redirigir a marketing
     console.log('🔄 Default redirect to marketing');
     return NextResponse.redirect(new URL('https://www.zynch.app', url));
     
